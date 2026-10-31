@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ AVault: Secure Hardware-Encrypted Call Management
+  ~  Copyright (C) 2026 AVault Project
+  ~  This software is licensed under the GNU General Public License v3 or later, 
+  ~  The full license text is available in the LICENSE file at the root of this project.
+  ~  This software is distributed WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  -->
+
+<resources>
+    <color name="launcher_background">#000000</color>
+</resources>

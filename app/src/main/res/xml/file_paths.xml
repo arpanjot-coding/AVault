@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ AVault: Secure Hardware-Encrypted Call Management
+  ~  Copyright (C) 2026 AVault Project
+  ~  This software is licensed under the GNU General Public License v3 or later, 
+  ~  The full license text is available in the LICENSE file at the root of this project.
+  ~  This software is distributed WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  -->
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Restrict external storage exposure strictly to the app recordings directory -->
+    <external-path name="recordings" path="Recordings/AVault" />
+    <external-path name="recordings_legacy" path="Recordings/ShizuCalls" />
+    <external-files-path name="ext_recordings" path="Recordings" />
+    <files-path name="internal_recordings" path="Recordings" />
+
+    <!-- Restrict cache exposure strictly to transient sharing and playback subdirectories -->
+    <cache-path name="shared_audio" path="shared_audio" />
+    <cache-path name="secure_playback" path="secure_playback" />
+</paths>

@@ -1,0 +1,15 @@
+{
+  "uniqueId": "com.avault.app",
+  "developers": [
+    {
+      "name": "AVault Project",
+      "organisationUrl": "https://github.com/avault-app/AVault"
+    }
+  ],
+  "description": "Secure, hardware-encrypted call management and vault for Android.",
+  "name": "AVault",
+  "website": "https://github.com/avault-app/AVault",
+  "licenses": [
+    "avault-gpl-3.0"
+  ]
+}

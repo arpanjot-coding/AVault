@@ -1,0 +1,18 @@
+<b>AVault</b> is a secure, privacy-first call management and encrypted audio vault for Android.
+
+<p><b>Features</b></p>
+<ul>
+<li><b>Hardware-Backed AES-256-GCM Encryption:</b> All conversations are securely stored in a cryptographic vault (.vault) with hardware KeyStore protection.</li>
+<li><b>App Lock Security:</b> Multi-factor authentication via PIN and Biometric verification (Fingerprint, Face, Passcode).</li>
+<li><b>Screen Privacy:</b> FLAG_SECURE prevents unauthorized screenshots and protects recent app previews.</li>
+<li><b>Storage Optimization & Auto-Cleanup:</b> Automated retention policies with configurable duration and permanent bookmark preservation.</li>
+<li><b>Integrated Audio Player:</b> Stream encrypted conversations on demand with zero plaintext audio left on disk.</li>
+<li><b>Dual-Channel Stereo Capture:</b> Separate uplink and downlink audio for local and remote voice isolation.</li>
+<li><b>Stealth Notifications:</b> Minimal, privacy-conscious status alerts.</li>
+</ul>
+
+<p><b>Requirements</b></p>
+<ul>
+<li>Android 12 or newer</li>
+<li>Supported system integration via Shizuku</li>
+</ul>

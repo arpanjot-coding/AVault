@@ -1,0 +1,41 @@
+MIT License
+
+Copyright (c) 2026 AVault Project
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+================================================================================
+CRITICAL DISCLAIMER FOR EDUCATIONAL & SECURITY RESEARCH PURPOSES ONLY
+================================================================================
+This repository and software are developed and maintained strictly for academic,
+educational, cryptographic, and security research purposes. 
+
+The authors, contributors, and maintainers explicitly disclaim all liability 
+whatsoever for any direct, indirect, incidental, special, punitive, or consequential 
+damages, legal infractions, civil claims, or criminal liabilities arising out of 
+or connected to:
+1. The use, misuse, modification, distribution, or inability to use this software.
+2. Interception, recording, storage, decryption, or transmission of telephone, 
+   VoIP, or cellular communications without appropriate legal consent.
+3. Violations of national, federal, state, provincial, or international telecommunications 
+   and wiretapping laws (including single-party or all-party consent statutes).
+
+It is solely the end-user's responsibility to understand, monitor, and adhere to 
+all applicable legal, statutory, and regulatory requirements in their jurisdiction 
+before deploying or running this codebase.
