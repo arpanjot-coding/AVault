@@ -14,8 +14,10 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.widget.Toast
 import androidx.compose.animation.*
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -46,6 +48,7 @@ import com.kitsumed.shizucallrecorder.integrations.shizuku.ShizukuConnectionMana
 import com.kitsumed.shizucallrecorder.system.openShizukuManager
 import com.kitsumed.shizucallrecorder.system.storage.HierarchicalStorageManager
 import com.kitsumed.shizucallrecorder.utils.AppLogger
+import com.kitsumed.shizucallrecorder.ui.theme.*
 import kotlinx.coroutines.delay
 import java.io.File
 import java.util.Locale
@@ -242,46 +245,61 @@ fun CallsDashboardScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.background)
+                    .background(BrikDarkBackground)
                     .statusBarsPadding()
-                    .padding(horizontal = 20.dp, vertical = 10.dp)
+                    .padding(horizontal = 20.dp, vertical = 12.dp)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Column(modifier = Modifier.weight(1f)) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
                         Text(
-                            text = "Calls",
+                            text = buildAnnotatedString {
+                                append("AVAULT")
+                                withStyle(SpanStyle(fontSize = 12.sp, fontWeight = FontWeight.Bold)) {
+                                    append("®")
+                                }
+                            },
                             style = MaterialTheme.typography.headlineMedium.copy(
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 28.sp
+                                fontWeight = FontWeight.Black,
+                                fontSize = 23.sp,
+                                letterSpacing = (-0.5).sp
                             ),
-                            color = MaterialTheme.colorScheme.onBackground
+                            color = BrikTextPrimary
                         )
-                        Spacer(modifier = Modifier.height(2.dp))
-                        val summaryText = if (allCalls.isEmpty()) {
-                            "No conversations saved"
-                        } else {
-                            "${allCalls.size} ${if (allCalls.size == 1) "conversation" else "conversations"} saved"
+                        Surface(
+                            shape = RoundedCornerShape(50),
+                            color = if (isShizukuReady) BrikLavender else BrikAmber,
+                            modifier = Modifier.clickable { if (!isShizukuReady) context.openShizukuManager() }
+                        ) {
+                            Text(
+                                text = if (isShizukuReady) "ROOTLESS ACTIVE" else "STANDBY",
+                                style = MaterialTheme.typography.labelSmall.copy(
+                                    fontWeight = FontWeight.ExtraBold,
+                                    letterSpacing = 0.6.sp
+                                ),
+                                color = if (isShizukuReady) BrikOnLavender else BrikOnAmber,
+                                modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
+                                maxLines = 1,
+                                softWrap = false
+                            )
                         }
-
-                        Text(
-                            text = summaryText,
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
                     }
 
-                    Row(verticalAlignment = Alignment.CenterVertically) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(2.dp)
+                    ) {
                         IconButton(onClick = { isSearchActive = !isSearchActive }) {
                             Icon(
                                 imageVector = if (isSearchActive) Icons.Default.Close else Icons.Default.Search,
                                 contentDescription = "Search",
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                tint = BrikTextPrimary
                             )
                         }
                         if (appPreferences.isAppLockEnabled()) {
@@ -289,7 +307,7 @@ fun CallsDashboardScreen(
                                 Icon(
                                     imageVector = Icons.Default.Lock,
                                     contentDescription = "Lock",
-                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                    tint = BrikTextPrimary
                                 )
                             }
                         }
@@ -297,34 +315,10 @@ fun CallsDashboardScreen(
                             Icon(
                                 imageVector = Icons.Default.Settings,
                                 contentDescription = "Settings",
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                tint = BrikTextPrimary
                             )
                         }
                     }
-                }
-
-                Spacer(modifier = Modifier.height(2.dp))
-
-                // Engine Health Indicator Pill
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(8.dp))
-                        .clickable { if (!isShizukuReady) context.openShizukuManager() }
-                        .padding(vertical = 4.dp)
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .size(8.dp)
-                            .clip(CircleShape)
-                            .background(if (isShizukuReady) Color(0xFF4CAF50) else Color(0xFFFF9800))
-                    )
-                    Spacer(modifier = Modifier.width(6.dp))
-                    Text(
-                        text = if (isShizukuReady) "Ready • Shizuku Connected" else "Shizuku Not Running (Tap to Start)",
-                        style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Medium),
-                        color = if (isShizukuReady) Color(0xFF4CAF50) else Color(0xFFFF9800)
-                    )
                 }
 
                 // Expandable Search Bar
@@ -336,86 +330,27 @@ fun CallsDashboardScreen(
                     OutlinedTextField(
                         value = searchQuery,
                         onValueChange = { searchQuery = it },
-                        placeholder = { Text("Search by name, number, or app...") },
-                        leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
+                        placeholder = { Text("Search by name, number, or app...", color = BrikTextSecondary) },
+                        leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = BrikLavender) },
                         trailingIcon = {
                             if (searchQuery.isNotEmpty()) {
                                 IconButton(onClick = { searchQuery = "" }) {
-                                    Icon(Icons.Default.Clear, contentDescription = "Clear")
+                                    Icon(Icons.Default.Clear, contentDescription = "Clear", tint = BrikTextSecondary)
                                 }
                             }
                         },
                         singleLine = true,
-                        shape = RoundedCornerShape(24.dp),
+                        shape = RoundedCornerShape(20.dp),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = BrikLavender,
+                            unfocusedBorderColor = BrikBorder,
+                            focusedContainerColor = BrikDarkCard,
+                            unfocusedContainerColor = BrikDarkCard
+                        ),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 8.dp)
+                            .padding(top = 10.dp)
                     )
-                }
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                // Filter Chips Row
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    item {
-                        FilterChip(
-                            selected = selectedFilter == "All",
-                            onClick = { selectedFilter = "All" },
-                            label = { Text("All (${allCalls.size})") },
-                            shape = RoundedCornerShape(20.dp)
-                        )
-                    }
-                    if (isAutoDeleteEnabled) {
-                        item {
-                            FilterChip(
-                                selected = selectedFilter == "Saved",
-                                onClick = { selectedFilter = "Saved" },
-                                leadingIcon = {
-                                    Icon(
-                                        imageVector = Icons.Default.Bookmark,
-                                        contentDescription = null,
-                                        modifier = Modifier.size(16.dp),
-                                        tint = if (selectedFilter == "Saved") MaterialTheme.colorScheme.primary else Color(0xFFF9A825)
-                                    )
-                                },
-                                label = { Text("Saved ($savedCount)") },
-                                shape = RoundedCornerShape(20.dp)
-                            )
-                        }
-                    }
-                    if (phoneCount > 0 || allCalls.isEmpty()) {
-                        item {
-                            FilterChip(
-                                selected = selectedFilter == "Phone",
-                                onClick = { selectedFilter = "Phone" },
-                                label = { Text("Phone ($phoneCount)") },
-                                shape = RoundedCornerShape(20.dp)
-                            )
-                        }
-                    }
-                    if (whatsAppCount > 0 || allCalls.isEmpty()) {
-                        item {
-                            FilterChip(
-                                selected = selectedFilter == "WhatsApp",
-                                onClick = { selectedFilter = "WhatsApp" },
-                                label = { Text("WhatsApp ($whatsAppCount)") },
-                                shape = RoundedCornerShape(20.dp)
-                            )
-                        }
-                    }
-                    if (telegramCount > 0) {
-                        item {
-                            FilterChip(
-                                selected = selectedFilter == "Telegram",
-                                onClick = { selectedFilter = "Telegram" },
-                                label = { Text("Telegram ($telegramCount)") },
-                                shape = RoundedCornerShape(20.dp)
-                            )
-                        }
-                    }
                 }
             }
         },
@@ -490,87 +425,87 @@ fun CallsDashboardScreen(
             }
         }
     ) { paddingValues ->
-        if (filteredCalls.isEmpty()) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-                    .padding(horizontal = 32.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Icon(
-                        imageVector = Icons.Default.GraphicEq,
-                        contentDescription = null,
-                        modifier = Modifier.size(64.dp),
-                        tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f)
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Text(
-                        text = if (searchQuery.isNotEmpty()) "No matching calls found" else "No conversations saved yet",
-                        style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold),
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = if (searchQuery.isNotEmpty())
-                            "Try searching with another contact name or phone number"
-                        else
-                            "Incoming and outgoing calls will automatically appear here once saved.",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        textAlign = androidx.compose.ui.text.style.TextAlign.Center
-                    )
-                }
-            }
-        } else {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(BrikDarkBackground)
+                .padding(paddingValues)
+        ) {
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(paddingValues)
                     .padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                contentPadding = PaddingValues(bottom = 90.dp, top = 8.dp)
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                contentPadding = PaddingValues(bottom = 100.dp, top = 8.dp)
             ) {
-                groupedCalls.forEach { (dateGroup, callsInGroup) ->
-                    item {
-                        Text(
-                            text = dateGroup,
-                            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
-                        )
+                // 1. Hero Card ("welcome back" style)
+                item {
+                    Surface(
+                        shape = RoundedCornerShape(26.dp),
+                        color = BrikDarkCard,
+                        border = BorderStroke(1.dp, BrikBorder),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Column(modifier = Modifier.padding(horizontal = 22.dp, vertical = 20.dp)) {
+                            Text(
+                                text = "Confidential vault,\nactive & protected",
+                                style = MaterialTheme.typography.headlineSmall.copy(
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 22.sp,
+                                    lineHeight = 28.sp
+                                ),
+                                color = BrikTextPrimary
+                            )
+                        }
                     }
+                }
 
-                    item {
-                        Surface(
-                            shape = RoundedCornerShape(16.dp),
-                            color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Column {
-                                callsInGroup.forEachIndexed { index, entry ->
-                                    CallLogRow(
-                                        entry = entry,
-                                        isPlaying = currentlyPlayingEntry?.id == entry.id && isPlaying,
-                                        showBookmark = isAutoDeleteEnabled,
-                                        onPlay = { playAudio(entry) },
-                                        onShare = { shareAudio(entry) },
-                                        onDelete = { deleteTargetEntry = entry },
-                                        onToggleBookmark = {
-                                            val isNowSaved = repository.toggleBookmark(entry.id)
-                                            if (isNowSaved) {
-                                                Toast.makeText(context, "Conversation saved forever (immune to auto-cleanup)", Toast.LENGTH_SHORT).show()
-                                            } else {
-                                                Toast.makeText(context, "Bookmark removed", Toast.LENGTH_SHORT).show()
-                                            }
-                                        }
+                // 2. Segmented Hardware Protection Card ("Your progress 79% ||||||||||||||" style)
+                item {
+                    Surface(
+                        shape = RoundedCornerShape(26.dp),
+                        color = BrikDarkCard,
+                        border = BorderStroke(1.dp, BrikBorder),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Column(modifier = Modifier.padding(20.dp)) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Column {
+                                    Text("Hardware protection", style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold), color = BrikTextPrimary)
+                                    Text("AES-256-GCM keystore bound", style = MaterialTheme.typography.bodySmall, color = BrikTextSecondary)
+                                }
+                                Surface(
+                                    shape = RoundedCornerShape(50),
+                                    color = BrikLavenderContainer,
+                                    border = BorderStroke(1.dp, BrikLavender.copy(alpha = 0.35f))
+                                ) {
+                                    Text(
+                                        text = "AES-256",
+                                        style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
+                                        color = BrikLavender,
+                                        modifier = Modifier.padding(horizontal = 9.dp, vertical = 3.dp)
                                     )
-                                    if (index < callsInGroup.size - 1) {
-                                        HorizontalDivider(
-                                            modifier = Modifier.padding(horizontal = 16.dp),
-                                            color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.4f),
-                                            thickness = 0.5.dp
+                                }
+                            }
+                            Spacer(modifier = Modifier.height(18.dp))
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text("100%", style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.ExtraBold, fontSize = 32.sp), color = BrikTextPrimary)
+                                Row(horizontalArrangement = Arrangement.spacedBy(3.dp)) {
+                                    repeat(18) { idx ->
+                                        Box(
+                                            modifier = Modifier
+                                                .width(6.dp)
+                                                .height(24.dp)
+                                                .clip(RoundedCornerShape(3.dp))
+                                                .background(if (idx < 17) BrikLavender else BrikBorder)
                                         )
                                     }
                                 }
@@ -578,11 +513,252 @@ fun CallsDashboardScreen(
                         }
                     }
                 }
+
+                // 3. Dual Side-by-Side Metric Cards ("Best score / Reaction speed" style)
+                item {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        Surface(
+                            shape = RoundedCornerShape(22.dp),
+                            color = BrikDarkCard,
+                            border = BorderStroke(1.dp, BrikBorder),
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Column(modifier = Modifier.padding(18.dp)) {
+                                Text("Sealed calls", style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.SemiBold), color = BrikTextSecondary)
+                                Text("Hardware vault", style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp), color = BrikTextSub)
+                                Spacer(modifier = Modifier.height(10.dp))
+                                Text("${allCalls.size}", style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold, fontSize = 28.sp), color = BrikTextPrimary)
+                            }
+                        }
+                        Surface(
+                            shape = RoundedCornerShape(22.dp),
+                            color = BrikDarkCard,
+                            border = BorderStroke(1.dp, BrikBorder),
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Column(modifier = Modifier.padding(18.dp)) {
+                                Text("Auto-retention", style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.SemiBold), color = BrikTextSecondary)
+                                Text("Exempt bookmarks", style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp), color = BrikTextSub)
+                                Spacer(modifier = Modifier.height(10.dp))
+                                Text(
+                                    text = if (isAutoDeleteEnabled) "${appPreferences.getAutoDeleteDays()}d" else "Indefinite",
+                                    style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold, fontSize = 20.sp),
+                                    color = BrikLavender
+                                )
+                            }
+                        }
+                    }
+                }
+
+                // 4. Filter Chips Row
+                item {
+                    LazyRow(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
+                    ) {
+                        item {
+                            Surface(
+                                shape = RoundedCornerShape(50),
+                                color = if (selectedFilter == "All") BrikLavender else BrikDarkCard,
+                                border = BorderStroke(1.dp, if (selectedFilter == "All") BrikLavender else BrikBorder),
+                                modifier = Modifier.clickable { selectedFilter = "All" }
+                            ) {
+                                Text(
+                                    text = "All (${allCalls.size})",
+                                    style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
+                                    color = if (selectedFilter == "All") BrikOnLavender else BrikTextSecondary,
+                                    modifier = Modifier.padding(horizontal = 14.dp, vertical = 7.dp)
+                                )
+                            }
+                        }
+                        if (isAutoDeleteEnabled && savedCount > 0) {
+                            item {
+                                Surface(
+                                    shape = RoundedCornerShape(50),
+                                    color = if (selectedFilter == "Saved") BrikAmber else BrikDarkCard,
+                                    border = BorderStroke(1.dp, if (selectedFilter == "Saved") BrikAmber else BrikBorder),
+                                    modifier = Modifier.clickable { selectedFilter = "Saved" }
+                                ) {
+                                    Text(
+                                        text = "Saved ($savedCount)",
+                                        style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
+                                        color = if (selectedFilter == "Saved") BrikOnAmber else BrikTextSecondary,
+                                        modifier = Modifier.padding(horizontal = 14.dp, vertical = 7.dp)
+                                    )
+                                }
+                            }
+                        }
+                        if (phoneCount > 0 || allCalls.isEmpty()) {
+                            item {
+                                Surface(
+                                    shape = RoundedCornerShape(50),
+                                    color = if (selectedFilter == "Phone") BrikLavender else BrikDarkCard,
+                                    border = BorderStroke(1.dp, if (selectedFilter == "Phone") BrikLavender else BrikBorder),
+                                    modifier = Modifier.clickable { selectedFilter = "Phone" }
+                                ) {
+                                    Text(
+                                        text = "Phone ($phoneCount)",
+                                        style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
+                                        color = if (selectedFilter == "Phone") BrikOnLavender else BrikTextSecondary,
+                                        modifier = Modifier.padding(horizontal = 14.dp, vertical = 7.dp)
+                                    )
+                                }
+                            }
+                        }
+                        if (whatsAppCount > 0 || allCalls.isEmpty()) {
+                            item {
+                                Surface(
+                                    shape = RoundedCornerShape(50),
+                                    color = if (selectedFilter == "WhatsApp") BrikLavender else BrikDarkCard,
+                                    border = BorderStroke(1.dp, if (selectedFilter == "WhatsApp") BrikLavender else BrikBorder),
+                                    modifier = Modifier.clickable { selectedFilter = "WhatsApp" }
+                                ) {
+                                    Text(
+                                        text = "WhatsApp ($whatsAppCount)",
+                                        style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
+                                        color = if (selectedFilter == "WhatsApp") BrikOnLavender else BrikTextSecondary,
+                                        modifier = Modifier.padding(horizontal = 14.dp, vertical = 7.dp)
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // 5. Calls List or Empty Placeholder
+                if (filteredCalls.isEmpty()) {
+                    item {
+                        Surface(
+                            shape = RoundedCornerShape(26.dp),
+                            color = BrikDarkCard,
+                            border = BorderStroke(1.dp, BrikBorder),
+                            modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp)
+                        ) {
+                            Column(
+                                modifier = Modifier.padding(32.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.GraphicEq,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(54.dp),
+                                    tint = BrikLavender
+                                )
+                                Spacer(modifier = Modifier.height(14.dp))
+                                Text(
+                                    text = if (searchQuery.isNotEmpty()) "No matching calls found" else "No conversations saved yet",
+                                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                                    color = BrikTextPrimary
+                                )
+                                Spacer(modifier = Modifier.height(6.dp))
+                                Text(
+                                    text = if (searchQuery.isNotEmpty())
+                                        "Try searching with another name or number"
+                                    else
+                                        "Incoming and outgoing calls will automatically appear here once sealed in vault.",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = BrikTextSecondary,
+                                    textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                                )
+                            }
+                        }
+                    }
+                } else {
+                    groupedCalls.forEach { (dateGroup, callsInGroup) ->
+                        item {
+                            Text(
+                                text = dateGroup,
+                                style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold),
+                                color = BrikTextSecondary,
+                                modifier = Modifier.padding(top = 10.dp, bottom = 2.dp, start = 4.dp)
+                            )
+                        }
+
+                        items(callsInGroup) { entry ->
+                            CallLogRow(
+                                entry = entry,
+                                isPlaying = currentlyPlayingEntry?.id == entry.id && isPlaying,
+                                showBookmark = isAutoDeleteEnabled,
+                                onPlay = { playAudio(entry) },
+                                onShare = { shareAudio(entry) },
+                                onDelete = { deleteTargetEntry = entry },
+                                onToggleBookmark = {
+                                    val isNowSaved = repository.toggleBookmark(entry.id)
+                                    if (isNowSaved) {
+                                        Toast.makeText(context, "Conversation saved forever (immune to auto-cleanup)", Toast.LENGTH_SHORT).show()
+                                    } else {
+                                        Toast.makeText(context, "Bookmark removed", Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                            )
+                        }
+                    }
+                }
+            }
+
+            // Floating Bottom Navigation Dock (BRIK Style)
+            Surface(
+                shape = RoundedCornerShape(50),
+                color = Color(0xFF091213),
+                border = BorderStroke(1.dp, BrikBorder),
+                shadowElevation = 12.dp,
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 18.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    modifier = Modifier.padding(horizontal = 14.dp, vertical = 7.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Shield,
+                        contentDescription = "Shield",
+                        tint = if (isShizukuReady) BrikLavender else BrikTextSecondary,
+                        modifier = Modifier.size(18.dp)
+                    )
+                    Surface(
+                        shape = RoundedCornerShape(50),
+                        color = BrikLavender,
+                        modifier = Modifier.clickable { }
+                    ) {
+                        Text(
+                            text = "VAULT",
+                            style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold, letterSpacing = 0.5.sp),
+                            color = BrikOnLavender,
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp)
+                        )
+                    }
+                    Surface(
+                        shape = RoundedCornerShape(50),
+                        color = Color.Transparent,
+                        modifier = Modifier.clickable { onNavigateToSettings() }
+                    ) {
+                        Text(
+                            text = "SETTINGS",
+                            style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold, letterSpacing = 0.5.sp),
+                            color = BrikTextSecondary,
+                            modifier = Modifier.padding(horizontal = 14.dp, vertical = 6.dp)
+                        )
+                    }
+                    Icon(
+                        imageVector = Icons.Default.MoreHoriz,
+                        contentDescription = "More",
+                        tint = BrikTextSecondary,
+                        modifier = Modifier
+                            .size(18.dp)
+                            .clickable { isSearchActive = !isSearchActive }
+                    )
+                }
             }
         }
     }
 
-    // Delete Confirmation Dialog
+
+        // Delete Confirmation Dialog
     deleteTargetEntry?.let { entry ->
         AlertDialog(
             onDismissRequest = { deleteTargetEntry = null },
@@ -624,206 +800,168 @@ private fun CallLogRow(
 ) {
     var isMenuExpanded by remember { mutableStateOf(false) }
 
-    val avatarColor = remember(entry.contactName) {
-        val colors = listOf(
-            Color(0xFF3F51B5), Color(0xFF009688), Color(0xFF673AB7),
-            Color(0xFFE91E63), Color(0xFF2196F3), Color(0xFFFF5722)
-        )
-        val hash = entry.contactName.hashCode()
-        colors[Math.abs(hash) % colors.size]
-    }
-
-    Row(
+    Surface(
+        shape = RoundedCornerShape(22.dp),
+        color = if (isPlaying) BrikDarkCardElevated else BrikDarkCard,
+        border = BorderStroke(1.dp, if (isPlaying) BrikLavender else BrikBorder),
         modifier = modifier
             .fillMaxWidth()
             .clickable { onPlay() }
-            .padding(horizontal = 14.dp, vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically
     ) {
-        // Avatar Initial
-        Box(
+        Row(
             modifier = Modifier
-                .size(40.dp)
-                .clip(CircleShape)
-                .background(avatarColor),
-            contentAlignment = Alignment.Center
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 14.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = entry.getAvatarInitial(),
-                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                color = Color.White
-            )
-        }
-
-        Spacer(modifier = Modifier.width(12.dp))
-
-        // Contact Info Column
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = entry.contactName,
-                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
-                color = MaterialTheme.colorScheme.onSurface,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-
-            Spacer(modifier = Modifier.height(2.dp))
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
+            // Avatar Initial with Lavender Theme
+            Box(
+                modifier = Modifier
+                    .size(42.dp)
+                    .clip(CircleShape)
+                    .background(BrikLavenderContainer),
+                contentAlignment = Alignment.Center
             ) {
-                // Direction Arrow
                 Text(
-                    text = if (entry.isIncoming()) "↙" else "↗",
-                    color = if (entry.isIncoming()) Color(0xFF4CAF50) else Color(0xFF2196F3),
-                    fontSize = 13.sp,
-                    fontWeight = FontWeight.Bold
+                    text = entry.getAvatarInitial(),
+                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                    color = BrikLavender
                 )
-                Spacer(modifier = Modifier.width(4.dp))
+            }
 
-                // App & Route Badge
-                val appLabel = when {
-                    entry.appType.contains("WhatsApp", true) -> "WhatsApp"
-                    entry.appType.contains("Telegram", true) -> "Telegram"
-                    else -> "Cellular"
-                }
-                val appColor = when {
-                    entry.appType.contains("WhatsApp", true) -> Color(0xFF25D366)
-                    entry.appType.contains("Telegram", true) -> Color(0xFF00B0FF)
-                    else -> Color(0xFF4A90E2)
-                }
+            Spacer(modifier = Modifier.width(14.dp))
+
+            // Contact Info Column
+            Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = buildAnnotatedString {
-                        withStyle(SpanStyle(color = appColor, fontWeight = FontWeight.Medium)) {
-                            append(appLabel)
-                        }
-                        withStyle(SpanStyle(color = Color(0xFF6E7480))) {
-                            append(" • ")
-                        }
-                        withStyle(SpanStyle(color = MaterialTheme.colorScheme.onSurfaceVariant)) {
-                            append(entry.getFormattedTime())
-                        }
-                        withStyle(SpanStyle(color = Color(0xFF6E7480))) {
-                            append(" • ")
-                        }
-                        withStyle(SpanStyle(color = MaterialTheme.colorScheme.onSurfaceVariant)) {
-                            append(entry.getFormattedDuration())
-                        }
-                    },
-                    style = MaterialTheme.typography.bodySmall,
+                    text = entry.contactName,
+                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold, fontSize = 16.sp),
+                    color = BrikTextPrimary,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
-            }
-        }
 
-        Spacer(modifier = Modifier.width(6.dp))
+                Spacer(modifier = Modifier.height(3.dp))
 
-        if (showBookmark) {
-            IconButton(
-                onClick = onToggleBookmark,
-                modifier = Modifier.size(36.dp)
-            ) {
-                Icon(
-                    imageVector = if (entry.isBookmarked) Icons.Default.Bookmark else Icons.Default.BookmarkBorder,
-                    contentDescription = if (entry.isBookmarked) "Saved forever" else "Bookmark conversation",
-                    tint = if (entry.isBookmarked) Color(0xFFF9A825) else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
-                    modifier = Modifier.size(22.dp)
-                )
-            }
-            Spacer(modifier = Modifier.width(4.dp))
-        }
-
-        // Circular Play Button matching call_log_final.png
-        Box(
-            modifier = Modifier
-                .size(36.dp)
-                .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.surfaceVariant)
-                .clickable { onPlay() },
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
-                contentDescription = if (isPlaying) "Pause" else "Play",
-                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.size(18.dp)
-            )
-        }
-
-        Spacer(modifier = Modifier.width(4.dp))
-
-        // 3-Dots Menu
-        Box {
-            IconButton(onClick = { isMenuExpanded = true }) {
-                Icon(
-                    imageVector = Icons.Default.MoreVert,
-                    contentDescription = "Options",
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-
-            DropdownMenu(
-                expanded = isMenuExpanded,
-                onDismissRequest = { isMenuExpanded = false }
-            ) {
-                // Header in menu
-                DropdownMenuItem(
-                    text = {
-                        Column {
-                            Text(entry.contactName, fontWeight = FontWeight.Bold)
-                            Text(
-                                "${entry.appType} • ${entry.getFormattedDuration()} • ${entry.getFormattedTime()}",
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        }
-                    },
-                    onClick = {},
-                    enabled = false
-                )
-                HorizontalDivider()
-                if (showBookmark) {
-                    DropdownMenuItem(
-                        text = { Text(if (entry.isBookmarked) "Remove bookmark" else "Bookmark (Keep forever)") },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = if (entry.isBookmarked) Icons.Default.BookmarkBorder else Icons.Default.Bookmark,
-                                contentDescription = null,
-                                tint = Color(0xFFF9A825)
-                            )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    val appLabel = when {
+                        entry.appType.contains("WhatsApp", true) -> "WhatsApp"
+                        entry.appType.contains("Telegram", true) -> "Telegram"
+                        else -> "Cellular"
+                    }
+                    val appColor = when {
+                        entry.appType.contains("WhatsApp", true) -> Color(0xFF25D366)
+                        entry.appType.contains("Telegram", true) -> Color(0xFF00B0FF)
+                        else -> BrikMint
+                    }
+                    Text(
+                        text = buildAnnotatedString {
+                            withStyle(SpanStyle(color = appColor, fontWeight = FontWeight.SemiBold)) {
+                                append(if (entry.isIncoming()) "↙ $appLabel" else "↗ $appLabel")
+                            }
+                            withStyle(SpanStyle(color = BrikTextSub)) {
+                                append(" • ")
+                            }
+                            withStyle(SpanStyle(color = BrikTextSecondary)) {
+                                append(entry.getFormattedTime())
+                            }
+                            withStyle(SpanStyle(color = BrikTextSub)) {
+                                append(" • ")
+                            }
+                            withStyle(SpanStyle(color = BrikTextSecondary)) {
+                                append(entry.getFormattedDuration())
+                            }
                         },
+                        style = MaterialTheme.typography.bodySmall,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            if (showBookmark) {
+                IconButton(
+                    onClick = onToggleBookmark,
+                    modifier = Modifier.size(36.dp)
+                ) {
+                    Icon(
+                        imageVector = if (entry.isBookmarked) Icons.Default.Bookmark else Icons.Default.BookmarkBorder,
+                        contentDescription = if (entry.isBookmarked) "Saved forever" else "Bookmark conversation",
+                        tint = if (entry.isBookmarked) BrikAmber else BrikTextSub,
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
+            }
+
+            // High-Contrast Circular Play Button
+            Box(
+                modifier = Modifier
+                    .size(40.dp)
+                    .clip(CircleShape)
+                    .background(if (isPlaying) BrikLavender else BrikDarkCardElevated)
+                    .border(1.dp, if (isPlaying) BrikLavender else BrikBorder, CircleShape)
+                    .clickable { onPlay() },
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
+                    contentDescription = if (isPlaying) "Pause" else "Play",
+                    tint = if (isPlaying) BrikOnLavender else BrikTextPrimary,
+                    modifier = Modifier.size(20.dp)
+                )
+            }
+
+            // Options Overflow Menu
+            Box {
+                IconButton(
+                    onClick = { isMenuExpanded = true },
+                    modifier = Modifier.size(36.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.MoreVert,
+                        contentDescription = "Options",
+                        tint = BrikTextSecondary,
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
+
+                DropdownMenu(
+                    expanded = isMenuExpanded,
+                    onDismissRequest = { isMenuExpanded = false }
+                ) {
+                    DropdownMenuItem(
+                        text = { Text("Share Audio File") },
+                        leadingIcon = { Icon(Icons.Default.Share, contentDescription = null) },
                         onClick = {
                             isMenuExpanded = false
-                            onToggleBookmark()
+                            onShare()
+                        }
+                    )
+                    if (showBookmark) {
+                        DropdownMenuItem(
+                            text = { Text(if (entry.isBookmarked) "Remove Bookmark" else "Save Permanently") },
+                            leadingIcon = { Icon(if (entry.isBookmarked) Icons.Default.BookmarkRemove else Icons.Default.BookmarkAdd, contentDescription = null) },
+                            onClick = {
+                                isMenuExpanded = false
+                                onToggleBookmark()
+                            }
+                        )
+                    }
+                    HorizontalDivider()
+                    DropdownMenuItem(
+                        text = { Text("Delete Permanently", color = MaterialTheme.colorScheme.error) },
+                        leadingIcon = { Icon(Icons.Default.Delete, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
+                        onClick = {
+                            isMenuExpanded = false
+                            onDelete()
                         }
                     )
                 }
-                DropdownMenuItem(
-                    text = { Text("Play") },
-                    leadingIcon = { Icon(Icons.Default.PlayArrow, contentDescription = null) },
-                    onClick = {
-                        isMenuExpanded = false
-                        onPlay()
-                    }
-                )
-                DropdownMenuItem(
-                    text = { Text("Share audio") },
-                    leadingIcon = { Icon(Icons.Default.Share, contentDescription = null) },
-                    onClick = {
-                        isMenuExpanded = false
-                        onShare()
-                    }
-                )
-                DropdownMenuItem(
-                    text = { Text("Delete", color = MaterialTheme.colorScheme.error) },
-                    leadingIcon = { Icon(Icons.Default.Delete, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
-                    onClick = {
-                        isMenuExpanded = false
-                        onDelete()
-                    }
-                )
             }
         }
     }

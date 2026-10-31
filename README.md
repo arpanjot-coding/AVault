@@ -2,10 +2,26 @@
 
 **High-Assurance, Hardware-Encrypted Call Management & Confidential Audio Vault for Android 12+**
 
-<p align="left"><a href="https://github.com/arpanjot-coding/AVault/releases/latest"><img src="https://img.shields.io/github/v/release/arpanjot-coding/AVault?color=blue" height="20" style="height: 20px; max-height: 20px;" alt="Release" /></a>&nbsp;<a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" height="20" style="height: 20px; max-height: 20px;" alt="MIT License" /></a>&nbsp;<a href="https://developer.android.com"><img src="https://img.shields.io/badge/Android-12%20--%2016%2B-green.svg" height="20" style="height: 20px; max-height: 20px;" alt="Android 12-16+" /></a>&nbsp;<a href="SECURITY.md"><img src="https://img.shields.io/badge/Vault-AES--256--GCM-gold.svg" height="20" style="height: 20px; max-height: 20px;" alt="AES-256-GCM" /></a>&nbsp;<a href="https://shizuku.rikka.app"><img src="https://img.shields.io/badge/Shizuku-Rootless-purple.svg" height="20" style="height: 20px; max-height: 20px;" alt="Shizuku Rootless" /></a>&nbsp;<a href="https://github.com/arpanjot-coding/AVault/stargazers"><img src="https://img.shields.io/github/stars/arpanjot-coding/AVault?style=social" height="20" style="height: 20px; max-height: 20px;" alt="GitHub Stars" /></a></p>
+<div align="left" style="display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 12px 0;">
+  <a href="https://github.com/arpanjot-coding/AVault/releases/latest"><img src="https://img.shields.io/github/v/release/arpanjot-coding/AVault?color=blue&style=flat-square" height="20" width="auto" style="display: inline-block; vertical-align: middle; height: 20px !important; max-height: 20px !important; width: auto !important; max-width: none !important;" alt="Release" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square" height="20" width="auto" style="display: inline-block; vertical-align: middle; height: 20px !important; max-height: 20px !important; width: auto !important; max-width: none !important;" alt="MIT License" /></a>
+  <a href="https://developer.android.com"><img src="https://img.shields.io/badge/Android-12%20--%2016%2B-green.svg?style=flat-square" height="20" width="auto" style="display: inline-block; vertical-align: middle; height: 20px !important; max-height: 20px !important; width: auto !important; max-width: none !important;" alt="Android 12-16+" /></a>
+  <a href="SECURITY.md"><img src="https://img.shields.io/badge/Vault-AES--256--GCM-gold.svg?style=flat-square" height="20" width="auto" style="display: inline-block; vertical-align: middle; height: 20px !important; max-height: 20px !important; width: auto !important; max-width: none !important;" alt="AES-256-GCM" /></a>
+  <a href="https://shizuku.rikka.app"><img src="https://img.shields.io/badge/Shizuku-Rootless-purple.svg?style=flat-square" height="20" width="auto" style="display: inline-block; vertical-align: middle; height: 20px !important; max-height: 20px !important; width: auto !important; max-width: none !important;" alt="Shizuku Rootless" /></a>
+  <a href="https://github.com/arpanjot-coding/AVault/stargazers"><img src="https://img.shields.io/github/stars/arpanjot-coding/AVault?style=social" height="20" width="auto" style="display: inline-block; vertical-align: middle; height: 20px !important; max-height: 20px !important; width: auto !important; max-width: none !important;" alt="GitHub Stars" /></a>
+</div>
+
+<div align="center" style="margin: 20px 0;">
+  <a href="https://arpanjot-coding.github.io/AVault/"><strong>🌐 Visit Official Website & Documentation</strong></a> &nbsp;|&nbsp;
+  <a href="https://github.com/arpanjot-coding/AVault/releases/download/v2.0.0/AVault-v2.0.0-debug.apk"><strong>📦 Download Direct APK (v2.0.0)</strong></a>
+</div>
+
+<p align="center">
+  <img src="docs/screenshot_dashboard.png" width="280" alt="AVault Confidential Dashboard" style="border-radius: 20px; margin: 8px; border: 1px solid #1D3234;" />
+  <img src="docs/screenshot_lock.png" width="280" alt="AVault Biometric & PIN Lock" style="border-radius: 20px; margin: 8px; border: 1px solid #1D3234;" />
+</p>
 
 ---
-
 
 ## ⚠️ Critical Academic & Security Research Notice
 

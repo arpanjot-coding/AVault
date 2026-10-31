@@ -10,41 +10,59 @@ package com.kitsumed.shizucallrecorder.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-// --- PRIMARY COLORS ---
-val Green80 = Color(0xFFB4D3A1) // Light Green for Dark Theme
-val Green40 = Color(0xFF386B20) // Deep Green for Light Theme
+// --- NEO-MINIMALIST LUXURY PALETTE (BRIK AESTHETIC) ---
+val BrikDarkBackground = Color(0xFF081011)        // Deep dark slate-obsidian canvas
+val BrikDarkCard = Color(0xFF101E1F)              // High-end dark module card
+val BrikDarkCardElevated = Color(0xFF152627)      // Elevated hover/active card
+val BrikBorder = Color(0xFF1D3234)                // Card border
+val BrikBorderFocused = Color(0xFF2E4D50)         // Focused card border
 
-// --- SECONDARY & TERTIARY ---
-val GreenGrey80 = Color(0xFFC3C9BC)
-val GreenGrey40 = Color(0xFF5B6156)
-val AccentGreen80 = Color(0xFFA1D3BC)
+// --- ACCENT TOKENS ---
+val BrikLavender = Color(0xFFD4C7FF)              // Iconic signature lilac pill accent
+val BrikOnLavender = Color(0xFF081011)            // Contrast text on lilac
+val BrikLavenderContainer = Color(0xFF1F1836)     // Deep lilac container
+val BrikLavenderText = Color(0xFFE2D8FF)          // High contrast lilac text
+
+val BrikMint = Color(0xFF5EEAD4)                  // Shizuku Active bright mint
+val BrikOnMint = Color(0xFF042F2E)
+val BrikAmber = Color(0xFFFBBF24)                 // Standby / Warning amber
+val BrikOnAmber = Color(0xFF451A03)
+
+// --- TEXT TOKENS ---
+val BrikTextPrimary = Color(0xFFF3F7F7)           // Crisp white heading & numbers
+val BrikTextSecondary = Color(0xFF829697)         // Muted descriptive labels
+val BrikTextSub = Color(0xFF536768)               // Subtle indicators
+val BrikWhite = Color.White
+
+// --- LEGACY MATERIAL 3 COMPATIBILITY ---
+val Green80 = BrikMint
+val Green40 = Color(0xFF0F766E)
+val GreenGrey80 = Color(0xFFB5C9C8)
+val GreenGrey40 = Color(0xFF495E5E)
+val AccentGreen80 = BrikMint
 val AccentGreenDark = Color(0xFF00382B)
-
-// --- TEXT & "ON" COLORS ---
-val DeepDarkGreen = Color(0xFF00390A)   // High contrast for light surfaces
-val VeryDarkForest = Color(0xFF063900)  // Good for labels on light containers
-val DarkGreyGreen = Color(0xFF2D3229)   // Muted text
-val NearBlackText = Color(0xFF1B1C18)   // Universal dark text
-val OffWhiteText = Color(0xFFECEFF4)    // Light text for dark backgrounds
+val DeepDarkGreen = Color(0xFF042F2E)
+val VeryDarkForest = Color(0xFF063900)
+val DarkGreyGreen = Color(0xFF243638)
+val NearBlackText = Color(0xFF081011)
+val OffWhiteText = Color(0xFFF3F7F7)
 val White = Color.White
 
-// --- CONTAINERS & SURFACES ---
-val DarkSurface = Color(0xFF13161C)
-val LightSurface = Color(0xFFFDFDF6)
-val GreenContainerDark = Color(0xFF205107)
-val GreenContainerLight = Color(0xFFD0F0BC)
-val GreyGreenOutline = Color(0xFF2C3240)
+val DarkSurface = BrikDarkCard
+val LightSurface = Color(0xFFF7F8F6)
+val GreenContainerDark = Color(0xFF133832)
+val GreenContainerLight = Color(0xFFCCFBF1)
+val GreyGreenOutline = BrikBorder
 
-// --- SLEEK OLED DARK THEME ---
-val DarkBackground = Color(0xFF0B0C0E)
-val DarkSurfaceVariant = Color(0xFF1E222C)
-val DarkSurfaceContainer = Color(0xFF161922)
-val DarkSurfaceContainerLow = Color(0xFF11141A)
-val DarkSurfaceContainerHigh = Color(0xFF222733)
-val DarkTextPrimary = Color(0xFFECEFF4)
-val DarkTextSecondary = Color(0xFF9AA0A6)
-val DarkOutline = Color(0xFF2C3240)
-val DarkOutlineVariant = Color(0xFF202530)
-val DarkAccentBlue = Color(0xFF5390F5)
-val DarkAccentBlueContainer = Color(0xFF1B3258)
-val DarkAccentBlueOnContainer = Color(0xFFD2E3FC)
+val DarkBackground = BrikDarkBackground
+val DarkSurfaceVariant = BrikDarkCard
+val DarkSurfaceContainer = BrikDarkCard
+val DarkSurfaceContainerLow = BrikDarkBackground
+val DarkSurfaceContainerHigh = BrikDarkCardElevated
+val DarkTextPrimary = BrikTextPrimary
+val DarkTextSecondary = BrikTextSecondary
+val DarkOutline = BrikBorder
+val DarkOutlineVariant = Color(0xFF162729)
+val DarkAccentBlue = BrikLavender
+val DarkAccentBlueContainer = BrikLavenderContainer
+val DarkAccentBlueOnContainer = BrikLavenderText

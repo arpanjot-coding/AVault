@@ -24,10 +24,10 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = DarkAccentBlue,
-    onPrimary = Color.White,
-    primaryContainer = DarkAccentBlueContainer,
-    onPrimaryContainer = DarkAccentBlueOnContainer,
+    primary = BrikLavender,
+    onPrimary = BrikOnLavender,
+    primaryContainer = BrikLavenderContainer,
+    onPrimaryContainer = BrikLavenderText,
 
     secondary = Green80,
     onSecondary = DeepDarkGreen,
