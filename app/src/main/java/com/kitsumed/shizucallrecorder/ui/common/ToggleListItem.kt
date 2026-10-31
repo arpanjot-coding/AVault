@@ -12,28 +12,18 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.selection.toggleable
-import androidx.compose.material3.ListItem
-import androidx.compose.material3.ListItemDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Switch
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import com.kitsumed.shizucallrecorder.ui.theme.AVaultTheme
+import com.kitsumed.shizucallrecorder.ui.theme.*
 
-/** A list row with a switch. Tapping anywhere on the row toggles the switch.
- *
- * @param label           The text shown as the headline of the row.
- * @param checked         The current on/off state of the switch.
- * @param onCheckedChange Called with the new boolean when the user toggles.
- * @param modifier        Optional [Modifier] forwarded to the root [ListItem].
- * @param description     Optional text shown below the label.
- * @param enabled         Whether the switch and row are interactable.
+/**
+ * A list row with a switch styled in the BRIK design system.
  */
 @Composable
 fun ToggleListItem(
@@ -55,52 +45,35 @@ fun ToggleListItem(
                 onValueChange = { onCheckedChange(it) }
             ),
         headlineContent = {
-            Text(label, color = MaterialTheme.colorScheme.onSurface.copy(alpha = contentAlpha))
+            Text(
+                text = label,
+                color = BrikTextPrimary.copy(alpha = contentAlpha),
+                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Medium)
+            )
         },
         supportingContent = if (description != null) {
-            { Text(description, color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = contentAlpha)) }
+            {
+                Text(
+                    text = description,
+                    color = BrikTextSecondary.copy(alpha = contentAlpha),
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
         } else null,
         trailingContent = {
             Switch(
                 checked = checked,
-                onCheckedChange = null, // Only here for visuals
-                enabled = enabled
+                onCheckedChange = null,
+                enabled = enabled,
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor    = BrikOnLavender,
+                    checkedTrackColor    = BrikLavender,
+                    uncheckedThumbColor  = BrikTextSecondary,
+                    uncheckedTrackColor  = BrikDarkCardElevated,
+                    uncheckedBorderColor = BrikBorder
+                )
             )
         },
         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun PreviewToggleListItem() {
-    AVaultTheme(darkTheme = false) {
-        Surface(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Column() {
-                ToggleListItem(
-                    label = "Example Checked Toggle",
-                    checked = true,
-                    onCheckedChange = {},
-                    description = "This is what a toggle list item looks like"
-                )
-
-                ToggleListItem(
-                    label = "Example Unchecked Toggle",
-                    checked = false,
-                    onCheckedChange = {},
-                    description = "This is what a toggle list item looks like"
-                )
-
-                ToggleListItem(
-                    label = "Example Disabled Toggle",
-                    checked = false,
-                    enabled = false,
-                    onCheckedChange = {},
-                    description = "This is what a toggle list item looks like"
-                )
-            }
-        }
-    }
 }

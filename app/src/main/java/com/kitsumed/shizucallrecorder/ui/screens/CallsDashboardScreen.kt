@@ -436,124 +436,107 @@ fun CallsDashboardScreen(
                     .fillMaxSize()
                     .padding(horizontal = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
-                contentPadding = PaddingValues(bottom = 100.dp, top = 8.dp)
+                contentPadding = PaddingValues(bottom = 24.dp, top = 4.dp)
             ) {
-                // 1. Hero Card ("welcome back" style)
-                item {
-                    Surface(
-                        shape = RoundedCornerShape(26.dp),
-                        color = BrikDarkCard,
-                        border = BorderStroke(1.dp, BrikBorder),
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Column(modifier = Modifier.padding(horizontal = 22.dp, vertical = 20.dp)) {
-                            Text(
-                                text = "Confidential vault,\nactive & protected",
-                                style = MaterialTheme.typography.headlineSmall.copy(
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 22.sp,
-                                    lineHeight = 28.sp
-                                ),
-                                color = BrikTextPrimary
-                            )
-                        }
-                    }
-                }
-
-                // 2. Segmented Hardware Protection Card ("Your progress 79% ||||||||||||||" style)
-                item {
-                    Surface(
-                        shape = RoundedCornerShape(26.dp),
-                        color = BrikDarkCard,
-                        border = BorderStroke(1.dp, BrikBorder),
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Column(modifier = Modifier.padding(20.dp)) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Column {
-                                    Text("Hardware protection", style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold), color = BrikTextPrimary)
-                                    Text("AES-256-GCM keystore bound", style = MaterialTheme.typography.bodySmall, color = BrikTextSecondary)
-                                }
-                                Surface(
-                                    shape = RoundedCornerShape(50),
-                                    color = BrikLavenderContainer,
-                                    border = BorderStroke(1.dp, BrikLavender.copy(alpha = 0.35f))
-                                ) {
-                                    Text(
-                                        text = "AES-256",
-                                        style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
-                                        color = BrikLavender,
-                                        modifier = Modifier.padding(horizontal = 9.dp, vertical = 3.dp)
-                                    )
-                                }
-                            }
-                            Spacer(modifier = Modifier.height(18.dp))
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                Text("100%", style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.ExtraBold, fontSize = 32.sp), color = BrikTextPrimary)
-                                Row(horizontalArrangement = Arrangement.spacedBy(3.dp)) {
-                                    repeat(18) { idx ->
-                                        Box(
-                                            modifier = Modifier
-                                                .width(6.dp)
-                                                .height(24.dp)
-                                                .clip(RoundedCornerShape(3.dp))
-                                                .background(if (idx < 17) BrikLavender else BrikBorder)
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                // 3. Dual Side-by-Side Metric Cards ("Best score / Reaction speed" style)
+                // Compact Key Metrics Strip (Sleek, minimal, non-intrusive)
                 item {
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 4.dp),
                         horizontalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
                         Surface(
-                            shape = RoundedCornerShape(22.dp),
+                            shape = RoundedCornerShape(18.dp),
                             color = BrikDarkCard,
                             border = BorderStroke(1.dp, BrikBorder),
                             modifier = Modifier.weight(1f)
                         ) {
-                            Column(modifier = Modifier.padding(18.dp)) {
-                                Text("Sealed calls", style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.SemiBold), color = BrikTextSecondary)
-                                Text("Hardware vault", style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp), color = BrikTextSub)
-                                Spacer(modifier = Modifier.height(10.dp))
-                                Text("${allCalls.size}", style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold, fontSize = 28.sp), color = BrikTextPrimary)
+                            Row(
+                                modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Column {
+                                    Text(
+                                        text = "SEALED CALLS",
+                                        style = MaterialTheme.typography.labelSmall.copy(
+                                            fontSize = 10.sp,
+                                            fontWeight = FontWeight.Bold,
+                                            letterSpacing = 0.8.sp
+                                        ),
+                                        color = BrikTextSecondary
+                                    )
+                                    Text(
+                                        text = "${allCalls.size} recordings",
+                                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
+                                        color = BrikTextPrimary
+                                    )
+                                }
+                                Box(
+                                    modifier = Modifier
+                                        .size(30.dp)
+                                        .clip(CircleShape)
+                                        .background(BrikLavenderContainer),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Lock,
+                                        contentDescription = null,
+                                        tint = BrikLavender,
+                                        modifier = Modifier.size(15.dp)
+                                    )
+                                }
                             }
                         }
+
                         Surface(
-                            shape = RoundedCornerShape(22.dp),
+                            shape = RoundedCornerShape(18.dp),
                             color = BrikDarkCard,
                             border = BorderStroke(1.dp, BrikBorder),
                             modifier = Modifier.weight(1f)
                         ) {
-                            Column(modifier = Modifier.padding(18.dp)) {
-                                Text("Auto-retention", style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.SemiBold), color = BrikTextSecondary)
-                                Text("Exempt bookmarks", style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp), color = BrikTextSub)
-                                Spacer(modifier = Modifier.height(10.dp))
-                                Text(
-                                    text = if (isAutoDeleteEnabled) "${appPreferences.getAutoDeleteDays()}d" else "Indefinite",
-                                    style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold, fontSize = 20.sp),
-                                    color = BrikLavender
-                                )
+                            Row(
+                                modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Column {
+                                    Text(
+                                        text = "HARDWARE VAULT",
+                                        style = MaterialTheme.typography.labelSmall.copy(
+                                            fontSize = 10.sp,
+                                            fontWeight = FontWeight.Bold,
+                                            letterSpacing = 0.8.sp
+                                        ),
+                                        color = BrikTextSecondary
+                                    )
+                                    Text(
+                                        text = if (isAutoDeleteEnabled) "${appPreferences.getAutoDeleteDays()}d purge" else "AES-256 bound",
+                                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
+                                        color = BrikMint
+                                    )
+                                }
+                                Box(
+                                    modifier = Modifier
+                                        .size(30.dp)
+                                        .clip(CircleShape)
+                                        .background(Color(0xFF0F2B28)),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Shield,
+                                        contentDescription = null,
+                                        tint = BrikMint,
+                                        modifier = Modifier.size(15.dp)
+                                    )
+                                }
                             }
                         }
                     }
                 }
 
-                // 4. Filter Chips Row
+                // 2. Filter Chips Row
                 item {
                     LazyRow(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -698,67 +681,10 @@ fun CallsDashboardScreen(
                     }
                 }
             }
-
-            // Floating Bottom Navigation Dock (BRIK Style)
-            Surface(
-                shape = RoundedCornerShape(50),
-                color = Color(0xFF091213),
-                border = BorderStroke(1.dp, BrikBorder),
-                shadowElevation = 12.dp,
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 18.dp)
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    modifier = Modifier.padding(horizontal = 14.dp, vertical = 7.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Shield,
-                        contentDescription = "Shield",
-                        tint = if (isShizukuReady) BrikLavender else BrikTextSecondary,
-                        modifier = Modifier.size(18.dp)
-                    )
-                    Surface(
-                        shape = RoundedCornerShape(50),
-                        color = BrikLavender,
-                        modifier = Modifier.clickable { }
-                    ) {
-                        Text(
-                            text = "VAULT",
-                            style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold, letterSpacing = 0.5.sp),
-                            color = BrikOnLavender,
-                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp)
-                        )
-                    }
-                    Surface(
-                        shape = RoundedCornerShape(50),
-                        color = Color.Transparent,
-                        modifier = Modifier.clickable { onNavigateToSettings() }
-                    ) {
-                        Text(
-                            text = "SETTINGS",
-                            style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold, letterSpacing = 0.5.sp),
-                            color = BrikTextSecondary,
-                            modifier = Modifier.padding(horizontal = 14.dp, vertical = 6.dp)
-                        )
-                    }
-                    Icon(
-                        imageVector = Icons.Default.MoreHoriz,
-                        contentDescription = "More",
-                        tint = BrikTextSecondary,
-                        modifier = Modifier
-                            .size(18.dp)
-                            .clickable { isSearchActive = !isSearchActive }
-                    )
-                }
-            }
         }
     }
 
-
-        // Delete Confirmation Dialog
+    // Delete Confirmation Dialog
     deleteTargetEntry?.let { entry ->
         AlertDialog(
             onDismissRequest = { deleteTargetEntry = null },

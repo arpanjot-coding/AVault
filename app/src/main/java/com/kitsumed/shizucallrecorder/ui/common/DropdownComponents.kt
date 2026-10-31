@@ -8,21 +8,19 @@
 
 package com.kitsumed.shizucallrecorder.ui.common
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.layout.*
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import com.kitsumed.shizucallrecorder.ui.theme.AVaultTheme
+import androidx.compose.ui.unit.dp
+import com.kitsumed.shizucallrecorder.ui.theme.*
 
 /**
  * A key/label/description/etc... data class used to populate dropdown menus.
- *
- * @property key         Machine-readable identifier, identifies the selection in the data layer persisted.
- * @property label       Human-readable text shown inside the dropdown field.
- * @property description Optional one-line description shown below the dropdown for the selected item.
- * @property enabled     Whether this item can be selected; `false` grays it out and disables clicks.
  */
 data class OptionItem(
     val key: String,
@@ -32,13 +30,7 @@ data class OptionItem(
 )
 
 /**
- * A Material 3 [ExposedDropdownMenuBox]-based dropdown field.
- *
- * @param label            Text label shown above the field.
- * @param selected         The currently selected [OptionItem].
- * @param options          All available options shown in the dropdown menu.
- * @param onOptionSelected Called with the chosen [OptionItem] when the user picks a new option.
- * @param modifier         Optional layout modifier forwarded to the root [ExposedDropdownMenuBox].
+ * A Material 3 [ExposedDropdownMenuBox]-based dropdown field styled in the BRIK design system.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,7 +41,7 @@ fun M3DropdownField(
     onOptionSelected: (OptionItem) -> Unit,
     modifier: Modifier = Modifier,
     isError: Boolean = false,
-    ) {
+) {
     var expanded by remember { mutableStateOf(false) }
 
     ExposedDropdownMenuBox(
@@ -61,36 +53,53 @@ fun M3DropdownField(
             value         = selected.label,
             onValueChange = {},
             readOnly      = true,
-            label         = { Text(label) },
-            isError = isError,
+            label         = { Text(label, color = BrikTextSecondary) },
+            isError       = isError,
             trailingIcon  = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-            colors        = ExposedDropdownMenuDefaults.outlinedTextFieldColors(),
-            modifier      = Modifier.menuAnchor(type = ExposedDropdownMenuAnchorType.PrimaryNotEditable, enabled = true).fillMaxWidth()
+            shape         = RoundedCornerShape(16.dp),
+            colors        = OutlinedTextFieldDefaults.colors(
+                focusedContainerColor   = BrikDarkCardElevated,
+                unfocusedContainerColor = BrikDarkCardElevated,
+                focusedBorderColor      = BrikLavender,
+                unfocusedBorderColor    = BrikBorder,
+                focusedTextColor        = BrikTextPrimary,
+                unfocusedTextColor      = BrikTextPrimary,
+                focusedLabelColor       = BrikLavender,
+                unfocusedLabelColor     = BrikTextSecondary,
+                focusedTrailingIconColor = BrikLavender,
+                unfocusedTrailingIconColor = BrikTextSecondary
+            ),
+            modifier      = Modifier
+                .menuAnchor(type = ExposedDropdownMenuAnchorType.PrimaryNotEditable, enabled = true)
+                .fillMaxWidth()
         )
         ExposedDropdownMenu(
             expanded         = expanded,
-            onDismissRequest = { expanded = false }
+            onDismissRequest = { expanded = false },
+            shape            = RoundedCornerShape(18.dp),
+            containerColor   = BrikDarkCardElevated,
+            border           = BorderStroke(1.dp, BrikBorder)
         ) {
             options.forEach { option ->
+                val isSelected = option.key == selected.key
                 DropdownMenuItem(
                     text = {
                         Column(
-                            modifier = Modifier.padding(vertical = if (option.description != null) 4.dp else 0.dp)
+                            modifier = Modifier.padding(vertical = if (option.description != null) 4.dp else 2.dp)
                         ) {
                             Text(
                                 text = option.label,
-                                style = MaterialTheme.typography.bodyLarge
+                                style = MaterialTheme.typography.bodyLarge.copy(
+                                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
+                                ),
+                                color = if (isSelected) BrikLavender else BrikTextPrimary
                             )
                             option.description?.let { desc ->
                                 Spacer(modifier = Modifier.height(2.dp))
                                 Text(
                                     text = desc,
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = if (option.enabled) {
-                                        LocalContentColor.current.copy(alpha = 0.7f)
-                                    } else {
-                                        LocalContentColor.current
-                                    }
+                                    color = BrikTextSecondary
                                 )
                             }
                         }
@@ -105,27 +114,6 @@ fun M3DropdownField(
                     contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
                 )
             }
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewM3DropdownField() {
-    val options = listOf(
-        OptionItem("opt1", "Standard Option", "Description for option 1"),
-        OptionItem("opt2", "Another Option", "Description for option 2"),
-        OptionItem("opt3", "Disabled Option", "This cannot be selected", enabled = false)
-    )
-    AVaultTheme(darkTheme = false) {
-        Surface {
-            M3DropdownField(
-                label = "Select an option",
-                selected = options[0],
-                options = options,
-                onOptionSelected = {},
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp).fillMaxWidth()
-            )
         }
     }
 }

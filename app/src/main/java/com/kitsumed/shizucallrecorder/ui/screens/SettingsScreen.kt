@@ -77,7 +77,14 @@ import com.kitsumed.shizucallrecorder.ui.common.FileNameFormatDialog
 import com.kitsumed.shizucallrecorder.ui.common.M3DropdownField
 import com.kitsumed.shizucallrecorder.ui.common.OptionItem
 import com.kitsumed.shizucallrecorder.ui.common.ToggleListItem
-import com.kitsumed.shizucallrecorder.ui.theme.AVaultTheme
+import com.kitsumed.shizucallrecorder.ui.theme.*
+import androidx.compose.foundation.border
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.unit.sp
 import com.kitsumed.shizucallrecorder.ui.viewmodels.ContactPickerState
 import com.kitsumed.shizucallrecorder.ui.viewmodels.ContactPickerType
 import com.kitsumed.shizucallrecorder.ui.viewmodels.ContactPickerViewModel
@@ -195,7 +202,7 @@ fun SettingsContent(
     Surface(
         modifier = modifier
             .fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
+        color = BrikDarkBackground
     ) {
         LazyColumn(
             modifier = Modifier
@@ -209,21 +216,34 @@ fun SettingsContent(
             item {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(top = 8.dp)
+                    modifier = Modifier.padding(top = 12.dp, bottom = 4.dp)
                 ) {
                     if (onBack != null) {
-                        IconButton(onClick = onBack) {
+                        IconButton(
+                            onClick = onBack,
+                            modifier = Modifier
+                                .size(40.dp)
+                                .clip(CircleShape)
+                                .background(BrikDarkCard)
+                                .border(1.dp, BrikBorder, CircleShape)
+                        ) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "Back"
+                                contentDescription = "Back",
+                                tint = BrikTextPrimary,
+                                modifier = Modifier.size(20.dp)
                             )
                         }
-                        Spacer(modifier = Modifier.width(4.dp))
+                        Spacer(modifier = Modifier.width(14.dp))
                     }
                     Text(
                         text = stringResource(R.string.general_settings),
-                        style = MaterialTheme.typography.headlineMedium,
-                        fontWeight = FontWeight.Bold
+                        style = MaterialTheme.typography.headlineMedium.copy(
+                            fontWeight = FontWeight.Black,
+                            fontSize = 24.sp,
+                            letterSpacing = (-0.5).sp
+                        ),
+                        color = BrikTextPrimary
                     )
                 }
             }
@@ -1317,20 +1337,21 @@ private fun DebugSection(preferences: AppPreferences, updateTrigger: Int, action
 private fun SettingsSection(title: String, content: @Composable ColumnScope.() -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text(
-            text       = title,
-            style      = MaterialTheme.typography.titleSmall,
-            color      = MaterialTheme.colorScheme.primary,
-            fontWeight = FontWeight.Bold,
-            modifier   = Modifier.padding(start = 4.dp)
-        )
-        ElevatedCard(
-            modifier  = Modifier.fillMaxWidth(),
-            colors    = CardDefaults.elevatedCardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+            text       = title.uppercase(),
+            style      = MaterialTheme.typography.labelMedium.copy(
+                fontWeight = FontWeight.ExtraBold,
+                letterSpacing = 1.sp
             ),
-            elevation = CardDefaults.elevatedCardElevation(defaultElevation = 1.dp)
+            color      = BrikLavender,
+            modifier   = Modifier.padding(start = 6.dp)
+        )
+        Surface(
+            modifier  = Modifier.fillMaxWidth(),
+            shape     = RoundedCornerShape(22.dp),
+            color     = BrikDarkCard,
+            border    = BorderStroke(1.dp, BrikBorder)
         ) {
-            Column(modifier = Modifier.padding(vertical = 4.dp)) {
+            Column(modifier = Modifier.padding(vertical = 8.dp, horizontal = 2.dp)) {
                 content()
             }
         }
