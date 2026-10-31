@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AVault - Call Recorder (No Root Required)</title>
+  <meta name="description" content="High-Assurance, Hardware-Encrypted Call Management & Confidential Audio Vault for Android 12-16+. Zero root required, powered by Shizuku with AES-256-GCM hardware encryption.">
+  <meta property="og:title" content="AVault - Call Recorder (No Root Required)">
+  <meta property="og:description" content="Privacy-first, hardware-encrypted call recorder & audio vault for Android 12-16+. No root required.">
+  <meta property="og:image" content="https://arpanjot-coding.github.io/AVault/icon.png">
+  <meta property="og:url" content="https://arpanjot-coding.github.io/AVault/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0a0d14;
+      --bg-card: rgba(18, 23, 37, 0.75);
+      --bg-card-hover: rgba(26, 33, 52, 0.9);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-focus: rgba(99, 102, 241, 0.5);
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-sub: #6b7280;
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --primary-glow: rgba(99, 102, 241, 0.25);
+      --accent-green: #10b981;
+      --accent-gold: #f59e0b;
+      --accent-cyan: #06b6d4;
+      --accent-purple: #a855f7;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 85% 35%, rgba(16, 185, 129, 0.06) 0%, transparent 45%),
+        radial-gradient(circle at 50% 85%, rgba(168, 85, 247, 0.06) 0%, transparent 50%);
+      background-attachment: fixed;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Navigation */
+    nav {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border-color);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(10, 13, 20, 0.85);
+    }
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+    .brand img {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover {
+      color: #fff;
+    }
+    .btn-nav {
+      background: var(--primary);
+      color: #fff !important;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      box-shadow: 0 4px 14px var(--primary-glow);
+      transition: all 0.2s ease;
+    }
+    .btn-nav:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 90px 0 60px;
+      text-align: center;
+    }
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 50px;
+      background: rgba(99, 102, 241, 0.12);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      color: #a5b4fc;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+    .badge-pill span.pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+    }
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto 36px;
+    }
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+      color: #fff;
+      padding: 16px 32px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.35);
+      transition: all 0.2s ease;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(99, 102, 241, 0.45);
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+      padding: 16px 26px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1.05rem;
+      text-decoration: none;
+      border: 1px solid var(--border-color);
+      transition: all 0.2s ease;
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    .download-meta {
+      margin-top: 14px;
+      font-size: 0.85rem;
+      color: var(--text-sub);
+    }
+
+    /* Highlights Ribbon */
+    .highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin: 50px 0 70px;
+    }
+    .highlight-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 18px 20px;
+      border-radius: 12px;
+      text-align: left;
+      backdrop-filter: blur(8px);
+    }
+    .highlight-item .label {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .highlight-item .value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-top: 4px;
+    }
+
+    /* Section Styling */
+    section {
+      padding: 70px 0;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    .section-header h2 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Feature Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 32px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-focus);
+      transform: translateY(-4px);
+    }
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+    }
+    .feature-card h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+    .feature-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* Comparison Table */
+    .table-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      overflow-x: auto;
+      margin-top: 24px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+    th, td {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.95rem;
+    }
+    th {
+      background: rgba(255, 255, 255, 0.03);
+      font-weight: 700;
+      color: #fff;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    .check { color: #10b981; font-weight: 700; }
+    .cross { color: #ef4444; font-weight: 700; }
+    .highlight-col {
+      background: rgba(99, 102, 241, 0.08);
+      font-weight: 600;
+      color: #a5b4fc;
+    }
+
+    /* Quick Guide Steps */
+    .steps-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 30px;
+    }
+    .step-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 28px;
+      position: relative;
+    }
+    .step-number {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 12px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .step-box h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .step-box p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    .code-snippet {
+      background: #060910;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-top: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: #38bdf8;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    /* Warning Banner */
+    .disclaimer-box {
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      border-radius: 16px;
+      padding: 28px;
+      margin: 50px 0;
+    }
+    .disclaimer-box h3 {
+      color: #fbbf24;
+      font-size: 1.15rem;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .disclaimer-box p {
+      color: #d1d5db;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 0;
+      text-align: center;
+      color: var(--text-sub);
+      font-size: 0.9rem;
+    }
+    footer a {
+      color: var(--text-muted);
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    footer a:hover {
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="container nav-inner">
+      <a href="#" class="brand">
+        <img src="icon.png" alt="AVault Logo">
+        <span>AVault</span>
+      </a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#security">Security</a>
+        <a href="#setup">3-Min Setup</a>
+        <a href="https://github.com/arpanjot-coding/AVault">GitHub</a>
+        <a href="https://github.com/arpanjot-coding/AVault/releases/download/v2.0.0/AVault-v2.0.0-debug.apk" class="btn-nav">Download APK</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="badge-pill">
+        <span class="pulse"></span>
+        v2.0.0 Official Release · No Root Required · Android 12–16+
+      </div>
+      <h1>AVault - Call Recorder<br>(No Root Required)</h1>
+      <p>
+        The open-source, privacy-first call management platform with hardware-backed AES-256-GCM encryption, biometric lock, zero-plaintext playback, and automated retention.
+      </p>
+      <div class="hero-actions">
+        <a href="https://github.com/arpanjot-coding/AVault/releases/download/v2.0.0/AVault-v2.0.0-debug.apk" class="btn-primary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Download APK (v2.0.0)
+        </a>
+        <a href="https://github.com/arpanjot-coding/AVault" class="btn-secondary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          View on GitHub
+        </a>
+      </div>
+      <div class="download-meta">
+        Direct standalone APK · Signed · 68.5 MB · Free & Open Source (MIT)
+      </div>
+
+      <!-- Highlights -->
+      <div class="highlights">
+        <div class="highlight-item">
+          <div class="label">Hardware Encryption</div>
+          <div class="value">AES-256-GCM (TEE)</div>
+        </div>
+        <div class="highlight-item">
+          <div class="label">Rooting Required</div>
+          <div class="value">No (Rootless Shizuku)</div>
+        </div>
+        <div class="highlight-item">
+          <div class="label">Playback Security</div>
+          <div class="value">Zero Plaintext in RAM</div>
+        </div>
+        <div class="highlight-item">
+          <div class="label">Automated Lifecycle</div>
+          <div class="value">Auto-Delete + Bookmark</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features">
+    <div class="container">
+      <div class="section-header">
+        <h2>Designed for Total Privacy & Confidentiality</h2>
+        <p>Built from the ground up to solve the security flaws of traditional recording apps.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3>Hardware Cryptographic Vault</h3>
+          <p>Every conversation is sealed using AES-256 in authenticated Galois/Counter Mode (GCM). Master keys are generated inside your device's Hardware Security Module (TEE / StrongBox) and never enter user RAM.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <h3>Zero-Plaintext Ephemeral Playback</h3>
+          <p>Audio is decrypted strictly on-the-fly in private volatile memory (0600 POSIX permissions). Pausing, stopping, or exiting the app securely shreds the temporary stream instantly.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Rootless Telephony Capture</h3>
+          <p>Pairs standard Android Telecom state changes with Shizuku's rootless ADB bridge to capture both your voice (uplink) and the remote caller (downlink) cleanly on Android 12 through Android 16+.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">⏱️</div>
+          <h3>Auto-Delete with Bookmark Exemption</h3>
+          <p>Set automated retention from 1 day to 1 year to prevent storage waste. Tap the bookmark icon to mark any conversation as permanently saved—bookmarked calls never get purged.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">👆</div>
+          <h3>Biometrics & Salted PIN Lock</h3>
+          <p>Protect vault access with your fingerprint scanner, Face Unlock, or an independent PBKDF2/SHA-256 salted PIN with exponential brute-force backoff protection.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🤫</div>
+          <h3>Stealth Mode & FLAG_SECURE</h3>
+          <p>Status alerts use discreet phrasing ("Started", "Saved"). Call-end toast popups are eliminated, and Android's FLAG_SECURE blocks screenshots and task-switcher previews.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison Table -->
+  <section id="security">
+    <div class="container">
+      <div class="section-header">
+        <h2>How AVault Compares</h2>
+        <p>A side-by-side comparison with traditional recording tools and root hacks.</p>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Security & Feature Capabilities</th>
+              <th class="highlight-col">AVault</th>
+              <th>Standard Call Recorders</th>
+              <th>Magisk / KernelSU Root</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Root / Unlocked Bootloader Required</td>
+              <td class="highlight-col"><span class="check">No (Rootless Shizuku)</span></td>
+              <td>No</td>
+              <td><span class="cross">Yes (Unlocks Bootloader)</span></td>
+            </tr>
+            <tr>
+              <td>Disk Storage Format</td>
+              <td class="highlight-col"><span class="check">AES-256-GCM (.vault)</span></td>
+              <td><span class="cross">Plaintext MP3/M4A/WAV</span></td>
+              <td>Plaintext MP3/WAV</td>
+            </tr>
+            <tr>
+              <td>Master Key Isolation</td>
+              <td class="highlight-col"><span class="check">Hardware HSM / TEE</span></td>
+              <td><span class="cross">None</span></td>
+              <td>None</td>
+            </tr>
+            <tr>
+              <td>Plaintext Exposure during Playback</td>
+              <td class="highlight-col"><span class="check">Zero Plaintext (RAM Stream)</span></td>
+              <td><span class="cross">Exposed File on Disk</span></td>
+              <td>Exposed File on Disk</td>
+            </tr>
+            <tr>
+              <td>Media Gallery / Scraper Protection</td>
+              <td class="highlight-col"><span class="check">Protected (.nomedia)</span></td>
+              <td><span class="cross">Leaked to MediaStore</span></td>
+              <td>Leaked to MediaStore</td>
+            </tr>
+            <tr>
+              <td>App Lock (Biometrics & Salted PIN)</td>
+              <td class="highlight-col"><span class="check">Native BiometricPrompt</span></td>
+              <td><span class="cross">None or Basic PIN</span></td>
+              <td>None</td>
+            </tr>
+            <tr>
+              <td>Auto-Delete Retention Lifecycle</td>
+              <td class="highlight-col"><span class="check">Auto-Delete + Bookmarks</span></td>
+              <td><span class="cross">Manual Only</span></td>
+              <td>Manual Only</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3-Minute Setup -->
+  <section id="setup">
+    <div class="container">
+      <div class="section-header">
+        <h2>Simple 3-Minute Setup</h2>
+        <p>No computer required when using Wireless Debugging on Android 11+.</p>
+      </div>
+
+      <div class="steps-container">
+        <div class="step-box">
+          <div class="step-number">01</div>
+          <h3>Install AVault APK</h3>
+          <p>Download the pre-compiled APK directly from GitHub Releases and tap Install on your Android device.</p>
+        </div>
+
+        <div class="step-box">
+          <div class="step-number">02</div>
+          <h3>Start Shizuku</h3>
+          <p>Open Shizuku, pair with on-device Wireless Debugging (Developer Options), and tap Start.</p>
+          <div class="code-snippet">adb shell sh .../start.sh</div>
+        </div>
+
+        <div class="step-box">
+          <div class="step-number">03</div>
+          <h3>Authorize & Protect</h3>
+          <p>Open AVault, tap "Authorize" on the Shizuku prompt, configure your PIN/Biometrics, and you are ready!</p>
+        </div>
+      </div>
+
+      <!-- Legal Warning -->
+      <div class="disclaimer-box">
+        <h3>⚠️ Academic & Educational Research Notice</h3>
+        <p>
+          AVault is developed strictly for academic, security, and educational research purposes. The developers and contributors assume no liability for misuse. Always ensure compliance with all applicable local telecommunications and wiretapping consent statutes (one-party vs. all-party consent) before recording any conversation.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>© 2026 AVault Project · Released under the permissive MIT License</p>
+      <div style="margin-top: 12px;">
+        <a href="https://github.com/arpanjot-coding/AVault">GitHub Repository</a>
+        <a href="https://github.com/arpanjot-coding/AVault/releases">Releases</a>
+        <a href="https://github.com/arpanjot-coding/AVault/blob/main/SECURITY.md">Security Policy</a>
+        <a href="https://github.com/arpanjot-coding/AVault/blob/main/LICENSE">MIT License</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
