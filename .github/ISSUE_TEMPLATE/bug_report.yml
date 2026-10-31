@@ -11,11 +11,11 @@ body:
       label: Checklist
       description: Please confirm the following before continuing
       options:
-        - label: I have read the application [docs](https://github.com/kitsumed/ShizuCallRecorder/blob/main/docs/SUPPORT.md), searched existing [issues](https://github.com/kitsumed/ShizuCallRecorder/issues) and [discussions](https://github.com/kitsumed/ShizuCallRecorder/discussions/categories/community-support) and this is not a duplicate
+        - label: I have read the application [docs](https://github.com/arpanjot-coding/AVault/blob/main/docs/SUPPORT.md), searched existing [issues](https://github.com/arpanjot-coding/AVault/issues) and [discussions](https://github.com/arpanjot-coding/AVault/discussions/categories/community-support) and this is not a duplicate
           required: true
         - label: I am using the latest version of the project
           required: true
-        - label: I am reporting an issue with ShizuCallRecorder itself, NOT an issue about Shizuku or another app
+        - label: I am reporting an issue with AVault itself, NOT an issue about Shizuku or another app
           required: true
         - label: I have attached or pasted the required log files below (or explained why they are unavailable)
           required: true
@@ -23,7 +23,7 @@ body:
   - type: input
     id: appVersion
     attributes:
-      label: ShizuCallRecorder Version
+      label: AVault Version
       description: The version of your app. Please ensure you tried the latest version.
       placeholder: e.g. v1.0.2
     validations:
@@ -84,7 +84,7 @@ body:
       label: Logs
       description: |        
         ### 📥 How to get your logs:
-        1. **App Logs Exporter:** Open *ShizuCallRecorder*, go to the **Debug** section, and ensure **Log recording** is enabled. Replicate the bug, then export the file.
+        1. **App Logs Exporter:** Open *AVault*, go to the **Debug** section, and ensure **Log recording** is enabled. Replicate the bug, then export the file.
         2. **Stuck On Permission Screen:** Long press on any of the permission cards, enable **Log recording**, restart the application, replicate the bug and export the file.
         3. **System Logcat:** If the app crashes instantly, please capture a system logcat using a computer with [`adb logcat`](https://developer.android.com/tools/releases/platform-tools#downloads) or via a Shizuku-powered logcat tool. **You must capture logs by their tag `SCR:`**, do not target the package as it will cause some logs to be missing.
     validations:

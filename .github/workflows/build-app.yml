@@ -102,10 +102,10 @@ jobs:
         run: |
           if [ "${{ inputs.release_type }}" = "Debug Asset" ]; then
             echo "BUILD_TYPE=debug" >> $GITHUB_OUTPUT
-            echo "FINAL_APK_NAME=ShizuCallRecorder-${{ steps.get-version.outputs.VERSION }}-debug.apk" >> $GITHUB_OUTPUT
+            echo "FINAL_APK_NAME=AVault-${{ steps.get-version.outputs.VERSION }}-debug.apk" >> $GITHUB_OUTPUT
           else
             echo "BUILD_TYPE=release" >> $GITHUB_OUTPUT
-            echo "FINAL_APK_NAME=ShizuCallRecorder-${{ steps.get-version.outputs.VERSION }}.apk" >> $GITHUB_OUTPUT
+            echo "FINAL_APK_NAME=AVault-${{ steps.get-version.outputs.VERSION }}.apk" >> $GITHUB_OUTPUT
           fi
       
       # Set up signing for release builds
@@ -144,10 +144,10 @@ jobs:
           echo ----moving files...
           if [ "${{ steps.set-output.outputs.BUILD_TYPE }}" = "debug" ]; then
             mv app/build/outputs/apk/debug/app-debug.apk \
-               app/build/outputs/apk/ShizuCallRecorder-${{ steps.get-version.outputs.VERSION }}-debug.apk
+               app/build/outputs/apk/AVault-${{ steps.get-version.outputs.VERSION }}-debug.apk
           else
             mv app/build/outputs/apk/release/app-release.apk \
-               app/build/outputs/apk/ShizuCallRecorder-${{ steps.get-version.outputs.VERSION }}.apk
+               app/build/outputs/apk/AVault-${{ steps.get-version.outputs.VERSION }}.apk
           fi
       
       # Clean up signing keystore (security best practice)
@@ -160,7 +160,7 @@ jobs:
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 #v7.0.2
         with:
           name: apk-${{ steps.set-output.outputs.BUILD_TYPE }}
-          path: app/build/outputs/apk/ShizuCallRecorder-*.apk # Pattern, all apk file that start with the app name
+          path: app/build/outputs/apk/AVault-*.apk # Pattern, all apk file that start with the app name
           retention-days: 30
           if-no-files-found: error
 

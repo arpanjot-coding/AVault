@@ -2,7 +2,7 @@
 
 **High-Assurance, Hardware-Encrypted Call Management & Confidential Audio Vault for Android 12+**
 
-<p align="left"><a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" height="20" style="height: 20px; max-height: 20px;" alt="MIT License" /></a>&nbsp;<a href="https://developer.android.com"><img src="https://img.shields.io/badge/Android-12%2B-green.svg" height="20" style="height: 20px; max-height: 20px;" alt="Android 12+" /></a>&nbsp;<a href="SECURITY.md"><img src="https://img.shields.io/badge/Vault-AES--256--GCM-gold.svg" height="20" style="height: 20px; max-height: 20px;" alt="AES-256-GCM" /></a>&nbsp;<a href="https://shizuku.rikka.app"><img src="https://img.shields.io/badge/Shizuku-Rootless-purple.svg" height="20" style="height: 20px; max-height: 20px;" alt="Shizuku Rootless" /></a>&nbsp;<a href="SECURITY.md"><img src="https://img.shields.io/badge/Zero--Plaintext-teal.svg" height="20" style="height: 20px; max-height: 20px;" alt="Zero Plaintext" /></a></p>
+<p align="left"><a href="https://github.com/arpanjot-coding/AVault/releases/latest"><img src="https://img.shields.io/github/v/release/arpanjot-coding/AVault?color=blue" height="20" style="height: 20px; max-height: 20px;" alt="Release" /></a>&nbsp;<a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" height="20" style="height: 20px; max-height: 20px;" alt="MIT License" /></a>&nbsp;<a href="https://developer.android.com"><img src="https://img.shields.io/badge/Android-12%20--%2016%2B-green.svg" height="20" style="height: 20px; max-height: 20px;" alt="Android 12-16+" /></a>&nbsp;<a href="SECURITY.md"><img src="https://img.shields.io/badge/Vault-AES--256--GCM-gold.svg" height="20" style="height: 20px; max-height: 20px;" alt="AES-256-GCM" /></a>&nbsp;<a href="https://shizuku.rikka.app"><img src="https://img.shields.io/badge/Shizuku-Rootless-purple.svg" height="20" style="height: 20px; max-height: 20px;" alt="Shizuku Rootless" /></a>&nbsp;<a href="https://github.com/arpanjot-coding/AVault/stargazers"><img src="https://img.shields.io/github/stars/arpanjot-coding/AVault?style=social" height="20" style="height: 20px; max-height: 20px;" alt="GitHub Stars" /></a></p>
 
 ---
 
@@ -40,6 +40,7 @@
 - [Comprehensive Configuration Reference](#-comprehensive-configuration-reference)
 - [Threat Model & Security Analysis](#-threat-model--security-analysis)
 - [Diagnostic & Troubleshooting Guide](#-diagnostic--troubleshooting-guide)
+- [Frequently Asked Questions & SEO Discoverability](#-frequently-asked-questions--seo-discoverability)
 - [License](#-license)
 
 ---
@@ -433,6 +434,26 @@ graph TD
 | **Recordings Missing After Period** | Auto-Delete Retention policy pruned expired records. | If you wish to retain calls permanently, disable Auto-Delete in Settings, or tap the **Bookmark icon** on any call card to exempt it from cleanup. |
 | **Decryption Failed on Playback** | KeyStore master key invalidation or file corruption. | Ensure the app has not been reinstalled with clean data (KeyStore keys are UID-bound). Verify storage container integrity. |
 | **Samsung One UI Background Kill** | Samsung Sleeping Apps putting service to sleep. | Add AVault to **Settings** > **Battery** > **Background usage limits** > **Never sleeping apps**. |
+
+---
+
+## 🔍 Frequently Asked Questions & SEO Discoverability
+
+### Can I record phone calls on Android 14, Android 15, and Android 16 without rooting?
+Yes. Google introduced strict restrictions on raw call recording in modern Android releases. AVault bypasses these restrictions cleanly without requiring root (`su`), Magisk, or unlocked bootloaders by pairing standard Android Telecom APIs with **Shizuku's rootless ADB shell bridge**. This allows the app to capture both local microphone audio (uplink) and the remote caller voice (downlink) with crystal clarity.
+
+### How does AVault protect call recordings compared to traditional apps?
+Standard call recorders save recordings as unencrypted `.mp3`, `.m4a`, or `.wav` files directly into shared storage folders where any application with storage or media permissions can read or upload them. AVault seals every audio bitstream inside a tamper-resistant **`.vault` container** encrypted with **AES-256-GCM** using keys generated in your device's **Hardware Security Module (HSM / TEE / StrongBox)**. Audio is decrypted strictly on-the-fly in volatile RAM during playback with **zero plaintext persistence on disk**.
+
+### Does AVault support Samsung Galaxy, Google Pixel, Xiaomi, and OnePlus devices?
+Yes. AVault is engineered to work across leading OEM Android distributions:
+- **Samsung Galaxy (One UI):** Full cellular and VoLTE capture. (Remember to exempt AVault from Samsung "Sleeping Apps").
+- **Google Pixel (Stock Android):** Native InCallService integration with hardware StrongBox key protection.
+- **Xiaomi / Redmi / POCO (HyperOS / MIUI):** Rootless audio capture via Shizuku.
+- **OnePlus / OPPO / Vivo (OxygenOS / ColorOS):** Dual-channel stereo recording support.
+
+### How does the Auto-Delete and Bookmark feature optimize storage?
+AVault allows you to configure an automated retention policy (**1 Day to 1 Year**). The background retention worker automatically prunes non-bookmarked recordings when they surpass the expiration window. To preserve vital conversations permanently, tap the **Bookmark icon** near any call card—bookmarked calls are strictly exempt from all cleanup routines and remain in the vault forever.
 
 ---
 
