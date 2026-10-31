@@ -258,6 +258,13 @@ fun CallsDashboardScreen(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
+                        androidx.compose.foundation.Image(
+                            painter = androidx.compose.ui.res.painterResource(id = com.kitsumed.shizucallrecorder.R.drawable.ic_app_logo),
+                            contentDescription = "AVault Logo",
+                            modifier = Modifier
+                                .size(30.dp)
+                                .clip(CircleShape)
+                        )
                         Text(
                             text = buildAnnotatedString {
                                 append("AVAULT")
@@ -274,7 +281,7 @@ fun CallsDashboardScreen(
                         )
                         Surface(
                             shape = RoundedCornerShape(50),
-                            color = if (isShizukuReady) BrikLavender else BrikAmber,
+                            color = if (isShizukuReady) BrikMint else BrikAmber,
                             modifier = Modifier.clickable { if (!isShizukuReady) context.openShizukuManager() }
                         ) {
                             Text(
@@ -283,7 +290,7 @@ fun CallsDashboardScreen(
                                     fontWeight = FontWeight.ExtraBold,
                                     letterSpacing = 0.6.sp
                                 ),
-                                color = if (isShizukuReady) BrikOnLavender else BrikOnAmber,
+                                color = if (isShizukuReady) BrikOnMint else BrikOnAmber,
                                 modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
                                 maxLines = 1,
                                 softWrap = false
