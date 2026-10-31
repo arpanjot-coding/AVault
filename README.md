@@ -1,4 +1,4 @@
-# AVault
+# AVault - Call Recorder (No Root Required)
 
 **High-Assurance, Hardware-Encrypted Call Management & Confidential Audio Vault for Android 12+**
 
