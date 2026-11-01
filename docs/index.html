@@ -891,7 +891,61 @@
         display: none;
       }
     }
+
+    /* Language Selector */
+    .lang-select {
+      background: var(--bg-card);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-pill);
+      padding: 7px 28px 7px 12px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.2s ease;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='%2394A3B8' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+    }
+    .lang-select:hover {
+      background-color: var(--bg-card-elevated);
+      border-color: var(--border-hover);
+    }
+    .lang-select option {
+      background: #0E131F;
+      color: #F1F5F9;
+    }
+
+    /* RTL Support for Arabic, Persian, Hebrew */
+    [dir="rtl"] {
+      text-align: right;
+    }
+    [dir="rtl"] .section-kicker::before {
+      margin-left: 8px;
+      margin-right: 0;
+    }
+    [dir="rtl"] .pipeline-arrow {
+      transform: scaleX(-1);
+    }
+    [dir="rtl"] table {
+      text-align: right;
+    }
+    [dir="rtl"] th, [dir="rtl"] td {
+      text-align: right;
+    }
+    [dir="rtl"] .btn-download-primary .btn-text-block {
+      text-align: right;
+    }
+    [dir="rtl"] .lang-select {
+      background-position: left 10px center;
+      padding: 7px 12px 7px 28px;
+    }
   </style>
+  <script src="i18n.js" defer></script>
 </head>
 <body>
 
@@ -907,18 +961,19 @@
       </a>
 
       <div class="nav-links">
-        <a href="#overview">Overview</a>
-        <a href="#architecture">Architecture</a>
-        <a href="#comparison">Compare</a>
-        <a href="#specifications">Specs</a>
-        <a href="#setup">Quick Start</a>
+        <a href="#overview" data-i18n="nav_overview">Overview</a>
+        <a href="#architecture" data-i18n="nav_architecture">Architecture</a>
+        <a href="#comparison" data-i18n="nav_compare">Compare</a>
+        <a href="#specifications" data-i18n="nav_specs">Specs</a>
+        <a href="#setup" data-i18n="nav_setup">Quick Start</a>
       </div>
 
       <div class="nav-actions">
+        <select id="lang-select" class="lang-select" aria-label="Select Language"></select>
         <!-- Live GitHub Star Count Widget -->
         <a href="https://github.com/arpanjot-coding/AVault" target="_blank" rel="noopener" class="gh-star-btn" title="Star AVault on GitHub">
           <svg class="gh-icon" viewBox="0 0 16 16"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>
-          <span>Star</span>
+          <span data-i18n="nav_star">Star</span>
           <span class="gh-sep"></span>
           <svg class="star-icon" viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></svg>
           <span id="gh-star-count" class="gh-count">104</span>
@@ -927,7 +982,7 @@
         <!-- One-Tap Download Button -->
         <a href="https://github.com/arpanjot-coding/AVault/releases/download/v2.0.0/AVault-v2.0.0-debug.apk" download="AVault-v2.0.0-debug.apk" class="btn-nav-download" title="Instant Direct APK Download">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          <span>Download APK</span>
+          <span data-i18n="nav_download">Download APK</span>
         </a>
       </div>
     </div>
@@ -947,14 +1002,14 @@
       <!-- Kicker Pill -->
       <div class="hero-badge-pill">
         <span class="dot"></span>
-        ROOTLESS TELEPHONY ENGINE · ANDROID 12 THROUGH 16+
+        <span data-i18n="hero_badge">ROOTLESS TELEPHONY ENGINE · ANDROID 12 THROUGH 16+</span>
       </div>
 
       <!-- Main Heading -->
-      <h1>Hardware-Encrypted Calls.<br><span class="gradient">Zero Root Required.</span></h1>
+      <h1><span data-i18n="hero_title_1">Hardware-Encrypted Calls.</span><br><span class="gradient" data-i18n="hero_title_2">Zero Root Required.</span></h1>
       
       <!-- Subtitle -->
-      <p>
+      <p data-i18n="hero_desc">
         The open-source, high-assurance call recording system for modern Android. Powered by Shizuku ADB architecture with AES-256-GCM hardware keystore isolation, biometric security, and zero-plaintext volatile memory playback.
       </p>
 
@@ -963,23 +1018,23 @@
         <a href="https://github.com/arpanjot-coding/AVault/releases/download/v2.0.0/AVault-v2.0.0-debug.apk" download="AVault-v2.0.0-debug.apk" class="btn-download-primary" title="Instant One-Tap Download">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <div class="btn-text-block">
-            <span class="btn-title">Download APK (One-Tap)</span>
-            <span class="btn-sub">v2.0.0 · 68 MB · Android 12+</span>
+            <span class="btn-title" data-i18n="hero_cta_download">Download APK (One-Tap)</span>
+            <span class="btn-sub" data-i18n="hero_cta_sub">v2.0.0 · 68 MB · Android 12+</span>
           </div>
         </a>
 
         <a href="https://github.com/arpanjot-coding/AVault" target="_blank" rel="noopener" class="btn-hero-secondary">
           <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>
-          <span>View Source (★ 104)</span>
+          <span data-i18n="hero_cta_source">View Source (★ 104)</span>
         </a>
       </div>
 
       <!-- Trust Meta Indicators -->
       <div class="trust-badges">
-        <span>🛡️ AES-256-GCM Keystore HSM</span>
-        <span>⚡ Shizuku ADB Bridge</span>
-        <span>🔒 Zero Plaintext on Disk</span>
-        <span>⚖️ 100% Free & Open Source (MIT)</span>
+        <span data-i18n="trust_keystore">🛡️ AES-256-GCM Keystore HSM</span>
+        <span data-i18n="trust_shizuku">⚡ Shizuku ADB Bridge</span>
+        <span data-i18n="trust_zero_disk">🔒 Zero Plaintext on Disk</span>
+        <span data-i18n="trust_license">⚖️ 100% Free & Open Source (MIT)</span>
       </div>
 
       <!-- Live Samsung Galaxy A26 Physical Device Showcase -->
@@ -991,8 +1046,8 @@
               <img src="screenshot_dashboard.png" alt="AVault Streamlined Dashboard on Android 16">
             </div>
             <div class="device-caption">
-              <h4>Streamlined Dashboard</h4>
-              <p>Direct call logs, telemetry strip, filter chips</p>
+              <h4 data-i18n="mockup_dash_title">Streamlined Dashboard</h4>
+              <p data-i18n="mockup_dash_desc">Direct call logs, telemetry strip, filter chips</p>
             </div>
           </div>
 
@@ -1001,8 +1056,8 @@
               <img src="screenshot_settings.png" alt="AVault Flowing Settings & Controls">
             </div>
             <div class="device-caption">
-              <h4>Flowing Modular Settings</h4>
-              <p>Hardware switches & styled dropdown popups</p>
+              <h4 data-i18n="mockup_settings_title">Flowing Modular Settings</h4>
+              <p data-i18n="mockup_settings_desc">Hardware switches & styled dropdown popups</p>
             </div>
           </div>
 
@@ -1011,8 +1066,8 @@
               <img src="screenshot_lock.png" alt="AVault Hardware-Backed Biometric Lock">
             </div>
             <div class="device-caption">
-              <h4>Keystore & Biometric Lock</h4>
-              <p>PIN keypad & fingerprint authentication</p>
+              <h4 data-i18n="mockup_lock_title">Keystore & Biometric Lock</h4>
+              <p data-i18n="mockup_lock_desc">PIN keypad & fingerprint authentication</p>
             </div>
           </div>
 
@@ -1027,9 +1082,9 @@
     <div class="container">
       
       <div class="section-header">
-        <div class="section-kicker">01 / LIVE APPLICATION INTERFACE</div>
-        <h2>Engineered for Clarity and Operational Focus</h2>
-        <p>No promotional banners, no hovering navigation docks. Immediate access to your sealed recordings with essential metrics above the fold.</p>
+        <div class="section-kicker" data-i18n="s1_kicker">01 / LIVE APPLICATION INTERFACE</div>
+        <h2 data-i18n="s1_title">Engineered for Clarity and Operational Focus</h2>
+        <p data-i18n="s1_desc">No promotional banners, no hovering navigation docks. Immediate access to your sealed recordings with essential metrics above the fold.</p>
       </div>
 
       <div class="grid-3">
@@ -1038,13 +1093,13 @@
           <div class="card-icon-pill">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           </div>
-          <h3>Compact Overview Strip</h3>
+          <h3 data-i18n="s1_card1_title">Compact Overview Strip</h3>
           <p>
             Real-time status indicators in a 44dp overview row: Sealed Call counts and Hardware Keymaster encryption binding status without obscuring your call logs.
           </p>
           <div class="card-meta">
-            <span>Height: 44dp</span>
-            <span>Non-Intrusive</span>
+            <span data-i18n="s1_card1_m1">Height: 44dp</span>
+            <span data-i18n="s1_card1_m2">Non-Intrusive</span>
           </div>
         </div>
 
@@ -1052,13 +1107,13 @@
           <div class="card-icon-pill green">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           </div>
-          <h3>Multi-Source Filter Chips</h3>
+          <h3 data-i18n="s1_card2_title">Multi-Source Filter Chips</h3>
           <p>
             Filter between standard Cellular calls and third-party VoIP services (WhatsApp, Telegram) with one tap. Contact initials and duration meters provide instant context.
           </p>
           <div class="card-meta">
-            <span>Cellular & VoIP</span>
-            <span>Instant Filter</span>
+            <span data-i18n="s1_card2_m1">Cellular & VoIP</span>
+            <span data-i18n="s1_card2_m2">Instant Filter</span>
           </div>
         </div>
 
@@ -1066,12 +1121,12 @@
           <div class="card-icon-pill amber">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m12 6 4 4-4 4-4-4 4-4Z"/></svg>
           </div>
-          <h3>Biometric & PIN Lock</h3>
+          <h3 data-i18n="s1_card3_title">Biometric & PIN Lock</h3>
           <p>
             Enforces strict access control via Android BiometricPrompt and 4-digit Master PIN. Windows are protected against screenshots and recent apps snooping via <code>FLAG_SECURE</code>.
           </p>
           <div class="card-meta">
-            <span>Biometrics + PIN</span>
+            <span data-i18n="s1_card3_m1">Biometrics + PIN</span>
             <span>FLAG_SECURE</span>
           </div>
         </div>
@@ -1086,9 +1141,9 @@
     <div class="container">
       
       <div class="section-header">
-        <div class="section-kicker">02 / CRYPTOGRAPHIC SECURITY ARCHITECTURE</div>
-        <h2>High-Assurance Security Architecture</h2>
-        <p>Commercial recording apps write plaintext audio to shared storage. AVault seals every byte inside hardware-backed cryptographic containers.</p>
+        <div class="section-kicker" data-i18n="s2_kicker">02 / CRYPTOGRAPHIC SECURITY ARCHITECTURE</div>
+        <h2 data-i18n="s2_title">High-Assurance Security Architecture</h2>
+        <p data-i18n="s2_desc">Commercial recording apps write plaintext audio to shared storage. AVault seals every byte inside hardware-backed cryptographic containers.</p>
       </div>
 
       <!-- Architectural Data Flow Diagram -->
@@ -1129,7 +1184,7 @@
           <div class="card-icon-pill">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </div>
-          <h3>Hardware Keymaster Isolation (StrongBox)</h3>
+          <h3 data-i18n="s2_card1_title">Hardware Keymaster Isolation (StrongBox)</h3>
           <p>
             Master cryptographic keys are generated directly inside your Android processor's Hardware Security Module (TEE or StrongBox Keymaster). Keys are non-exportable and can never be extracted by malware, ad networks, or physical flash memory dumps.
           </p>
@@ -1143,7 +1198,7 @@
           <div class="card-icon-pill green">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
           </div>
-          <h3>Zero-Plaintext Ephemeral Playback</h3>
+          <h3 data-i18n="s2_card2_title">Zero-Plaintext Ephemeral Playback</h3>
           <p>
             Audio is decrypted dynamically in-memory chunk-by-chunk inside an encrypted memory pipe. No temporary MP3 or WAV files ever touch disk storage. Buffers are cryptographically shredded with zero byte residue upon playback completion.
           </p>
@@ -1157,7 +1212,7 @@
           <div class="card-icon-pill green">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           </div>
-          <h3>Automated Retention Lifecycle</h3>
+          <h3 data-i18n="s2_card3_title">Automated Retention Lifecycle</h3>
           <p>
             Configure automated lifecycle workers (from 24 hours to 365 days) that automatically purge expired call recordings in the background, preventing storage exhaustion.
           </p>
@@ -1171,7 +1226,7 @@
           <div class="card-icon-pill amber">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           </div>
-          <h3>Star Bookmark Deletion Exemption</h3>
+          <h3 data-i18n="s2_card4_title">Star Bookmark Deletion Exemption</h3>
           <p>
             Important conversations marked with the Bookmark Star are cryptographically exempt from automated lifecycle deletion, ensuring legal or critical evidence is preserved indefinitely until explicitly purged.
           </p>
@@ -1191,19 +1246,19 @@
     <div class="container">
       
       <div class="section-header">
-        <div class="section-kicker">03 / THREAT MODEL COMPARISON MATRIX</div>
-        <h2>How AVault Compares to Alternatives</h2>
-        <p>A factual architectural comparison against standard app store recorders and risky root modifications.</p>
+        <div class="section-kicker" data-i18n="s3_kicker">03 / THREAT MODEL COMPARISON MATRIX</div>
+        <h2 data-i18n="s3_title">How AVault Compares to Alternatives</h2>
+        <p data-i18n="s3_desc">A factual architectural comparison against standard app store recorders and risky root modifications.</p>
       </div>
 
       <div class="table-container">
         <table>
           <thead>
             <tr>
-              <th>Security & Architecture Vector</th>
+              <th data-i18n="s3_th_vector">Security & Architecture Vector</th>
               <th class="highlight-col">AVAULT® (v2.0.0)</th>
-              <th>Standard Play Store Recorders</th>
-              <th>Magisk / KernelSU Root Hacks</th>
+              <th data-i18n="s3_th_standard">Standard Play Store Recorders</th>
+              <th data-i18n="s3_th_root">Magisk / KernelSU Root Hacks</th>
             </tr>
           </thead>
           <tbody>
@@ -1261,35 +1316,35 @@
     <div class="container">
       
       <div class="section-header">
-        <div class="section-kicker">04 / SYSTEM SPECIFICATIONS & COMPATIBILITY</div>
-        <h2>Technical Specifications</h2>
-        <p>Built to run reliably across standard consumer and enterprise Android hardware without vendor locks.</p>
+        <div class="section-kicker" data-i18n="s4_kicker">04 / SYSTEM SPECIFICATIONS & COMPATIBILITY</div>
+        <h2 data-i18n="s4_title">Technical Specifications</h2>
+        <p data-i18n="s4_desc">Built to run reliably across standard consumer and enterprise Android hardware without vendor locks.</p>
       </div>
 
       <div class="specs-grid">
         
         <div class="spec-box">
-          <div class="spec-label">Android OS</div>
+          <div class="spec-label" data-i18n="s4_box1_lbl">Android OS</div>
           <div class="spec-value">12 – 16+</div>
-          <div class="spec-desc">API Level 31 through 36</div>
+          <div class="spec-desc" data-i18n="s4_box1_desc">API Level 31 through 36</div>
         </div>
 
         <div class="spec-box">
-          <div class="spec-label">CPU Architectures</div>
+          <div class="spec-label" data-i18n="s4_box2_lbl">CPU Architectures</div>
           <div class="spec-value">ARM64 & x86_64</div>
-          <div class="spec-desc">Universal 64-bit binaries</div>
+          <div class="spec-desc" data-i18n="s4_box2_desc">Universal 64-bit binaries</div>
         </div>
 
         <div class="spec-box">
-          <div class="spec-label">Cipher Primitive</div>
+          <div class="spec-label" data-i18n="s4_box3_lbl">Cipher Primitive</div>
           <div class="spec-value">AES-256-GCM</div>
-          <div class="spec-desc">128-bit authentication tag</div>
+          <div class="spec-desc" data-i18n="s4_box3_desc">128-bit authentication tag</div>
         </div>
 
         <div class="spec-box">
-          <div class="spec-label">Privilege Bridge</div>
+          <div class="spec-label" data-i18n="s4_box4_lbl">Privilege Bridge</div>
           <div class="spec-value">Shizuku ADB</div>
-          <div class="spec-desc">Zero root, zero bootloader unlock</div>
+          <div class="spec-desc" data-i18n="s4_box4_desc">Zero root, zero bootloader unlock</div>
         </div>
 
       </div>
@@ -1302,9 +1357,9 @@
     <div class="container">
       
       <div class="section-header">
-        <div class="section-kicker">05 / QUICK START GUIDE</div>
-        <h2>Up and Running in 3 Steps</h2>
-        <p>No PC required when pairing directly via Android Wireless Debugging.</p>
+        <div class="section-kicker" data-i18n="s5_kicker">05 / QUICK START GUIDE</div>
+        <h2 data-i18n="s5_title">Up and Running in 3 Steps</h2>
+        <p data-i18n="s5_desc">No PC required when pairing directly via Android Wireless Debugging.</p>
       </div>
 
       <div class="steps-grid">
@@ -1312,32 +1367,32 @@
         <div class="step-card">
           <div>
             <div class="step-badge">01</div>
-            <h3>Download & Install APK</h3>
-            <p>Download the pre-compiled APK directly and tap to install on your Android device.</p>
+            <h3 data-i18n="s5_step1_title">Download & Install APK</h3>
+            <p data-i18n="s5_step1_desc">Download the pre-compiled APK directly and tap to install on your Android device.</p>
           </div>
           <div class="code-block">
             <span>AVault-v2.0.0-debug.apk</span>
-            <a href="https://github.com/arpanjot-coding/AVault/releases/download/v2.0.0/AVault-v2.0.0-debug.apk" download="AVault-v2.0.0-debug.apk" class="copy-button" style="text-decoration:none;">1-Tap Download</a>
+            <a href="https://github.com/arpanjot-coding/AVault/releases/download/v2.0.0/AVault-v2.0.0-debug.apk" download="AVault-v2.0.0-debug.apk" class="copy-button" style="text-decoration:none;"><span data-i18n="s5_step1_btn">1-Tap Download</span></a>
           </div>
         </div>
 
         <div class="step-card">
           <div>
             <div class="step-badge">02</div>
-            <h3>Pair Wireless Debugging</h3>
-            <p>Open Shizuku, pair once via Wireless Debugging in Developer Options, and tap Start.</p>
+            <h3 data-i18n="s5_step2_title">Pair Wireless Debugging</h3>
+            <p data-i18n="s5_step2_desc">Open Shizuku, pair once via Wireless Debugging in Developer Options, and tap Start.</p>
           </div>
           <div class="code-block">
             <span id="adb-cmd-text">adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/start.sh</span>
-            <button class="copy-button" onclick="copyAdbCmd(this)">Copy</button>
+            <button class="copy-button" onclick="copyAdbCmd(this)" data-i18n="s5_step2_btn">Copy</button>
           </div>
         </div>
 
         <div class="step-card">
           <div>
             <div class="step-badge">03</div>
-            <h3>Authorize & Secure Vault</h3>
-            <p>Launch AVault, tap "Authorize" on the Shizuku prompt, configure your Master PIN or Biometrics.</p>
+            <h3 data-i18n="s5_step3_title">Authorize & Secure Vault</h3>
+            <p data-i18n="s5_step3_desc">Launch AVault, tap "Authorize" on the Shizuku prompt, configure your Master PIN or Biometrics.</p>
           </div>
           <div class="code-block">
             <span style="color:var(--accent);">AES-256 Hardware Bound</span>
@@ -1351,7 +1406,7 @@
       <div class="disclaimer-card">
         <div class="disclaimer-icon">⚠️</div>
         <div>
-          <h4>Academic, Security & Educational Research Notice</h4>
+          <h4 data-i18n="s5_disclaimer_title">Academic, Security & Educational Research Notice</h4>
           <p>
             AVault is strictly developed for academic, security, and educational research purposes. The developers, contributors, and copyright holders assume no liability or responsibility for how this software is compiled, distributed, or utilized. Please verify and comply with all applicable telecommunications wiretapping and recording consent regulations (including one-party and all-party consent statutes) within your jurisdiction prior to recording any conversations.
           </p>
@@ -1366,19 +1421,19 @@
     <div class="container">
       
       <div class="section-header">
-        <div class="section-kicker">06 / VERIFIED RELEASES</div>
-        <h2>Download AVault v2.0.0</h2>
-        <p>Verify cryptographic integrity against official release signatures before installing.</p>
+        <div class="section-kicker" data-i18n="s6_kicker">06 / VERIFIED RELEASES</div>
+        <h2 data-i18n="s6_title">Download AVault v2.0.0</h2>
+        <p data-i18n="s6_desc">Verify cryptographic integrity against official release signatures before installing.</p>
       </div>
 
       <div class="release-hub">
         <div class="release-info">
-          <h3>AVault Production Release v2.0.0</h3>
-          <p>Universal Android Package (APK) · Compiled for Android 12 through Android 16+ (API 31–36) · Size: 68.5 MB</p>
+          <h3 data-i18n="s6_hub_title">AVault Production Release v2.0.0</h3>
+          <p data-i18n="s6_hub_desc">Universal Android Package (APK) · Compiled for Android 12 through Android 16+ (API 31–36) · Size: 68.5 MB</p>
           
           <div class="hash-display">
             <span>SHA-256: <code id="apk-sha256">970d98af46ca47d42a1334c949f1c28f37c236951c779e0244f1e57ffadec1bd</code></span>
-            <button class="copy-button" onclick="copyHash(this)">Copy Hash</button>
+            <button class="copy-button" onclick="copyHash(this)" data-i18n="s6_copy_hash">Copy Hash</button>
           </div>
         </div>
 
@@ -1386,8 +1441,8 @@
           <a href="https://github.com/arpanjot-coding/AVault/releases/download/v2.0.0/AVault-v2.0.0-debug.apk" download="AVault-v2.0.0-debug.apk" class="btn-download-primary" title="Instant Direct Download">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             <div class="btn-text-block">
-              <span class="btn-title">One-Tap Download APK</span>
-              <span class="btn-sub">v2.0.0 · Direct .apk</span>
+              <span class="btn-title" data-i18n="s6_btn_download">One-Tap Download APK</span>
+              <span class="btn-sub" data-i18n="s6_btn_sub">v2.0.0 · Direct .apk</span>
             </div>
           </a>
         </div>
@@ -1414,7 +1469,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        © 2026 AVault Project · High-Assurance Hardware-Encrypted Call Management · Free & Open Source Under MIT
+        <span data-i18n="footer_rights">© 2026 AVault Project · High-Assurance Hardware-Encrypted Call Management · Free & Open Source Under MIT</span>
       </div>
     </div>
   </footer>
