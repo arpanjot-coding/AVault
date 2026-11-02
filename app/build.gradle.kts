@@ -80,6 +80,14 @@ android {
         }
     }
     buildTypes {
+        // Isolated sample data for reproducible product photography.
+        // Never updates the installed vault or runs the recording application.
+        create("screenshots") {
+            initWith(getByName("debug"))
+            applicationIdSuffix = ".screenshots"
+            versionNameSuffix = "-screenshots"
+            matchingFallbacks += listOf("debug")
+        }
         release {
             isMinifyEnabled = true
             isShrinkResources = true

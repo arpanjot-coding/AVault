@@ -30,6 +30,9 @@ import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -199,12 +202,19 @@ fun SettingsContent(
     modifier: Modifier = Modifier,
     onBack: (() -> Unit)? = null
 ) {
+    var selectedCategory by rememberSaveable { mutableIntStateOf(0) }
+    val listState = rememberLazyListState()
+    val categories = listOf(R.string.settings_category_recording, R.string.settings_category_privacy,
+        R.string.settings_category_storage, R.string.settings_category_appearance,
+        R.string.settings_category_advanced)
+    LaunchedEffect(selectedCategory) { listState.scrollToItem(0) }
     Surface(
         modifier = modifier
             .fillMaxSize(),
-        color = BrikDarkBackground
+        color = MaterialTheme.colorScheme.background
     ) {
         LazyColumn(
+            state = listState,
             modifier = Modifier
                 .fillMaxSize(),
             // Equivalent to .safeDrawingPadding() but allow UI to extend behind the status bar when scrolling
@@ -222,15 +232,15 @@ fun SettingsContent(
                         IconButton(
                             onClick = onBack,
                             modifier = Modifier
-                                .size(40.dp)
+                                .size(48.dp)
                                 .clip(CircleShape)
-                                .background(BrikDarkCard)
-                                .border(1.dp, BrikBorder, CircleShape)
+                                .background(MaterialTheme.colorScheme.surface)
+                                .border(1.dp, MaterialTheme.colorScheme.outlineVariant, CircleShape)
                         ) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                 contentDescription = "Back",
-                                tint = BrikTextPrimary,
+                                tint = MaterialTheme.colorScheme.onBackground,
                                 modifier = Modifier.size(20.dp)
                             )
                         }
@@ -239,29 +249,52 @@ fun SettingsContent(
                     Text(
                         text = stringResource(R.string.general_settings),
                         style = MaterialTheme.typography.headlineMedium.copy(
-                            fontWeight = FontWeight.Black,
+                            fontWeight = FontWeight.SemiBold,
                             fontSize = 24.sp,
                             letterSpacing = (-0.5).sp
                         ),
-                        color = BrikTextPrimary
+                        color = MaterialTheme.colorScheme.onBackground
                     )
                 }
             }
             item {
-                RecordingSection(
-                    preferences = preferences,
-                    updateTrigger = updateTrigger,
-                    actions = actions,
-                    onSelectFolder = onSelectFolder,
-                    onOpenContactsIncoming = onOpenContactsIncoming,
-                    onOpenContactsOutgoing = onOpenContactsOutgoing
-                )
+                LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    categories.forEachIndexed { index, label ->
+                        item {
+                            FilterChip(selected = selectedCategory == index,
+                                onClick = { selectedCategory = index },
+                                label = { Text(stringResource(label)) },
+                                modifier = Modifier.heightIn(min = 48.dp),
+                                shape = RoundedCornerShape(12.dp),
+                                colors = FilterChipDefaults.filterChipColors(
+                                    selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                                    selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer))
+                        }
+                    }
+                }
             }
-            item { AudioSection(preferences, updateTrigger, actions) }
-            item { StorageCleanupSection(preferences, updateTrigger, actions) }
-            item { SecuritySection(preferences, updateTrigger, actions) }
-            item { VisualSection(preferences, updateTrigger, actions) }
-            item { DebugSection(preferences, updateTrigger, actions, onExportLogs) }
+            when (selectedCategory) {
+                0 -> {
+                    item {
+                        RecordingSection(
+                            preferences = preferences,
+                            updateTrigger = updateTrigger,
+                            actions = actions,
+                            onSelectFolder = onSelectFolder,
+                            onOpenContactsIncoming = onOpenContactsIncoming,
+                            onOpenContactsOutgoing = onOpenContactsOutgoing
+                        )
+                    }
+                    item { AudioSection(preferences, updateTrigger, actions) }
+                }
+                1 -> item { SecuritySection(preferences, updateTrigger, actions) }
+                2 -> item { StorageCleanupSection(preferences, updateTrigger, actions) }
+                3 -> item { VisualSection(preferences, updateTrigger, actions) }
+                else -> {
+                    item { DebugSection(preferences, updateTrigger, actions, onExportLogs) }
+                    item { AboutSection(actions.getAppVersion()) }
+                }
+            }
             item {  } // extra padding at bottom
         }
     }
@@ -1337,19 +1370,19 @@ private fun DebugSection(preferences: AppPreferences, updateTrigger: Int, action
 private fun SettingsSection(title: String, content: @Composable ColumnScope.() -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text(
-            text       = title.uppercase(),
+            text       = title,
             style      = MaterialTheme.typography.labelMedium.copy(
-                fontWeight = FontWeight.ExtraBold,
-                letterSpacing = 1.sp
+                fontWeight = FontWeight.SemiBold,
+                letterSpacing = 0.sp
             ),
-            color      = BrikLavender,
+            color      = MaterialTheme.colorScheme.primary,
             modifier   = Modifier.padding(start = 6.dp)
         )
         Surface(
             modifier  = Modifier.fillMaxWidth(),
-            shape     = RoundedCornerShape(22.dp),
-            color     = BrikDarkCard,
-            border    = BorderStroke(1.dp, BrikBorder)
+            shape     = RoundedCornerShape(16.dp),
+            color     = MaterialTheme.colorScheme.surface,
+            border    = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
         ) {
             Column(modifier = Modifier.padding(vertical = 8.dp, horizontal = 2.dp)) {
                 content()

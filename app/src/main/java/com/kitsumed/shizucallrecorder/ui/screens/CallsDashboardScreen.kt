@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -79,12 +80,6 @@ fun CallsDashboardScreen(
         appPreferences.registerOnSharedPreferenceChangeListener(listener)
         onDispose {
             appPreferences.unregisterOnSharedPreferenceChangeListener(listener)
-        }
-    }
-
-    LaunchedEffect(isAutoDeleteEnabled) {
-        if (!isAutoDeleteEnabled && selectedFilter == "Saved") {
-            selectedFilter = "All"
         }
     }
 
@@ -235,8 +230,26 @@ fun CallsDashboardScreen(
         filteredCalls.groupBy { it.getDateGroup() }
     }
 
-    val isShizukuReady = remember {
-        ShizukuConnectionManager.isAvailable() && ShizukuConnectionManager.hasPermission(context)
+    var isShizukuReady by remember { mutableStateOf(false) }
+    fun refreshConnection() {
+        isShizukuReady = ShizukuConnectionManager.isAvailable() &&
+            ShizukuConnectionManager.hasPermission(context)
+    }
+    androidx.lifecycle.compose.LifecycleEventEffect(androidx.lifecycle.Lifecycle.Event.ON_RESUME) {
+        refreshConnection()
+    }
+    DisposableEffect(Unit) {
+        val received = rikka.shizuku.Shizuku.OnBinderReceivedListener { refreshConnection() }
+        val dead = rikka.shizuku.Shizuku.OnBinderDeadListener { isShizukuReady = false }
+        val permission = rikka.shizuku.Shizuku.OnRequestPermissionResultListener { _, _ -> refreshConnection() }
+        rikka.shizuku.Shizuku.addBinderReceivedListenerSticky(received)
+        rikka.shizuku.Shizuku.addBinderDeadListener(dead)
+        rikka.shizuku.Shizuku.addRequestPermissionResultListener(permission)
+        onDispose {
+            rikka.shizuku.Shizuku.removeBinderReceivedListener(received)
+            rikka.shizuku.Shizuku.removeBinderDeadListener(dead)
+            rikka.shizuku.Shizuku.removeRequestPermissionResultListener(permission)
+        }
     }
 
     Scaffold(
@@ -245,7 +258,7 @@ fun CallsDashboardScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(BrikDarkBackground)
+                    .background(MaterialTheme.colorScheme.background)
                     .statusBarsPadding()
                     .padding(horizontal = 20.dp, vertical = 12.dp)
             ) {
@@ -255,47 +268,17 @@ fun CallsDashboardScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Row(
+                        modifier = Modifier.weight(1f),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
                         androidx.compose.foundation.Image(
-                            painter = androidx.compose.ui.res.painterResource(id = com.kitsumed.shizucallrecorder.R.drawable.ic_app_logo),
-                            contentDescription = "AVault Logo",
-                            modifier = Modifier
-                                .size(30.dp)
-                                .clip(CircleShape)
+                            painter = androidx.compose.ui.res.painterResource(com.kitsumed.shizucallrecorder.R.drawable.ic_app_logo),
+                            contentDescription = null,
+                            modifier = Modifier.size(32.dp).clip(CircleShape)
                         )
-                        Text(
-                            text = buildAnnotatedString {
-                                append("AVAULT")
-                                withStyle(SpanStyle(fontSize = 12.sp, fontWeight = FontWeight.Bold)) {
-                                    append("®")
-                                }
-                            },
-                            style = MaterialTheme.typography.headlineMedium.copy(
-                                fontWeight = FontWeight.Black,
-                                fontSize = 23.sp,
-                                letterSpacing = (-0.5).sp
-                            ),
-                            color = BrikTextPrimary
-                        )
-                        Surface(
-                            shape = RoundedCornerShape(50),
-                            color = if (isShizukuReady) BrikMint else BrikAmber,
-                            modifier = Modifier.clickable { if (!isShizukuReady) context.openShizukuManager() }
-                        ) {
-                            Text(
-                                text = if (isShizukuReady) "ROOTLESS ACTIVE" else "STANDBY",
-                                style = MaterialTheme.typography.labelSmall.copy(
-                                    fontWeight = FontWeight.ExtraBold,
-                                    letterSpacing = 0.6.sp
-                                ),
-                                color = if (isShizukuReady) BrikOnMint else BrikOnAmber,
-                                modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
-                                maxLines = 1,
-                                softWrap = false
-                            )
-                        }
+                        Text("AVault", style = MaterialTheme.typography.titleLarge,
+                            color = MaterialTheme.colorScheme.onBackground)
                     }
 
                     Row(
@@ -306,7 +289,7 @@ fun CallsDashboardScreen(
                             Icon(
                                 imageVector = if (isSearchActive) Icons.Default.Close else Icons.Default.Search,
                                 contentDescription = "Search",
-                                tint = BrikTextPrimary
+                                tint = MaterialTheme.colorScheme.onBackground
                             )
                         }
                         if (appPreferences.isAppLockEnabled()) {
@@ -314,7 +297,7 @@ fun CallsDashboardScreen(
                                 Icon(
                                     imageVector = Icons.Default.Lock,
                                     contentDescription = "Lock",
-                                    tint = BrikTextPrimary
+                                    tint = MaterialTheme.colorScheme.onBackground
                                 )
                             }
                         }
@@ -322,7 +305,7 @@ fun CallsDashboardScreen(
                             Icon(
                                 imageVector = Icons.Default.Settings,
                                 contentDescription = "Settings",
-                                tint = BrikTextPrimary
+                                tint = MaterialTheme.colorScheme.onBackground
                             )
                         }
                     }
@@ -337,22 +320,22 @@ fun CallsDashboardScreen(
                     OutlinedTextField(
                         value = searchQuery,
                         onValueChange = { searchQuery = it },
-                        placeholder = { Text("Search by name, number, or app...", color = BrikTextSecondary) },
-                        leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = BrikLavender) },
+                        placeholder = { Text("Search by name, number, or app...", color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                        leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = MaterialTheme.colorScheme.primary) },
                         trailingIcon = {
                             if (searchQuery.isNotEmpty()) {
                                 IconButton(onClick = { searchQuery = "" }) {
-                                    Icon(Icons.Default.Clear, contentDescription = "Clear", tint = BrikTextSecondary)
+                                    Icon(Icons.Default.Clear, contentDescription = "Clear", tint = MaterialTheme.colorScheme.onSurfaceVariant)
                                 }
                             }
                         },
                         singleLine = true,
                         shape = RoundedCornerShape(20.dp),
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = BrikLavender,
-                            unfocusedBorderColor = BrikBorder,
-                            focusedContainerColor = BrikDarkCard,
-                            unfocusedContainerColor = BrikDarkCard
+                            focusedBorderColor = MaterialTheme.colorScheme.primary,
+                            unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
+                            focusedContainerColor = MaterialTheme.colorScheme.surface,
+                            unfocusedContainerColor = MaterialTheme.colorScheme.surface
                         ),
                         modifier = Modifier
                             .fillMaxWidth()
@@ -435,7 +418,7 @@ fun CallsDashboardScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(BrikDarkBackground)
+                .background(MaterialTheme.colorScheme.background)
                 .padding(paddingValues)
         ) {
             LazyColumn(
@@ -445,6 +428,37 @@ fun CallsDashboardScreen(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 contentPadding = PaddingValues(bottom = 24.dp, top = 4.dp)
             ) {
+                item {
+                    Column(Modifier.fillMaxWidth().padding(top = 14.dp, bottom = 12.dp)) {
+                        Text("Your conversations,\nkept close.",
+                            style = MaterialTheme.typography.headlineLarge,
+                            color = MaterialTheme.colorScheme.onBackground)
+                        Spacer(Modifier.height(16.dp))
+                        Surface(
+                            onClick = { if (!isShizukuReady) context.openShizukuManager() },
+                            shape = RoundedCornerShape(12.dp),
+                            color = if (isShizukuReady) MaterialTheme.colorScheme.secondaryContainer
+                                else MaterialTheme.colorScheme.surfaceContainerHigh,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                                Icon(if (isShizukuReady) Icons.Default.CheckCircle else Icons.Default.Info,
+                                    contentDescription = null, tint = MaterialTheme.colorScheme.primary,
+                                    modifier = Modifier.size(20.dp))
+                                Column(Modifier.weight(1f)) {
+                                    Text(if (isShizukuReady) "Ready to record" else "Connect to Shizuku",
+                                        style = MaterialTheme.typography.titleSmall)
+                                    Text(if (isShizukuReady) "Recording follows your settings"
+                                        else "Open Shizuku to finish connecting",
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                }
+                                if (!isShizukuReady) Icon(Icons.Default.ChevronRight, "Open Shizuku")
+                            }
+                        }
+                    }
+                }
                 // Compact Key Metrics Strip (Sleek, minimal, non-intrusive)
                 item {
                     Row(
@@ -454,9 +468,9 @@ fun CallsDashboardScreen(
                         horizontalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
                         Surface(
-                            shape = RoundedCornerShape(18.dp),
-                            color = BrikDarkCard,
-                            border = BorderStroke(1.dp, BrikBorder),
+                            shape = RoundedCornerShape(16.dp),
+                            color = MaterialTheme.colorScheme.surface,
+                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
                             modifier = Modifier.weight(1f)
                         ) {
                             Row(
@@ -466,31 +480,31 @@ fun CallsDashboardScreen(
                             ) {
                                 Column {
                                     Text(
-                                        text = "SEALED CALLS",
+                                        text = "YOUR LIBRARY",
                                         style = MaterialTheme.typography.labelSmall.copy(
                                             fontSize = 10.sp,
                                             fontWeight = FontWeight.Bold,
                                             letterSpacing = 0.8.sp
                                         ),
-                                        color = BrikTextSecondary
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
                                     Text(
                                         text = "${allCalls.size} recordings",
                                         style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
-                                        color = BrikTextPrimary
+                                        color = MaterialTheme.colorScheme.onBackground
                                     )
                                 }
                                 Box(
                                     modifier = Modifier
                                         .size(30.dp)
                                         .clip(CircleShape)
-                                        .background(BrikLavenderContainer),
+                                        .background(MaterialTheme.colorScheme.primaryContainer),
                                     contentAlignment = Alignment.Center
                                 ) {
                                     Icon(
                                         imageVector = Icons.Default.Lock,
                                         contentDescription = null,
-                                        tint = BrikLavender,
+                                        tint = MaterialTheme.colorScheme.primary,
                                         modifier = Modifier.size(15.dp)
                                     )
                                 }
@@ -498,9 +512,9 @@ fun CallsDashboardScreen(
                         }
 
                         Surface(
-                            shape = RoundedCornerShape(18.dp),
-                            color = BrikDarkCard,
-                            border = BorderStroke(1.dp, BrikBorder),
+                            shape = RoundedCornerShape(16.dp),
+                            color = MaterialTheme.colorScheme.surface,
+                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
                             modifier = Modifier.weight(1f)
                         ) {
                             Row(
@@ -510,31 +524,31 @@ fun CallsDashboardScreen(
                             ) {
                                 Column {
                                     Text(
-                                        text = "HARDWARE VAULT",
+                                        text = "AUTO-DELETE",
                                         style = MaterialTheme.typography.labelSmall.copy(
                                             fontSize = 10.sp,
                                             fontWeight = FontWeight.Bold,
                                             letterSpacing = 0.8.sp
                                         ),
-                                        color = BrikTextSecondary
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
                                     Text(
-                                        text = if (isAutoDeleteEnabled) "${appPreferences.getAutoDeleteDays()}d purge" else "AES-256 bound",
+                                        text = if (isAutoDeleteEnabled) "After ${appPreferences.getAutoDeleteDays()} days" else "Keep recordings",
                                         style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
-                                        color = BrikMint
+                                        color = MaterialTheme.colorScheme.secondary
                                     )
                                 }
                                 Box(
                                     modifier = Modifier
                                         .size(30.dp)
                                         .clip(CircleShape)
-                                        .background(Color(0xFF0F2B28)),
+                                        .background(MaterialTheme.colorScheme.secondaryContainer),
                                     contentAlignment = Alignment.Center
                                 ) {
                                     Icon(
-                                        imageVector = Icons.Default.Shield,
+                                        imageVector = Icons.Default.Schedule,
                                         contentDescription = null,
-                                        tint = BrikMint,
+                                        tint = MaterialTheme.colorScheme.secondary,
                                         modifier = Modifier.size(15.dp)
                                     )
                                 }
@@ -543,77 +557,20 @@ fun CallsDashboardScreen(
                     }
                 }
 
-                // 2. Filter Chips Row
                 item {
-                    LazyRow(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
-                    ) {
-                        item {
-                            Surface(
-                                shape = RoundedCornerShape(50),
-                                color = if (selectedFilter == "All") BrikLavender else BrikDarkCard,
-                                border = BorderStroke(1.dp, if (selectedFilter == "All") BrikLavender else BrikBorder),
-                                modifier = Modifier.clickable { selectedFilter = "All" }
-                            ) {
-                                Text(
-                                    text = "All (${allCalls.size})",
-                                    style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
-                                    color = if (selectedFilter == "All") BrikOnLavender else BrikTextSecondary,
-                                    modifier = Modifier.padding(horizontal = 14.dp, vertical = 7.dp)
-                                )
-                            }
-                        }
-                        if (isAutoDeleteEnabled && savedCount > 0) {
-                            item {
-                                Surface(
-                                    shape = RoundedCornerShape(50),
-                                    color = if (selectedFilter == "Saved") BrikAmber else BrikDarkCard,
-                                    border = BorderStroke(1.dp, if (selectedFilter == "Saved") BrikAmber else BrikBorder),
-                                    modifier = Modifier.clickable { selectedFilter = "Saved" }
-                                ) {
-                                    Text(
-                                        text = "Saved ($savedCount)",
-                                        style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
-                                        color = if (selectedFilter == "Saved") BrikOnAmber else BrikTextSecondary,
-                                        modifier = Modifier.padding(horizontal = 14.dp, vertical = 7.dp)
-                                    )
-                                }
-                            }
-                        }
-                        if (phoneCount > 0 || allCalls.isEmpty()) {
-                            item {
-                                Surface(
-                                    shape = RoundedCornerShape(50),
-                                    color = if (selectedFilter == "Phone") BrikLavender else BrikDarkCard,
-                                    border = BorderStroke(1.dp, if (selectedFilter == "Phone") BrikLavender else BrikBorder),
-                                    modifier = Modifier.clickable { selectedFilter = "Phone" }
-                                ) {
-                                    Text(
-                                        text = "Phone ($phoneCount)",
-                                        style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
-                                        color = if (selectedFilter == "Phone") BrikOnLavender else BrikTextSecondary,
-                                        modifier = Modifier.padding(horizontal = 14.dp, vertical = 7.dp)
-                                    )
-                                }
-                            }
-                        }
-                        if (whatsAppCount > 0 || allCalls.isEmpty()) {
-                            item {
-                                Surface(
-                                    shape = RoundedCornerShape(50),
-                                    color = if (selectedFilter == "WhatsApp") BrikLavender else BrikDarkCard,
-                                    border = BorderStroke(1.dp, if (selectedFilter == "WhatsApp") BrikLavender else BrikBorder),
-                                    modifier = Modifier.clickable { selectedFilter = "WhatsApp" }
-                                ) {
-                                    Text(
-                                        text = "WhatsApp ($whatsAppCount)",
-                                        style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
-                                        color = if (selectedFilter == "WhatsApp") BrikOnLavender else BrikTextSecondary,
-                                        modifier = Modifier.padding(horizontal = 14.dp, vertical = 7.dp)
-                                    )
-                                }
-                            }
+                    LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        modifier = Modifier.fillMaxWidth()) {
+                        val filters = listOf("All" to allCalls.size, "Saved" to savedCount,
+                            "Phone" to phoneCount, "WhatsApp" to whatsAppCount)
+                        items(filters) { (name, count) ->
+                            FilterChip(selected = selectedFilter == name,
+                                onClick = { selectedFilter = name },
+                                label = { Text("$name  $count") },
+                                modifier = Modifier.heightIn(min = 48.dp),
+                                shape = RoundedCornerShape(12.dp),
+                                colors = FilterChipDefaults.filterChipColors(
+                                    selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                                    selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer))
                         }
                     }
                 }
@@ -623,8 +580,8 @@ fun CallsDashboardScreen(
                     item {
                         Surface(
                             shape = RoundedCornerShape(26.dp),
-                            color = BrikDarkCard,
-                            border = BorderStroke(1.dp, BrikBorder),
+                            color = MaterialTheme.colorScheme.surface,
+                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
                             modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp)
                         ) {
                             Column(
@@ -635,22 +592,24 @@ fun CallsDashboardScreen(
                                     imageVector = Icons.Default.GraphicEq,
                                     contentDescription = null,
                                     modifier = Modifier.size(54.dp),
-                                    tint = BrikLavender
+                                    tint = MaterialTheme.colorScheme.primary
                                 )
                                 Spacer(modifier = Modifier.height(14.dp))
                                 Text(
-                                    text = if (searchQuery.isNotEmpty()) "No matching calls found" else "No conversations saved yet",
+                                    text = if (searchQuery.isNotEmpty()) "No matching recordings" else if (selectedFilter != "All") "No recordings in this filter" else "A little space for your calls",
                                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                                    color = BrikTextPrimary
+                                    color = MaterialTheme.colorScheme.onBackground
                                 )
                                 Spacer(modifier = Modifier.height(6.dp))
                                 Text(
                                     text = if (searchQuery.isNotEmpty())
-                                        "Try searching with another name or number"
+                                        "Try a different name, number or app."
+                                    else if (selectedFilter != "All")
+                                        "Choose All to see your other recordings."
                                     else
-                                        "Incoming and outgoing calls will automatically appear here once sealed in vault.",
+                                        "Your recordings will appear here. Connect Shizuku and check your recording settings to get started.",
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = BrikTextSecondary,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     textAlign = androidx.compose.ui.text.style.TextAlign.Center
                                 )
                             }
@@ -662,7 +621,7 @@ fun CallsDashboardScreen(
                             Text(
                                 text = dateGroup,
                                 style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold),
-                                color = BrikTextSecondary,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 modifier = Modifier.padding(top = 10.dp, bottom = 2.dp, start = 4.dp)
                             )
                         }
@@ -671,14 +630,14 @@ fun CallsDashboardScreen(
                             CallLogRow(
                                 entry = entry,
                                 isPlaying = currentlyPlayingEntry?.id == entry.id && isPlaying,
-                                showBookmark = isAutoDeleteEnabled,
+                                showBookmark = true,
                                 onPlay = { playAudio(entry) },
                                 onShare = { shareAudio(entry) },
                                 onDelete = { deleteTargetEntry = entry },
                                 onToggleBookmark = {
                                     val isNowSaved = repository.toggleBookmark(entry.id)
                                     if (isNowSaved) {
-                                        Toast.makeText(context, "Conversation saved forever (immune to auto-cleanup)", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(context, "Bookmarked. Excluded from auto-delete.", Toast.LENGTH_SHORT).show()
                                     } else {
                                         Toast.makeText(context, "Bookmark removed", Toast.LENGTH_SHORT).show()
                                     }
@@ -734,9 +693,9 @@ private fun CallLogRow(
     var isMenuExpanded by remember { mutableStateOf(false) }
 
     Surface(
-        shape = RoundedCornerShape(22.dp),
-        color = if (isPlaying) BrikDarkCardElevated else BrikDarkCard,
-        border = BorderStroke(1.dp, if (isPlaying) BrikLavender else BrikBorder),
+        shape = RoundedCornerShape(16.dp),
+        color = if (isPlaying) MaterialTheme.colorScheme.surfaceContainerHigh else MaterialTheme.colorScheme.surface,
+        border = BorderStroke(1.dp, if (isPlaying) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant),
         modifier = modifier
             .fillMaxWidth()
             .clickable { onPlay() }
@@ -752,13 +711,13 @@ private fun CallLogRow(
                 modifier = Modifier
                     .size(42.dp)
                     .clip(CircleShape)
-                    .background(BrikLavenderContainer),
+                    .background(MaterialTheme.colorScheme.primaryContainer),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = entry.getAvatarInitial(),
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                    color = BrikLavender
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
 
@@ -769,11 +728,15 @@ private fun CallLogRow(
                 Text(
                     text = entry.contactName,
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold, fontSize = 16.sp),
-                    color = BrikTextPrimary,
+                    color = MaterialTheme.colorScheme.onBackground,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
 
+                if (entry.isBookmarked) {
+                    Text("Bookmarked", style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.primary)
+                }
                 Spacer(modifier = Modifier.height(3.dp))
 
                 Row(
@@ -785,26 +748,27 @@ private fun CallLogRow(
                         entry.appType.contains("Telegram", true) -> "Telegram"
                         else -> "Cellular"
                     }
+                    val darkSurface = MaterialTheme.colorScheme.background.luminance() < 0.5f
                     val appColor = when {
-                        entry.appType.contains("WhatsApp", true) -> Color(0xFF25D366)
-                        entry.appType.contains("Telegram", true) -> Color(0xFF00B0FF)
-                        else -> BrikMint
+                        entry.appType.contains("WhatsApp", true) -> if (darkSurface) Color(0xFF83D5A3) else Color(0xFF14743F)
+                        entry.appType.contains("Telegram", true) -> if (darkSurface) Color(0xFF9CCDF0) else Color(0xFF006BA0)
+                        else -> MaterialTheme.colorScheme.secondary
                     }
                     Text(
                         text = buildAnnotatedString {
                             withStyle(SpanStyle(color = appColor, fontWeight = FontWeight.SemiBold)) {
                                 append(if (entry.isIncoming()) "↙ $appLabel" else "↗ $appLabel")
                             }
-                            withStyle(SpanStyle(color = BrikTextSub)) {
+                            withStyle(SpanStyle(color = MaterialTheme.colorScheme.onSurfaceVariant)) {
                                 append(" • ")
                             }
-                            withStyle(SpanStyle(color = BrikTextSecondary)) {
+                            withStyle(SpanStyle(color = MaterialTheme.colorScheme.onSurfaceVariant)) {
                                 append(entry.getFormattedTime())
                             }
-                            withStyle(SpanStyle(color = BrikTextSub)) {
+                            withStyle(SpanStyle(color = MaterialTheme.colorScheme.onSurfaceVariant)) {
                                 append(" • ")
                             }
-                            withStyle(SpanStyle(color = BrikTextSecondary)) {
+                            withStyle(SpanStyle(color = MaterialTheme.colorScheme.onSurfaceVariant)) {
                                 append(entry.getFormattedDuration())
                             }
                         },
@@ -817,34 +781,20 @@ private fun CallLogRow(
 
             Spacer(modifier = Modifier.width(8.dp))
 
-            if (showBookmark) {
-                IconButton(
-                    onClick = onToggleBookmark,
-                    modifier = Modifier.size(36.dp)
-                ) {
-                    Icon(
-                        imageVector = if (entry.isBookmarked) Icons.Default.Bookmark else Icons.Default.BookmarkBorder,
-                        contentDescription = if (entry.isBookmarked) "Saved forever" else "Bookmark conversation",
-                        tint = if (entry.isBookmarked) BrikAmber else BrikTextSub,
-                        modifier = Modifier.size(20.dp)
-                    )
-                }
-            }
-
             // High-Contrast Circular Play Button
             Box(
                 modifier = Modifier
-                    .size(40.dp)
+                    .size(48.dp)
                     .clip(CircleShape)
-                    .background(if (isPlaying) BrikLavender else BrikDarkCardElevated)
-                    .border(1.dp, if (isPlaying) BrikLavender else BrikBorder, CircleShape)
+                    .background(if (isPlaying) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceContainerHigh)
+                    .border(1.dp, if (isPlaying) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant, CircleShape)
                     .clickable { onPlay() },
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
                     imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
                     contentDescription = if (isPlaying) "Pause" else "Play",
-                    tint = if (isPlaying) BrikOnLavender else BrikTextPrimary,
+                    tint = if (isPlaying) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onBackground,
                     modifier = Modifier.size(20.dp)
                 )
             }
@@ -853,12 +803,12 @@ private fun CallLogRow(
             Box {
                 IconButton(
                     onClick = { isMenuExpanded = true },
-                    modifier = Modifier.size(36.dp)
+                    modifier = Modifier.size(48.dp)
                 ) {
                     Icon(
                         imageVector = Icons.Default.MoreVert,
                         contentDescription = "Options",
-                        tint = BrikTextSecondary,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(20.dp)
                     )
                 }
@@ -877,7 +827,7 @@ private fun CallLogRow(
                     )
                     if (showBookmark) {
                         DropdownMenuItem(
-                            text = { Text(if (entry.isBookmarked) "Remove Bookmark" else "Save Permanently") },
+                            text = { Text(if (entry.isBookmarked) "Remove Bookmark" else "Bookmark recording") },
                             leadingIcon = { Icon(if (entry.isBookmarked) Icons.Default.BookmarkRemove else Icons.Default.BookmarkAdd, contentDescription = null) },
                             onClick = {
                                 isMenuExpanded = false

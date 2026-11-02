@@ -157,6 +157,9 @@ private enum class AppScreen {
 }
 
 private fun resolveScreen(status: OnboardingStatus.Status): AppScreen {
-    // Open directly to Calls Dashboard as permanent home screen
-    return AppScreen.Calls
+    return when {
+        !status.disclaimerAccepted -> AppScreen.Disclaimer
+        !status.isComplete() -> AppScreen.Permissions
+        else -> AppScreen.Calls
+    }
 }

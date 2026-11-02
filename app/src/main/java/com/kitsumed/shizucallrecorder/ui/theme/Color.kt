@@ -11,27 +11,27 @@ package com.kitsumed.shizucallrecorder.ui.theme
 import androidx.compose.ui.graphics.Color
 
 // --- AVAULT HIGH-ASSURANCE AUTHENTIC PALETTE ---
-val AVaultDarkBackground = Color(0xFF0A0D14)        // True dark midnight canvas
-val AVaultDarkCard = Color(0xFF121724)              // Sleek dark cyber card
-val AVaultDarkCardElevated = Color(0xFF181F30)      // Elevated container
-val AVaultBorder = Color(0xFF222B3D)                // Refined dark border
-val AVaultBorderFocused = Color(0xFF3B82F6)         // Focused card border
+val AVaultDarkBackground = Color(0xFF101419)        // True dark midnight canvas
+val AVaultDarkCard = Color(0xFF191F27)              // Sleek dark cyber card
+val AVaultDarkCardElevated = Color(0xFF222B36)      // Elevated container
+val AVaultBorder = Color(0xFF333E4B)                // Refined dark border
+val AVaultBorderFocused = Color(0xFFA9C7FF)         // Focused card border
 
 // --- AUTHENTIC AVault ACCENT TOKENS ---
-val AVaultAccentBlue = Color(0xFF5390F5)            // Iconic AVault signature electric blue
-val AVaultOnAccentBlue = Color(0xFFFFFFFF)          // High contrast white on blue
-val AVaultAccentBlueContainer = Color(0xFF17294A)   // Deep blue container
-val AVaultAccentBlueText = Color(0xFFD3E4FD)        // Luminous blue text
+val AVaultAccentBlue = Color(0xFFA9C7FF)            // Iconic AVault signature electric blue
+val AVaultOnAccentBlue = Color(0xFF112C51)          // High contrast white on blue
+val AVaultAccentBlueContainer = Color(0xFF253B57)   // Deep blue container
+val AVaultAccentBlueText = Color(0xFFD9E7FF)        // Luminous blue text
 
-val AVaultGreen = Color(0xFF10B981)                 // Rootless Active emerald green
+val AVaultGreen = Color(0xFF9FCBBA)                 // Rootless Active emerald green
 val AVaultOnGreen = Color(0xFF022C22)
-val AVaultAmber = Color(0xFFFBBF24)                 // Standby / Warning amber
+val AVaultAmber = Color(0xFFEBC582)                 // Standby / Warning amber
 val AVaultOnAmber = Color(0xFF451A03)
 
 // --- TEXT TOKENS ---
-val AVaultTextPrimary = Color(0xFFF1F5F9)           // Crisp white-slate headings
-val AVaultTextSecondary = Color(0xFF94A3B8)         // Slate muted labels
-val AVaultTextSub = Color(0xFF64748B)               // Subtle indicators
+val AVaultTextPrimary = Color(0xFFF0F2F5)           // Crisp white-slate headings
+val AVaultTextSecondary = Color(0xFFB0BBC8)         // Slate muted labels
+val AVaultTextSub = Color(0xFF94A2B3)               // Subtle indicators
 val AVaultWhite = Color.White
 
 // Compatibility aliases for layout tokens

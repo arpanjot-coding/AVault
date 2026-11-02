@@ -106,7 +106,7 @@ fun LockScreen(
     // Auto-prompt biometrics when screen first appears and purge any transient playback cache
     LaunchedEffect(Unit) {
         com.kitsumed.shizucallrecorder.system.security.VaultEncryptionManager.clearTempPlayback(context)
-        if (!com.kitsumed.shizucallrecorder.BuildConfig.DEBUG && isBiometricEnabled && activity != null) {
+        if (isBiometricEnabled && activity != null) {
             delay(200)
             triggerBiometrics()
         }
@@ -188,7 +188,7 @@ fun LockScreen(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(BrikDarkBackground)
+            .background(MaterialTheme.colorScheme.background)
             .systemBarsPadding(),
         contentAlignment = Alignment.Center
     ) {
@@ -205,14 +205,14 @@ fun LockScreen(
                 modifier = Modifier
                     .size(72.dp)
                     .clip(CircleShape)
-                    .background(BrikDarkCard)
-                    .border(1.dp, BrikDarkCardElevated, CircleShape),
+                    .background(MaterialTheme.colorScheme.surface)
+                    .border(1.dp, MaterialTheme.colorScheme.surfaceContainerHigh, CircleShape),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
                     imageVector = Icons.Default.Lock,
                     contentDescription = null,
-                    tint = if (lockoutSeconds > 0) Color(0xFFFF5252) else BrikLavender,
+                    tint = if (lockoutSeconds > 0) Color(0xFFFF5252) else MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(36.dp)
                 )
             }
@@ -220,12 +220,12 @@ fun LockScreen(
             Spacer(modifier = Modifier.height(20.dp))
 
             Text(
-                text = "AVault Locked",
+                text = "Your vault is locked",
                 style = MaterialTheme.typography.headlineMedium.copy(
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp
                 ),
-                color = Color.White
+                color = MaterialTheme.colorScheme.onBackground
             )
 
             Spacer(modifier = Modifier.height(6.dp))
@@ -233,7 +233,7 @@ fun LockScreen(
             Text(
                 text = if (hasCustomPin) "Enter your 4-digit PIN" else "Confirm identity to access conversations",
                 style = MaterialTheme.typography.bodyMedium,
-                color = BrikTextSecondary
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
             Spacer(modifier = Modifier.height(28.dp))
@@ -248,8 +248,8 @@ fun LockScreen(
                         val isFilled = index < enteredPin.length
                         val dotColor = when {
                             isError -> Color(0xFFFF5252)
-                            isFilled -> BrikLavender
-                            else -> BrikDarkCardElevated
+                            isFilled -> MaterialTheme.colorScheme.primary
+                            else -> MaterialTheme.colorScheme.surfaceContainerHigh
                         }
                         Box(
                             modifier = Modifier
@@ -258,7 +258,7 @@ fun LockScreen(
                                 .background(dotColor)
                                 .border(
                                     1.dp,
-                                    if (isFilled) BrikLavender else BrikBorder,
+                                    if (isFilled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant,
                                     CircleShape
                                 )
                         )
@@ -301,11 +301,11 @@ fun LockScreen(
                                                 modifier = Modifier
                                                     .size(72.dp)
                                                     .clip(CircleShape)
-                                                    .background(BrikDarkCard)
-                                                    .border(1.dp, BrikBorder, CircleShape)
+                                                    .background(MaterialTheme.colorScheme.surface)
+                                                    .border(1.dp, MaterialTheme.colorScheme.outlineVariant, CircleShape)
                                                     .clickable(
                                                         interactionSource = remember { MutableInteractionSource() },
-                                                        indication = ripple(bounded = true, color = BrikLavender),
+                                                        indication = ripple(bounded = true, color = MaterialTheme.colorScheme.primary),
                                                         onClick = { triggerBiometrics() }
                                                     ),
                                                 contentAlignment = Alignment.Center
@@ -313,7 +313,7 @@ fun LockScreen(
                                                 Icon(
                                                     imageVector = Icons.Default.Fingerprint,
                                                     contentDescription = "Biometric Unlock",
-                                                    tint = BrikLavender,
+                                                    tint = MaterialTheme.colorScheme.primary,
                                                     modifier = Modifier.size(28.dp)
                                                 )
                                             }
@@ -330,7 +330,7 @@ fun LockScreen(
                                                 .clickable(
                                                     enabled = lockoutSeconds == 0,
                                                     interactionSource = remember { MutableInteractionSource() },
-                                                    indication = ripple(bounded = true, color = Color.White),
+                                                    indication = ripple(bounded = true, color = MaterialTheme.colorScheme.onBackground),
                                                     onClick = { onDeleteClick() }
                                                 ),
                                             contentAlignment = Alignment.Center
@@ -349,12 +349,12 @@ fun LockScreen(
                                                 .size(72.dp)
                                                 .clip(CircleShape)
                                                 .alpha(if (lockoutSeconds > 0) 0.35f else 1f)
-                                                .background(BrikDarkCard)
-                                                .border(1.dp, BrikBorder, CircleShape)
+                                                .background(MaterialTheme.colorScheme.surface)
+                                                .border(1.dp, MaterialTheme.colorScheme.outlineVariant, CircleShape)
                                                 .clickable(
                                                     enabled = lockoutSeconds == 0,
                                                     interactionSource = remember { MutableInteractionSource() },
-                                                    indication = ripple(bounded = true, color = BrikLavender),
+                                                    indication = ripple(bounded = true, color = MaterialTheme.colorScheme.primary),
                                                     onClick = { onNumberClick(key) }
                                                 ),
                                             contentAlignment = Alignment.Center
@@ -365,7 +365,7 @@ fun LockScreen(
                                                     fontWeight = FontWeight.SemiBold,
                                                     fontSize = 24.sp
                                                 ),
-                                                color = Color.White
+                                                color = MaterialTheme.colorScheme.onBackground
                                             )
                                         }
                                     }
@@ -376,10 +376,10 @@ fun LockScreen(
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
-                TextButton(onClick = { triggerBiometrics() }) {
+                if (isBiometricEnabled) TextButton(onClick = { triggerBiometrics() }) {
                     Text(
                         text = "Unlock with Biometrics / Screen Lock",
-                        color = BrikTextSecondary,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
@@ -391,7 +391,7 @@ fun LockScreen(
                     onClick = { triggerBiometrics() },
                     shape = RoundedCornerShape(24.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = BrikLavender,
+                        containerColor = MaterialTheme.colorScheme.primary,
                         contentColor = Color.White
                     ),
                     modifier = Modifier
@@ -415,8 +415,8 @@ fun LockScreen(
                 OutlinedButton(
                     onClick = { showSetPinDialog = true },
                     shape = RoundedCornerShape(24.dp),
-                    colors = ButtonDefaults.outlinedButtonColors(contentColor = BrikLavender),
-                    border = BorderStroke(1.dp, BrikDarkCardElevated),
+                    colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.primary),
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.surfaceContainerHigh),
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(52.dp)

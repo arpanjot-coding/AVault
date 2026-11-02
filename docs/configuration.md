@@ -19,9 +19,9 @@ AVault requires specific Android runtime permissions to detect call state transi
 Inside AVault's **Settings > Security and App Lock**:
 - **App Lock Protection:** Toggle authentication requirement to open AVault and view recorded conversations.
 - **Biometric and Screen Lock:** Unlock using Fingerprint, Face recognition, or your device passcode.
-- **Master PIN:** Configure an independent SHA-256 salted PIN as a dedicated vault password.
+- **App PIN:** Configure an independent four-digit PIN. PIN hashes use PBKDF2-HMAC-SHA256; the PIN gates the interface and is separate from the audio encryption key.
 - **Screen & Recents Privacy:** Activates Android `FLAG_SECURE` to block screenshots and blur/hide conversation contents in the Recent Apps overview.
-- **Hardware Encryption:** Ensures all stored recordings on disk are encrypted using AES-256-GCM via the Android KeyStore (`.vault`).
+- **Recording encryption:** Encrypt recorded audio using AES-256-GCM via Android Keystore (`.vault`). Hardware backing depends on the device. See [security notes](../SECURITY.md) for playback and export limits.
 
 ---
 
@@ -37,7 +37,7 @@ Inside AVault's **Settings > Storage & Auto-Cleanup**:
   - 90 days (3 months)
   - 180 days (6 months)
   - 365 days (1 year)
-- **Bookmark Preservation:** When Auto-Delete mode is enabled, bookmark icons appear beside conversations in the Calls tab. Bookmarking any call marks it as **Saved forever**, making it completely immune to automatic purges.
+- **Bookmarks:** Open a recording’s options menu to bookmark it. Bookmarks are available whether auto-delete is on or off; bookmarked recordings are excluded from automatic cleanup. They can still be deleted manually.
 - **Run Auto-Cleanup Now:** Perform an on-demand cleanup pass to immediately reclaim storage.
 
 ---

@@ -57,60 +57,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        if (BuildConfig.DEBUG) {
-            appPreferences.setAppLockEnabled(true)
-            if (!AppLockManager.hasPin(this)) {
-                AppLockManager.setPin(this, "1234")
-            }
-            val repo = com.kitsumed.shizucallrecorder.data.call.CallLogRepository.getInstance(applicationContext)
-            if (repo.getAll().isEmpty()) {
-                val dir = java.io.File(filesDir, "Recordings").apply { mkdirs() }
-                val now = System.currentTimeMillis()
-                val f3 = java.io.File(dir, "call_legal.vault").apply { if (!exists()) writeBytes("AVAULT01demo".toByteArray()) }
-                val f2 = java.io.File(dir, "call_michael.vault").apply { if (!exists()) writeBytes("AVAULT01demo".toByteArray()) }
-                val f1 = java.io.File(dir, "call_sarah.vault").apply { if (!exists()) writeBytes("AVAULT01demo".toByteArray()) }
-                repo.add(com.kitsumed.shizucallrecorder.data.call.CallLogEntry(
-                    id = "vault-03",
-                    contactName = "Apex Legal Advisory",
-                    phoneNumberOrSource = "+44 20 7946 0912",
-                    appType = "Cellular",
-                    timestamp = now - 28800000,
-                    durationSeconds = 310,
-                    filePath = f3.absolutePath,
-                    fileSize = 2480000,
-                    callDirection = "INCOMING",
-                    audioRoute = "Bluetooth",
-                    isBookmarked = true
-                ))
-                repo.add(com.kitsumed.shizucallrecorder.data.call.CallLogEntry(
-                    id = "vault-02",
-                    contactName = "Michael Scott",
-                    phoneNumberOrSource = "+1 (555) 890-1234",
-                    appType = "WhatsApp",
-                    timestamp = now - 7200000,
-                    durationSeconds = 85,
-                    filePath = f2.absolutePath,
-                    fileSize = 680000,
-                    callDirection = "OUTGOING",
-                    audioRoute = "Speaker",
-                    isBookmarked = false
-                ))
-                repo.add(com.kitsumed.shizucallrecorder.data.call.CallLogEntry(
-                    id = "vault-01",
-                    contactName = "Sarah Jenkins",
-                    phoneNumberOrSource = "+1 (555) 234-8901",
-                    appType = "Cellular",
-                    timestamp = now - 1800000,
-                    durationSeconds = 142,
-                    filePath = f1.absolutePath,
-                    fileSize = 1136000,
-                    callDirection = "INCOMING",
-                    audioRoute = "Earpiece",
-                    isBookmarked = true
-                ))
-            }
-        }
-
         setContent {
             AppNavigationScreen()
         }
@@ -134,7 +80,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun applyWindowSecurityFlags() {
-        if (!BuildConfig.DEBUG && appPreferences.isAppLockEnabled() && appPreferences.isHideRecentsContentEnabled()) {
+        if (appPreferences.isAppLockEnabled() && appPreferences.isHideRecentsContentEnabled()) {
             window.setFlags(
                 WindowManager.LayoutParams.FLAG_SECURE,
                 WindowManager.LayoutParams.FLAG_SECURE
