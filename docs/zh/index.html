@@ -42,12 +42,15 @@
       "name": "AVault",
       "operatingSystem": "Android 11 or later",
       "applicationCategory": "UtilitiesApplication",
-      "softwareVersion": "2.0.0",
+      "softwareVersion": "2.0.1",
       "description": "开源 Android 通话录音应用与加密音频库，支持应用锁、搜索、书签和可配置的保留期限。需要 Shizuku；录音支持情况因设备而异。",
       "url": "https://arpanjot-coding.github.io/AVault/zh/",
       "downloadUrl": "https://github.com/arpanjot-coding/AVault/releases/latest",
       "codeRepository": "https://github.com/arpanjot-coding/AVault",
-      "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+      "license": [
+        "https://github.com/arpanjot-coding/AVault/blob/main/LICENSE",
+        "https://github.com/arpanjot-coding/AVault/blob/main/LICENSES/GPL-3.0-or-later.txt"
+      ],
       "screenshot": "https://arpanjot-coding.github.io/AVault/assets/library.webp",
       "offers": {
         "@type": "Offer",
@@ -108,7 +111,7 @@
       <div class="privacy-copy"><p class="eyebrow">02 — 隐私，落到实处</p><h2 id="privacy-title">你的对话<br>值得妥善守护。</h2><p>AVault 将音频加密与访问控制集中在一处。代码公开，承诺背后的实现也可供查阅。</p><a class="text-link" href="https://github.com/arpanjot-coding/AVault/blob/main/SECURITY.md">阅读安全说明 <span aria-hidden="true">↗</span></a><div class="security-details"><article><h3>静态存储加密</h3><p>启用加密后，AES-256-GCM 会保护音频。密钥通过 Android Keystore 管理。</p></article><article><h3>属于你的应用锁</h3><p>通过应用 PIN 码或受支持的生物识别方式保护访问。可在设置中启用屏幕隐私保护。</p></article></div><p class="privacy-footnote">硬件支持取决于设备。播放和分享会使用临时解密文件。也请保护好设备本身。</p></div>
       <figure class="privacy-visual"><div class="privacy-ring" aria-hidden="true"></div><div class="phone lock-phone"><img src="../assets/lock.webp" width="1080" height="2340" alt="AVault 应用锁及其四位 PIN 码键盘。" loading="lazy"></div><figcaption>隐私由你选择。保护融入设计。</figcaption></figure>
     </div></section>
-    <section class="professional-section wrap" aria-labelledby="professional-title"><div><p class="eyebrow">为值得记住的工作而备</p><h2 id="professional-title">专注当下。<br>留住细节。</h2></div><div><p>经许可录制的客户沟通、访谈和项目决策，都可成为有用的参考。此刻专注对话，需要时再回顾细节。</p><a class="text-link" href="https://github.com/arpanjot-coding/AVault">公开开发 <span aria-hidden="true">↗</span></a><p class="project-proof"><span data-github-stars title="GitHub snapshot: 2 November 2026">520</span> GitHub 星标 · GPL-3.0-or-later</p></div></section>
+    <section class="professional-section wrap" aria-labelledby="professional-title"><div><p class="eyebrow">为值得记住的工作而备</p><h2 id="professional-title">专注当下。<br>留住细节。</h2></div><div><p>经许可录制的客户沟通、访谈和项目决策，都可成为有用的参考。此刻专注对话，需要时再回顾细节。</p><a class="text-link" href="https://github.com/arpanjot-coding/AVault">公开开发 <span aria-hidden="true">↗</span></a><p class="project-proof"><span data-github-stars title="GitHub snapshot: 2 November 2026">520</span> GitHub 星标 · 公开源码</p></div></section>
     <section class="setup-section wrap section" id="setup" aria-labelledby="setup-title">
       <div class="section-heading"><p class="eyebrow">03 — 打造你的专属空间</p><div class="heading-row"><h2 id="setup-title">只需几步。<br>接下来，由你做主。</h2><p>AVault 通过 Shizuku 连接 Android 系统服务，无需 root。完成设置后，让音频库按你的方式运行。</p></div></div>
       <ol class="setup-steps">
@@ -119,7 +122,7 @@
       <div class="compatibility-note"><svg viewbox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 11v6m0-10v1" /></svg><p><strong>关于兼容性。</strong> 应用可安装在 Android 11 及更高版本上。通话录音支持情况取决于手机、Android 版本和通话应用。设备重启后，可能需要重新启动 Shizuku。正式依赖录音前，请先测试配置。</p></div>
     </section>
     <section class="faq-section wrap section" aria-labelledby="faq-title"><div><p class="eyebrow">你可能想了解</p><h2 id="faq-title">开始使用<br> 之前。</h2><a class="text-link" href="https://github.com/arpanjot-coding/AVault/issues">需要帮助？ <span aria-hidden="true">↗</span></a></div><div class="faq-list">
-      <details><summary>AVault 免费且开源吗？<span aria-hidden="true">+</span></summary><p>是的。AVault 可免费使用，源码依据 GNU 通用公共许可证第 3 版或更高版本公开。你可以查阅实现，也可以在 GitHub 上参与贡献。</p></details>
+      <details><summary>AVault 免费且开源吗？<span aria-hidden="true">+</span></summary><p>是的。AVault 可免费使用，源码公开。仓库包含一份 MIT LICENSE 文件，源文件中也有 GPL 声明；再分发前，请阅读许可说明。你可以查阅代码，也可以在 GitHub 上参与贡献。</p></details>
       <details><summary>需要给手机 root 吗？<span aria-hidden="true">+</span></summary><p>不需要。AVault 通过 Shizuku 访问录音所需的系统服务。设置时，需要启动 Shizuku 并授予必要权限。</p></details>
       <details><summary>所有手机上的每一通电话都能录制吗？<span aria-hidden="true">+</span></summary><p>录音支持情况因手机厂商、Android 版本和通话应用而异。第三方通话应用本身也可能限制录音。请先进行测试录音，确认配置可用。</p></details>
       <details><summary>分享录音时会发生什么？<span aria-hidden="true">+</span></summary><p>分享加密录音时，会为你选择的应用生成解密后的音频副本。该副本不再受音频库保护。请仅向可信的目标分享。</p></details>
@@ -127,6 +130,6 @@
     </div></section>
     <section class="closing wrap" aria-labelledby="closing-title"><div class="closing-wave" aria-hidden="true"><img src="../logo.svg" width="120" height="120" alt=""></div><p class="eyebrow">由你留存。</p><h2 id="closing-title">好对话。<br>妥善珍藏。</h2><a class="button button-dark" href="https://github.com/arpanjot-coding/AVault/releases/latest">获取 AVault Android 版 <span aria-hidden="true">↗</span></a><p class="download-note">免费。开源。随时为你准备好。</p></section>
   </main>
-  <footer class="footer wrap"><div class="footer-top"><a class="brand" href="#"><span class="brand-icon"><img src="../logo.svg" width="38" height="38" alt=""></span>AVault<span class="brand-period">.</span></a><p>给你的对话一个私密空间。</p><nav aria-label="页脚导航"><a href="https://github.com/arpanjot-coding/AVault">GitHub</a><a href="https://github.com/arpanjot-coding/AVault/blob/main/SECURITY.md">安全</a><a href="https://github.com/arpanjot-coding/AVault/blob/main/LICENSE">许可证</a></nav></div><div class="footer-bottom"><p>© 2026 AVault 贡献者 · GPL-3.0-or-later</p><p>负责任地录音，尊重通话另一端的人。</p></div></footer>
+  <footer class="footer wrap"><div class="footer-top"><a class="brand" href="#"><span class="brand-icon"><img src="../logo.svg" width="38" height="38" alt=""></span>AVault<span class="brand-period">.</span></a><p>给你的对话一个私密空间。</p><nav aria-label="页脚导航"><a href="https://github.com/arpanjot-coding/AVault">GitHub</a><a href="https://github.com/arpanjot-coding/AVault/blob/main/SECURITY.md">安全</a><a href="https://github.com/arpanjot-coding/AVault/blob/main/LICENSE">许可证</a></nav></div><div class="footer-bottom"><p>© 2026 AVault 贡献者 · 请参阅许可声明</p><p>负责任地录音，尊重通话另一端的人。</p></div><p class="use-notice">用于合法研究、教育及经同意开展的评估。按现状提供；请参阅预期用途和担保声明。 <a href="https://github.com/arpanjot-coding/AVault/blob/main/DISCLAIMER.md">阅读使用与免责声明</a></p></footer>
 </body>
 </html>

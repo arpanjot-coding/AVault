@@ -16,7 +16,9 @@ The app PIN gates the interface. It does not derive the audio key, and the Keyst
 
 Ordinary debug builds do not impose a default PIN or insert sample recordings. The separate `.screenshots` application is explicitly for demonstrations and uses only fictional sample data.
 
-## Playback, export and deletion
+## Recording, playback, export and deletion
+
+The recording service encodes an audio file and attempts encryption when finalising it if encryption is enabled. Plaintext can exist during capture/finalisation or when encryption fails. The app does not stream microphone audio directly into an encrypted-only storage pipeline.
 
 Playback creates temporary decrypted files in the app's private `secure_playback` cache. Cleanup is requested when playback stops or completes, the library is disposed, or MainActivity backgrounds. Pausing playback retains the current playback file so playback can resume. A sudden process termination can interrupt cleanup; playback is not exclusively in RAM.
 

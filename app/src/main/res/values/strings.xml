@@ -52,37 +52,8 @@
     <string name="disclaimer_title">Welcome to AVault</string>
     <string name="disclaimer_wiki_link_KEYWORD">Wiki</string>
     <string name="disclaimer_introduction">Please open and read the setup instructions on our Wiki before proceeding. Then, read the disclaimer below.</string>
-    <string name="disclaimer_body" translatable="false">
-        By using this application, you confirm that you have read this disclaimer and acknowledge that this software is licensed under the GNU General Public License v3.0 with additional clauses under Section 7.\n\n
-
-        Copyright © 2026 AVault Project\n\n
-
-        This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\n
-
-        This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.\n\n
-
-        You should have received a copy of the GNU General Public License along with this program. If not, see https://github.com/AVault Project/AVault/blob/main/LICENSE/.\n\n
-
-        ----------------------Disclaimer---------------------------\n\n
-
-        Recording phone calls may be subject to complex and varying laws in different countries and jurisdictions. For example, you may need to ensure you have consent from all parties before recording conversations. The developers and contributors are not responsible for any misuse or legal consequences arising from the use of this application.\n
-        You can learn more on Wikipedia at:\n https://en.wikipedia.org/wiki/Telephone_call_recording_laws.\n\n
-
-        If you are legally required to inform or ask someone for consent before recording, please note that the application DOES NOT handle this for you.\n
-        In some cases, certain features, like automatic call recording, may not be legally allowed. It is your responsibility to ensure compliance with applicable laws. This is not legal advice. Please consult a legal professional for guidance regarding your specific situation.\n\n
-
-        APPLICATION BEHAVIOR\n
-        Due to the evolving Android ecosystem and varying hardware (OEMs), this software is subject to non-deterministic behavior:\n\n
-        * Concurrent Calls: The app may fail to detect transitions (e.g., while in a call, a second incoming call arrives, or switching between held calls). In these scenarios, the application may continue to record audio into a single continuous file without separate notifications or new notifications prompts for subsequent callers.\n\n
-        * Filter Logic Limitations: Due to Android privacy-driven restrictions on real-time phone number access, the app may rely, depending on the call detection mode, on fetching deprecated or unstable values when it receives a phone state updates. These initial check could be used to decide whether to automatically record based on your settings. In cases where we receive the value too late, receive invalid data, or receive no data, the application is likely to consider the call as anonymous in its decision process.\n\n
-        * Unforeseen Failures: Future OS updates, bugs, design choices in the app, or undocumented system behaviors may cause the app to start and/or continue recording, or fail, in a unexpected manner.\n\n
-
-        USER AWARENESS\n
-        Because deterministic behavior in the application cannot be guaranteed, it is your responsibility to:\n\n
-        1. Ensure the recording behavior and your application settings aligns with your intent and the specific requirements in your jurisdiction.\n\n
-        2. Monitor the app behavior on your specific device. If you observe any behavior that does not comply with your local laws, you must immediately cease any activity that constitutes a legal infraction (For example, hanging up the call, deleting the audio files, etc).
-    </string>
-    <string name="disclaimer_checkbox_label">I have read the disclaimer and understand the legal requirements, responsibilities, and technical limitations of this software.</string>
+    <string name="disclaimer_body" translatable="false">INTENDED USE\n\nAVault is presented primarily for lawful research, education and consent-based evaluation. Use it only on devices, accounts and conversations you are authorised to access and record. A research or testing label does not itself give permission to record.\n\nCONSENT AND RESPONSIBILITY\n\nYou must obtain all required permissions, notices and participant consent before recording. AVault does not obtain consent, notify every participant or determine whether your activities are lawful. Do not use it for unlawful interception, unauthorised surveillance, stalking, harassment or unlawful disclosure. You are responsible for recording decisions, settings, retention, access and sharing.\n\nTECHNICAL LIMITATIONS\n\nDevice, Android and calling-app behaviour can change. Recordings may be missing, incomplete, silent or one-sided. Concurrent or held calls and delayed caller identity can affect detection and filters. The app can behave unexpectedly; monitor your configuration and stop any unauthorised recording.\n\nPlaintext can exist during recording finalisation and in temporary playback or sharing files. Encryption and app lock do not protect against every threat. Shared copies are controlled by their recipients. Uninstalling or clearing app data may destroy access to encrypted recordings. Test your setup with permission and do not rely on AVault as the sole record for consequential decisions.\n\nNO WARRANTY AND LIMITATION OF LIABILITY\n\nExcept where applicable law or an express written warranty requires otherwise, the software and documentation are provided as-is, without promises of accuracy, availability, compatibility, fitness, security or legal compliance. To the extent permitted by applicable law and the governing licenses, authors, contributors and distributors disclaim liability arising from use, inability to use, data loss, disclosure or misuse. No notice excludes rights or liabilities that cannot lawfully be excluded.\n\nLICENSE NOTICES\n\nThe repository contains an MIT LICENSE file and GPL-3.0-or-later source notices. Respect the terms applicable to each component. This intended-use notice does not replace those licenses or add a research-only restriction to existing open-source rights.\n\nRead the full notice at https://github.com/arpanjot-coding/AVault/blob/main/DISCLAIMER.md and the original license notices in the repository. This text is not legal advice for your particular deployment.</string>
+    <string name="disclaimer_checkbox_label">I have read the use and disclaimer notice and understand my responsibility for permissions, consent and safe configuration.</string>
     <string name="disclaimer_wait">Wait %1$ds</string>
     <string name="disclaimer_must_read">You must read the disclaimer.</string>
 

@@ -67,7 +67,7 @@
   "s066": "Die Details bewahren.",
   "s067": "Eine hilfreiche Referenz für Kundengespräche, Interviews und Projektentscheidungen, die mit Erlaubnis aufgezeichnet wurden. Konzentrieren Sie sich auf das Gespräch und greifen Sie später auf die Details zurück.",
   "s068": "Offen entwickelt",
-  "s069": "GitHub-Sterne · GPL-3.0-or-later",
+  "s069": "GitHub-Sterne · Öffentlicher Quellcode",
   "s070": "03 — GUT ANKOMMEN",
   "s071": "Wenige Schritte.",
   "s072": "Dann entscheiden Sie.",
@@ -91,7 +91,7 @@
   "s090": "loslegen.",
   "s091": "Brauchen Sie Hilfe?",
   "s092": "Ist AVault kostenlos und Open Source?",
-  "s093": "Ja. AVault ist kostenlos. Der Quellcode steht unter der GNU General Public License v3 oder neuer zur Verfügung. Sie können die Umsetzung prüfen und auf GitHub mitarbeiten.",
+  "s093": "Ja. AVault ist kostenlos und der Quellcode ist öffentlich. Das Repository enthält eine MIT-LICENSE-Datei und GPL-Hinweise in Quelldateien; lesen Sie vor einer Weiterverbreitung die Lizenzhinweise. Sie können den Code prüfen und auf GitHub mitarbeiten.",
   "s094": "Muss mein Telefon gerootet sein?",
   "s095": "Nein. AVault nutzt Shizuku für den Zugriff auf die zur Aufnahme benötigten Systemdienste. Bei der Einrichtung müssen Sie Shizuku starten und die erforderlichen Berechtigungen erteilen.",
   "s096": "Funktioniert die Aufnahme bei jedem Anruf auf jedem Telefon?",
@@ -109,6 +109,8 @@
   "s108": "Navigation im Fußbereich",
   "s109": "Sicherheit",
   "s110": "Lizenz",
-  "s111": "© 2026 AVault-Mitwirkende · GPL-3.0-or-later",
-  "s112": "Verantwortungsvoll aufnehmen. Die Menschen am anderen Ende respektieren."
+  "s111": "© 2026 AVault-Mitwirkende · Lizenzhinweise beachten",
+  "s112": "Verantwortungsvoll aufnehmen. Die Menschen am anderen Ende respektieren.",
+  "s113": "Für rechtmäßige Forschung, Bildung und Evaluierung mit Einwilligung. Bereitstellung wie besehen; Hinweise zu Verwendungszweck und Gewährleistung beachten.",
+  "s114": "Nutzungs- und Haftungshinweise lesen"
 }

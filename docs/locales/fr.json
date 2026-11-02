@@ -67,7 +67,7 @@
   "s066": "Gardez les détails.",
   "s067": "Une référence utile pour les échanges clients, les entretiens et les décisions de projet enregistrés avec autorisation. Concentrez-vous sur la conversation, puis retrouvez les détails au bon moment.",
   "s068": "Développé au grand jour",
-  "s069": "étoiles GitHub · GPL-3.0-or-later",
+  "s069": "étoiles GitHub · Code source public",
   "s070": "03 — PRENEZ VOS REPÈRES",
   "s071": "Quelques étapes.",
   "s072": "Ensuite, à vous de choisir.",
@@ -91,7 +91,7 @@
   "s090": "passer l’appel.",
   "s091": "Besoin d’aide ?",
   "s092": "AVault est-il gratuit et open source ?",
-  "s093": "Oui. AVault est gratuit et son code source est disponible sous GNU General Public License v3 ou ultérieure. Vous pouvez examiner le fonctionnement et contribuer sur GitHub.",
+  "s093": "Oui. AVault est gratuit et son code source est public. Le dépôt contient un fichier LICENSE sous licence MIT et des mentions GPL dans les fichiers source ; consultez les notes de licence avant toute redistribution. Vous pouvez examiner le code et contribuer sur GitHub.",
   "s094": "Faut-il rooter mon téléphone ?",
   "s095": "Non. AVault utilise Shizuku pour accéder aux services système nécessaires à l’enregistrement. Vous devez lancer Shizuku et accorder les autorisations requises pendant la configuration.",
   "s096": "Tous les appels sont-ils enregistrables sur tous les téléphones ?",
@@ -109,6 +109,8 @@
   "s108": "Navigation de bas de page",
   "s109": "Sécurité",
   "s110": "Licence",
-  "s111": "© 2026 Contributeurs AVault · GPL-3.0-or-later",
-  "s112": "Enregistrez de manière responsable. Respectez vos interlocuteurs."
+  "s111": "© 2026 Contributeurs AVault · Voir les mentions de licence",
+  "s112": "Enregistrez de manière responsable. Respectez vos interlocuteurs.",
+  "s113": "Pour la recherche et l’enseignement dans un cadre légal, ainsi que l’évaluation avec consentement. Fourni en l’état ; consultez les indications d’usage prévu et de garantie.",
+  "s114": "Lire les indications d’usage et les avis de non-responsabilité"
 }

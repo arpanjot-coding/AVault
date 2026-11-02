@@ -67,7 +67,7 @@
   "s066": "Lưu lại từng chi tiết.",
   "s067": "Nguồn tham khảo hữu ích cho các cuộc trao đổi với khách hàng, phỏng vấn và quyết định dự án được ghi âm khi có sự cho phép. Tập trung vào cuộc trò chuyện lúc này, rồi xem lại chi tiết khi cần.",
   "s068": "Phát triển công khai",
-  "s069": "sao trên GitHub · GPL-3.0-or-later",
+  "s069": "sao trên GitHub · Mã nguồn công khai",
   "s070": "03 — THIẾT LẬP THEO CÁCH CỦA BẠN",
   "s071": "Chỉ vài bước.",
   "s072": "Sau đó, bạn làm chủ.",
@@ -91,7 +91,7 @@
   "s090": "bắt đầu sử dụng.",
   "s091": "Bạn cần trợ giúp?",
   "s092": "AVault có miễn phí và là mã nguồn mở không?",
-  "s093": "Có. AVault miễn phí sử dụng, với mã nguồn được cung cấp theo GNU General Public License v3 hoặc mới hơn. Bạn có thể kiểm tra cách triển khai và đóng góp trên GitHub.",
+  "s093": "Có. AVault miễn phí sử dụng và mã nguồn được công khai. Kho mã có tệp LICENSE theo giấy phép MIT cùng các thông báo GPL trong tệp mã nguồn; hãy đọc ghi chú về giấy phép trước khi phân phối lại. Bạn có thể kiểm tra mã và đóng góp trên GitHub.",
   "s094": "Tôi có cần root điện thoại không?",
   "s095": "Không. AVault dùng Shizuku để truy cập các dịch vụ hệ thống cần cho ghi âm. Trong quá trình thiết lập, bạn cần khởi chạy Shizuku và cấp các quyền cần thiết.",
   "s096": "Ứng dụng có ghi được mọi cuộc gọi trên mọi điện thoại không?",
@@ -109,6 +109,8 @@
   "s108": "Điều hướng chân trang",
   "s109": "Bảo mật",
   "s110": "Giấy phép",
-  "s111": "© 2026 Những người đóng góp cho AVault · GPL-3.0-or-later",
-  "s112": "Ghi âm có trách nhiệm. Tôn trọng người ở đầu dây bên kia."
+  "s111": "© 2026 Những người đóng góp cho AVault · Xem thông báo giấy phép",
+  "s112": "Ghi âm có trách nhiệm. Tôn trọng người ở đầu dây bên kia.",
+  "s113": "Dành cho nghiên cứu, giáo dục hợp pháp và hoạt động đánh giá có sự đồng ý. Được cung cấp nguyên trạng; hãy xem các thông báo về mục đích sử dụng và bảo hành.",
+  "s114": "Đọc thông báo sử dụng và miễn trừ trách nhiệm"
 }

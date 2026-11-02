@@ -67,7 +67,7 @@
   "s066": "Keep the details.",
   "s067": "A useful reference for client conversations, interviews and project decisions recorded with permission. Focus on the conversation now, then come back to the details when you need them.",
   "s068": "Built in the open",
-  "s069": "GitHub stars · GPL-3.0-or-later",
+  "s069": "GitHub stars · Public source",
   "s070": "03 — MAKE YOURSELF AT HOME",
   "s071": "A few steps.",
   "s072": "Then, it’s your call.",
@@ -91,7 +91,7 @@
   "s090": "make the call.",
   "s091": "Need a hand?",
   "s092": "Is AVault free and open source?",
-  "s093": "Yes. AVault is free to use, with source code available under the GNU General Public License v3 or later. You can inspect the implementation and contribute on GitHub.",
+  "s093": "Yes. AVault is free to use and its source is public. The repository includes an MIT LICENSE file and GPL notices in source files; review the licensing notes before redistributing. You can inspect the code and contribute on GitHub.",
   "s094": "Do I need to root my phone?",
   "s095": "No. AVault uses Shizuku to access the system services needed for recording. You will need to start Shizuku and grant the required permissions during setup.",
   "s096": "Will it record every call on every phone?",
@@ -109,6 +109,8 @@
   "s108": "Footer navigation",
   "s109": "Security",
   "s110": "License",
-  "s111": "© 2026 AVault contributors · GPL-3.0-or-later",
-  "s112": "Record responsibly. Respect the people on the other end."
+  "s111": "© 2026 AVault contributors · See license notices",
+  "s112": "Record responsibly. Respect the people on the other end.",
+  "s113": "For lawful research, education and consent-based evaluation. Provided as-is; see intended use and warranty notices.",
+  "s114": "Read use and disclaimer notices"
 }

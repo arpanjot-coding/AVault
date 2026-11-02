@@ -67,7 +67,7 @@
   "s066": "Conserva i dettagli.",
   "s067": "Un riferimento utile per conversazioni con clienti, interviste e decisioni di progetto registrate con il permesso degli interessati. Concentrati sulla conversazione e torna ai dettagli quando servono.",
   "s068": "Sviluppato alla luce del sole",
-  "s069": "stelle su GitHub · GPL-3.0-or-later",
+  "s069": "stelle su GitHub · Codice sorgente pubblico",
   "s070": "03 — SENTITI A CASA",
   "s071": "Pochi passaggi.",
   "s072": "Poi scegli tu.",
@@ -91,7 +91,7 @@
   "s090": "fare la chiamata.",
   "s091": "Ti serve una mano?",
   "s092": "AVault è gratuito e open source?",
-  "s093": "Sì. AVault è gratuito e il codice sorgente è disponibile con GNU General Public License v3 o successiva. Puoi esaminare l’implementazione e contribuire su GitHub.",
+  "s093": "Sì. AVault è gratuito e il codice sorgente è pubblico. Il repository contiene un file LICENSE con licenza MIT e avvisi GPL nei file sorgente; consulta le note sulle licenze prima di ridistribuire. Puoi esaminare il codice e contribuire su GitHub.",
   "s094": "Devo eseguire il root del telefono?",
   "s095": "No. AVault usa Shizuku per accedere ai servizi di sistema necessari alla registrazione. Durante la configurazione devi avviare Shizuku e concedere le autorizzazioni richieste.",
   "s096": "Registra ogni chiamata su qualsiasi telefono?",
@@ -109,6 +109,8 @@
   "s108": "Navigazione a piè di pagina",
   "s109": "Sicurezza",
   "s110": "Licenza",
-  "s111": "© 2026 Collaboratori AVault · GPL-3.0-or-later",
-  "s112": "Registra in modo responsabile. Rispetta chi ti ascolta dall’altra parte."
+  "s111": "© 2026 Collaboratori AVault · Consulta gli avvisi di licenza",
+  "s112": "Registra in modo responsabile. Rispetta chi ti ascolta dall’altra parte.",
+  "s113": "Per ricerca, formazione e valutazioni lecite basate sul consenso. Fornito così com’è; consulta le note sull’uso previsto e sulle garanzie.",
+  "s114": "Leggi le note sull’uso e le esclusioni di responsabilità"
 }

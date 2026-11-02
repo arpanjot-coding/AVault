@@ -1570,3 +1570,6 @@ html:not([lang="en"]) .hero h1 { font-size: clamp(44px, 4.8vw, 70px); letter-spa
 [lang="hi"] .hero h1,[lang="th"] .hero h1 { line-height: 1.4; letter-spacing: 0; }
 @media(max-width:600px) { html:not([lang="en"]) .hero h1 { font-size: 43px; } }
 .brand, .nav-source { direction: ltr; }
+
+.use-notice { font-size: 11px; line-height: 1.8; color: var(--muted); border-top: 1px solid var(--line); padding-top: 18px; margin: 20px 0 0; }
+.use-notice a { text-decoration: underline; text-underline-offset: 3px; }
