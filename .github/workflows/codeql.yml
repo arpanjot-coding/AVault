@@ -60,15 +60,8 @@ jobs:
         with:
           validate-wrappers: true
           cache-provider: basic
-          gradle-version: '9.8.2'
           # MUST BE READ ONLY TO PREVENT CACHE POISONING
           cache-read-only: true
-      
-      - name: Generate Missing Gradle Wrapper Scripts
-        if: matrix.language == 'java-kotlin'
-        env:
-          SKIP_SIGNING: true # Prevent build.gradle.kts from throwing error due to missing signing info
-        run: gradle wrapper --no-daemon
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4

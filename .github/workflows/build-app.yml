@@ -74,14 +74,11 @@ jobs:
         with:
           validate-wrappers: true # Verify Gradle wrapper integrity to prevent supply chain attacks from bad-actor wrapper file in the git repo
           cache-provider: basic # DO NOT REMOVE, gradle V6 made controversial OPT-IN BY DEFAULT NEW TERMS FOR THEIR NEW PROPRIETARY "ADVANCED CACHING". basic is previous MIT FOSS caching variant with no terms.
-          gradle-version: '9.8.2' # Replicate the same version as gradle-wrapper.properties used by Android Studio
           # In the weird case where we could run this CI on a PRs from forks, cache is read-only to prevents cache poisoning.
           cache-read-only: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository }}
 
-      - name: Generate Missing Gradle Wrapper Scripts
-        env:
-          SKIP_SIGNING: true # Prevent build.gradle.kts from throwing error due to missing signing info
-        run: gradle wrapper --no-daemon
+      - name: Prepare Tracked Gradle Wrapper
+        run: chmod +x gradlew
 
       - name: Extract Version via Gradle Task
         id: get-version
