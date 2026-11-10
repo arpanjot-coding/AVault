@@ -3,6 +3,7 @@
     <application android:name="android.app.Application" android:label="AVault Screenshots"
         tools:replace="android:name,android:label">
         <activity android:name="com.kitsumed.shizucallrecorder.screenshots.ScreenshotActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
     </application>
 </manifest>

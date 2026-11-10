@@ -58,6 +58,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AVault">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -70,6 +71,7 @@
         <!-- Activity to show the user a confirmation dialog before deleting a recording -->
         <activity
             android:name=".services.recording.DeleteDialogConfirmationActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.DayNight.Dialog.Alert"
             android:excludeFromRecents="true"
             android:taskAffinity=""

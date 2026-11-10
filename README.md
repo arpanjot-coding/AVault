@@ -53,6 +53,7 @@ The app uses **Shizuku** for system access without root. It installs on **Androi
 - **Your retention rules.** Choose an auto-delete period or keep auto-delete off. Bookmarks exclude recordings from automatic cleanup.
 - **Playback and sharing.** Listen inside the app or explicitly share an audio copy with another app.
 - **A considered interface.** A readable library, grouped settings, and support for the existing light, dark and dynamic colour preferences.
+- **Portrait on phones.** The library, settings, setup and lock screen stay upright when you turn the phone. The recording deletion dialog uses the same orientation.
 
 ## Get started
 
