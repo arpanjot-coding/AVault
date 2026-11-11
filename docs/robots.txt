@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /media-kit.html
 
 Sitemap: https://arpanjot-coding.github.io/AVault/sitemap.xml

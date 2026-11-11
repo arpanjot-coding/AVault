@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f6f5f1">
-  <title>AVault — 私密通话录音 &amp; Android 加密音频库</title>
-  <meta name="description" content="用 AVault 妥善保存对话。这款开源 Android 通话录音应用提供 AES-256-GCM 加密、应用锁、搜索和自动保留期限管理。需要 Shizuku。">
+  <title>安卓通话录音，无需 Root | AVault</title>
+  <meta name="description" content="下载 AVault，免费的安卓通话录音应用。通过 Shizuku 无需 Root 即可录音，还能搜索已保存的通话、设置应用 PIN 码并管理录音保留时间。">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <link rel="canonical" href="https://arpanjot-coding.github.io/AVault/zh/">
   <link rel="icon" type="image/png" href="../icon.png">
@@ -14,15 +14,15 @@
   <meta property="og:locale" content="zh_CN">
   <meta property="og:site_name" content="AVault">
   <meta property="og:url" content="https://arpanjot-coding.github.io/AVault/zh/">
-  <meta property="og:title" content="AVault — 留住通话。始终由你掌握。">
-  <meta property="og:description" content="适用于 Android 的开源通话录音应用与加密音频库。井然有序，由你掌握。">
+  <meta property="og:title" content="安卓通话录音，无需 Root | AVault">
+  <meta property="og:description" content="下载 AVault，免费的安卓通话录音应用。通过 Shizuku 无需 Root 即可录音，还能搜索已保存的通话、设置应用 PIN 码并管理录音保留时间。">
   <meta property="og:image" content="https://arpanjot-coding.github.io/AVault/assets/social-card.jpg">
-  <meta property="og:image:width" content="1200">
+  <meta property="og:image:width" content="1199">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="AVault — 留住通话。始终由你掌握。你的 Android 录音库。">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="AVault — 留住通话。始终由你掌握。">
-  <meta name="twitter:description" content="配备加密音频库的开源 Android 通话录音应用。">
+  <meta name="twitter:title" content="安卓通话录音，无需 Root | AVault">
+  <meta name="twitter:description" content="下载 AVault，免费的安卓通话录音应用。通过 Shizuku 无需 Root 即可录音，还能搜索已保存的通话、设置应用 PIN 码并管理录音保留时间。">
   <meta name="twitter:image" content="https://arpanjot-coding.github.io/AVault/assets/social-card.jpg">
   <link rel="stylesheet" href="../styles.css">
   <link rel="preload" href="../assets/library.webp" as="image" type="image/webp">
@@ -31,33 +31,37 @@
   "@graph": [
     {
       "@type": "WebSite",
-      "@id": "https://arpanjot-coding.github.io/AVault/zh/#website",
+      "@id": "https://arpanjot-coding.github.io/AVault/#website",
       "name": "AVault",
+      "url": "https://arpanjot-coding.github.io/AVault/"
+    },
+    {
+      "@type": "WebPage",
+      "isPartOf": {
+        "@id": "https://arpanjot-coding.github.io/AVault/#website"
+      },
+      "mainEntity": {
+        "@id": "https://arpanjot-coding.github.io/AVault/#app"
+      },
+      "@id": "https://arpanjot-coding.github.io/AVault/zh/#page",
       "url": "https://arpanjot-coding.github.io/AVault/zh/",
-      "inLanguage": "zh"
+      "inLanguage": "zh-Hans"
     },
     {
       "@type": "SoftwareApplication",
-      "@id": "https://arpanjot-coding.github.io/AVault/zh/#app",
+      "@id": "https://arpanjot-coding.github.io/AVault/#app",
       "name": "AVault",
       "operatingSystem": "Android 11 or later",
       "applicationCategory": "UtilitiesApplication",
-      "softwareVersion": "2.0.1",
-      "description": "开源 Android 通话录音应用与加密音频库，支持应用锁、搜索、书签和可配置的保留期限。需要 Shizuku；录音支持情况因设备而异。",
-      "url": "https://arpanjot-coding.github.io/AVault/zh/",
+      "description": "下载 AVault，免费的安卓通话录音应用。通过 Shizuku 无需 Root 即可录音，还能搜索已保存的通话、设置应用 PIN 码并管理录音保留时间。",
+      "url": "https://arpanjot-coding.github.io/AVault/",
       "downloadUrl": "https://github.com/arpanjot-coding/AVault/releases/latest",
-      "codeRepository": "https://github.com/arpanjot-coding/AVault",
-      "license": [
-        "https://github.com/arpanjot-coding/AVault/blob/main/LICENSE",
-        "https://github.com/arpanjot-coding/AVault/blob/main/LICENSES/GPL-3.0-or-later.txt"
-      ],
+      "sameAs": "https://github.com/arpanjot-coding/AVault",
       "screenshot": "https://arpanjot-coding.github.io/AVault/assets/library.webp",
       "offers": {
         "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "inLanguage": "zh"
+        "price": 0
+      }
     }
   ]
 }</script>
@@ -81,21 +85,21 @@
   <header class="header"><div class="wrap navigation">
     <a class="brand" href="#" aria-label="AVault 首页"><span class="brand-icon"><img src="../logo.svg" width="38" height="38" alt=""></span>AVault<span class="brand-period">.</span></a>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="navigation-links">菜单 <span aria-hidden="true">+</span></button>
-    <nav id="navigation-links" aria-label="主导航"><a href="#product">了解应用</a><a href="#privacy">隐私</a><a href="#setup">开始使用</a><a class="nav-source" href="https://github.com/arpanjot-coding/AVault">GitHub <svg viewbox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.8 6.4.9-4.6 4.5 1.1 6.4-5.7-3-5.7 3 1.1-6.4L2.8 9.7l6.4-.9z" /></svg><span data-github-stars title="GitHub snapshot: 2 November 2026">520</span><span class="star-label">星标</span><span aria-hidden="true">↗</span></a><details class="language-picker"><summary><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c5 5 5 13 0 18-5-5-5-13 0-18"/></svg>简体中文<span aria-hidden="true">⌄</span></summary><ul><li><a href=".././" lang="en" hreflang="en">English</a></li><li><a href="../ru/" lang="ru" hreflang="ru">Русский</a></li><li><a href="../zh/" lang="zh" hreflang="zh" aria-current="page">简体中文</a></li><li><a href="../ja/" lang="ja" hreflang="ja">日本語</a></li><li><a href="../vi/" lang="vi" hreflang="vi">Tiếng Việt</a></li><li><a href="../th/" lang="th" hreflang="th">ไทย</a></li><li><a href="../hi/" lang="hi" hreflang="hi">हिन्दी</a></li><li><a href="../ar/" lang="ar" hreflang="ar">العربية</a></li><li><a href="../fr/" lang="fr" hreflang="fr">Français</a></li><li><a href="../de/" lang="de" hreflang="de">Deutsch</a></li><li><a href="../es/" lang="es" hreflang="es">Español</a></li><li><a href="../it/" lang="it" hreflang="it">Italiano</a></li></ul></details></nav>
+    <nav id="navigation-links" aria-label="主导航"><a href="#product">了解应用</a><a href="#privacy">隐私</a><a href="#setup">开始使用</a><a class="nav-source" href="https://github.com/arpanjot-coding/AVault">GitHub <svg viewbox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.8 6.4.9-4.6 4.5 1.1 6.4-5.7-3-5.7 3 1.1-6.4L2.8 9.7l6.4-.9z" /></svg><span data-github-stars title="GitHub snapshot: 11 November 2026">622</span><span class="star-label">星标</span><span aria-hidden="true">↗</span></a><details class="language-picker"><summary><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c5 5 5 13 0 18-5-5-5-13 0-18"/></svg>简体中文<span aria-hidden="true">⌄</span></summary><ul><li><a href=".././" lang="en" hreflang="en">English</a></li><li><a href="../ru/" lang="ru" hreflang="ru">Русский</a></li><li><a href="../zh/" lang="zh" hreflang="zh" aria-current="page">简体中文</a></li><li><a href="../ja/" lang="ja" hreflang="ja">日本語</a></li><li><a href="../vi/" lang="vi" hreflang="vi">Tiếng Việt</a></li><li><a href="../th/" lang="th" hreflang="th">ไทย</a></li><li><a href="../hi/" lang="hi" hreflang="hi">हिन्दी</a></li><li><a href="../ar/" lang="ar" hreflang="ar">العربية</a></li><li><a href="../fr/" lang="fr" hreflang="fr">Français</a></li><li><a href="../de/" lang="de" hreflang="de">Deutsch</a></li><li><a href="../es/" lang="es" hreflang="es">Español</a></li><li><a href="../it/" lang="it" hreflang="it">Italiano</a></li></ul></details></nav>
   </div></header>
   <main id="main">
     <section class="hero wrap" aria-labelledby="hero-title">
       <div class="hero-copy">
         <p class="eyebrow"><span class="status-dot"></span> 开源。由你做主。</p>
-        <h1 id="hero-title">留住通话。<br>始终由 <em>你掌握。</em></h1>
-        <p class="hero-description">有些对话，值得留下。<br class="desktop-break"> 在你的 Android 设备上，给它们一个私密的空间。</p>
+        <h1 id="hero-title">安卓通话录音<br><em>无需 Root</em></h1>
+        <p class="hero-description">通过 Shizuku 在兼容的安卓手机上录制通话。按联系人查找录音、为重要通话添加书签，并选择何时清理旧录音。</p>
         <div class="hero-actions"><a class="button button-dark" href="https://github.com/arpanjot-coding/AVault/releases/latest"><svg viewbox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5" /></svg>下载 Android 版</a><a class="text-link" href="#product">了解你的音频库 <span aria-hidden="true">↘</span></a></div>
         <p class="download-note">免费使用 · Android 11 及以上 · 需要 Shizuku</p>
         <div class="hero-proof"><span><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /></svg>AES-256-GCM 加密</span><span><svg viewbox="0 0 24 24" aria-hidden="true"><path d="m8 7-5 5 5 5m8-10 5 5-5 5m-3-13-2 16" /></svg>源码可供查阅</span></div>
       </div>
       <figure class="hero-stage"><div class="hero-artwork"><div class="stage-top"><span>你的声音。你的音频库。</span><span aria-hidden="true">01 / 03</span></div><div class="stage-orbit" aria-hidden="true"></div><div class="phone hero-phone"><img src="../assets/library.webp" width="1080" height="2340" alt="AVault 录音库，支持搜索、书签和通话筛选。画面为示例录音。" fetchpriority="high"></div></div><figcaption><span>AVault Android 版</span><span>画面为示例录音</span></figcaption></figure>
     </section>
-    <div class="principles wrap" aria-label="产品理念"><p>多一份隐私。<br><strong>多一份安心。</strong></p><span>加密音频</span><span>无需 root</span><span>始终开源</span></div>
+    <div class="principles wrap" aria-label="产品理念"><p>多一份隐私。<br><strong>多一份安心。</strong></p><span>录音保存在本机</span><span>无需 root</span><span>始终开源</span></div>
     <section class="product-section wrap section" id="product" aria-labelledby="product-title">
       <div class="section-heading"><p class="eyebrow">01 — 给对话一个专属空间</p><div class="heading-row"><h2 id="product-title">少一点查找。<br>多一点回忆。</h2><p>从有用的细节到重要的决定，轻松找到所需的对话，不必在一堆音频文件中翻找。</p></div></div>
       <div class="product-layout"><figure class="product-figure"><div class="product-visual"><div class="product-visual-caption"><span>一个安静、有序的录音库</span><span aria-hidden="true">↙</span></div><div class="phone secondary-phone"><img src="../assets/library.webp" width="1080" height="2340" alt="AVault 录音库，示例对话按日期整理。" loading="lazy"></div></div><figcaption><span>你的录音库</span><span>画面为示例录音</span></figcaption></figure>
@@ -108,16 +112,16 @@
       </div>
     </section>
     <section class="privacy-section" id="privacy" aria-labelledby="privacy-title"><div class="wrap privacy-layout">
-      <div class="privacy-copy"><p class="eyebrow">02 — 隐私，落到实处</p><h2 id="privacy-title">你的对话<br>值得妥善守护。</h2><p>AVault 将音频加密与访问控制集中在一处。代码公开，承诺背后的实现也可供查阅。</p><a class="text-link" href="https://github.com/arpanjot-coding/AVault/blob/main/SECURITY.md">阅读安全说明 <span aria-hidden="true">↗</span></a><div class="security-details"><article><h3>静态存储加密</h3><p>启用加密后，AES-256-GCM 会保护音频。密钥通过 Android Keystore 管理。</p></article><article><h3>属于你的应用锁</h3><p>通过应用 PIN 码或受支持的生物识别方式保护访问。可在设置中启用屏幕隐私保护。</p></article></div><p class="privacy-footnote">硬件支持取决于设备。播放和分享会使用临时解密文件。也请保护好设备本身。</p></div>
+      <div class="privacy-copy"><p class="eyebrow">02 — 隐私，落到实处</p><h2 id="privacy-title">你的对话<br>值得妥善守护。</h2><p>将录音保存在手机上，使用 PIN 码或设备支持的生物识别方式保护访问权限。你可以查阅源代码，了解录音如何存储和加密。</p><a class="text-link" href="https://github.com/arpanjot-coding/AVault/blob/main/SECURITY.md">阅读安全说明 <span aria-hidden="true">↗</span></a><div class="security-details"><article><h3>录音加密</h3><p>AVault 支持 AES-256-GCM 加密，密钥由 Android Keystore 管理。</p></article><article><h3>属于你的应用锁</h3><p>通过应用 PIN 码或受支持的生物识别方式保护访问。可在设置中启用屏幕隐私保护。</p></article></div><p class="privacy-footnote">请确认测试录音保存为 .vault 文件。Android 的存储限制可能导致录音未加密。是否有硬件保护取决于设备，播放和分享时会使用临时解密文件。</p></div>
       <figure class="privacy-visual"><div class="privacy-ring" aria-hidden="true"></div><div class="phone lock-phone"><img src="../assets/lock.webp" width="1080" height="2340" alt="AVault 应用锁及其四位 PIN 码键盘。" loading="lazy"></div><figcaption>隐私由你选择。保护融入设计。</figcaption></figure>
     </div></section>
-    <section class="professional-section wrap" aria-labelledby="professional-title"><div><p class="eyebrow">为值得记住的工作而备</p><h2 id="professional-title">专注当下。<br>留住细节。</h2></div><div><p>经许可录制的客户沟通、访谈和项目决策，都可成为有用的参考。此刻专注对话，需要时再回顾细节。</p><a class="text-link" href="https://github.com/arpanjot-coding/AVault">公开开发 <span aria-hidden="true">↗</span></a><p class="project-proof"><span data-github-stars title="GitHub snapshot: 2 November 2026">520</span> GitHub 星标 · 公开源码</p></div></section>
+    <section class="professional-section wrap" aria-labelledby="professional-title"><div><p class="eyebrow">为值得记住的工作而备</p><h2 id="professional-title">专注当下。<br>留住细节。</h2></div><div><p>经许可录制的客户沟通、访谈和项目决策，都可成为有用的参考。此刻专注对话，需要时再回顾细节。</p><a class="text-link" href="https://github.com/arpanjot-coding/AVault">公开开发 <span aria-hidden="true">↗</span></a><p class="project-proof"><span data-github-stars title="GitHub snapshot: 11 November 2026">622</span> GitHub 星标 · 公开源码</p></div></section>
     <section class="setup-section wrap section" id="setup" aria-labelledby="setup-title">
       <div class="section-heading"><p class="eyebrow">03 — 打造你的专属空间</p><div class="heading-row"><h2 id="setup-title">只需几步。<br>接下来，由你做主。</h2><p>AVault 通过 Shizuku 连接 Android 系统服务，无需 root。完成设置后，让音频库按你的方式运行。</p></div></div>
       <ol class="setup-steps">
         <li><span class="step-index">01 / 下载</span><h3>获取 AVault。</h3><p>从 GitHub Releases 下载 APK，并安装到 Android 手机上。</p><a class="text-link" href="https://github.com/arpanjot-coding/AVault/releases/latest">前往发布页面 <span aria-hidden="true">↗</span></a></li>
         <li><span class="step-index">02 / 连接</span><h3>启动 Shizuku。</h3><p>安装 Shizuku，通过无线调试或 ADB 启动服务，然后授权 AVault。</p><a class="text-link" href="https://shizuku.rikka.app/guide/setup/">Shizuku 设置指南 <span aria-hidden="true">↗</span></a></li>
-        <li><span class="step-index">03 / 个性设置</span><h3>按你的方式设置。</h3><p>按照应用内的权限清单完成设置，选择录音规则、应用锁和保留期限。</p><a class="text-link" href="https://github.com/arpanjot-coding/AVault/blob/main/docs/configuration.md">配置指南 <span aria-hidden="true">↗</span></a></li>
+        <li><span class="step-index">03 / 个性设置</span><h3>按你的方式设置。</h3><p>按照应用内的权限清单完成设置，选择录音规则、应用锁和保留期限。</p><a class="text-link" href="../guides/android-call-recording/" hreflang="en">Android 分步设置指南（英文） <span aria-hidden="true">↗</span></a></li>
       </ol>
       <div class="compatibility-note"><svg viewbox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 11v6m0-10v1" /></svg><p><strong>关于兼容性。</strong> 应用可安装在 Android 11 及更高版本上。通话录音支持情况取决于手机、Android 版本和通话应用。设备重启后，可能需要重新启动 Shizuku。正式依赖录音前，请先测试配置。</p></div>
     </section>
